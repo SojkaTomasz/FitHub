@@ -1,0 +1,12 @@
+<head>
+	<nav class="nav flex-column">
+		<a class="nav-link active" aria-current="page" href="#">Active</a>
+		<a class="nav-link" href="#">Link</a>
+		<a class="nav-link" href="#">Link</a>
+		<form method="GET" action={{path('app_logout')}}>
+			<button type="submit" class="nav-link">
+				{% trans %}Wyloguj{% endtrans %}
+			</button>
+		</form>
+	</nav>
+</head>

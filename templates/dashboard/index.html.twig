@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DashboardController!
+{% endblock %}
+
+{% block body %}
+	{% include 'dashboard/head.html.twig' %}
+	<table class="table">
+		<thead>
+			<tr class="table-active">
+				<th scope="col">
+					<a class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Imię</a>
+				</th>
+				<th scope="col">
+					<a class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Nazwisko</a>
+				</th>
+
+				<th scope="col"></th>
+
+			</tr>
+		</thead>
+		<tbody class="table-group-divider">
+			{% for trainer in trainers %}
+				<tr>
+					<td scope="row">
+						<a href="{{path('user', {id: trainer.id})}}">{{trainer.firstName}}</a>
+
+					</td>
+					<td>{{trainer.lastName}}</td>
+
+					<td class="text-end">{# <a href="{{path('delete.trainer', {id: trainer.id})}}" type="button" class="btn btn-danger">Usuń</a> #}
+						{# <a href="{{path('edit.trainer', {id: trainer.id})}}" type="button" class="btn btn-success">Edytuj</a> #}
+					</td>
+
+
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+{% endblock %}

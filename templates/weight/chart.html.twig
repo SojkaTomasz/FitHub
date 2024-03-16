@@ -1,0 +1,75 @@
+{# templates/weight/chart.html.twig #}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wykres Wagi</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1 style="text-align: center;">Wykres Wagi Użytkownika</h1>
+    <canvas id="weightChart" width="800" height="400"></canvas>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Dane o wadze użytkownika przekazane z kontrolera
+            const weightData = {{ weightData|json_encode|raw }};
+            
+            // Przygotuj etykiety i wartości wag do wykresu
+            const labels = weightData.map(entry => entry.date);
+            const weights = weightData.map(entry => entry.weight);
+
+            // Znajdź minimalną wagę użytkownika
+            const minWeight = Math.min(...weights);
+
+            // Wygeneruj wykres za pomocą biblioteki Chart.js
+            var ctx = document.getElementById('weightChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Waga',
+                        data: weights,
+                        borderColor: 'rgba(255, 99, 132, 1)', // Zmiana koloru linii na czerwony
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)', // Zmiana koloru tła na czerwony z przeźroczystością
+                        borderWidth: 2, // Zmiana grubości linii na 2 piksele
+                        pointStyle: 'circle', // Zmiana stylu punktów danych na okrągłe
+                        pointRadius: 5, // Zmiana wielkości punktów danych na 5 pikseli
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Wykres Wagi Użytkownika',
+                            font: {
+                                size: 18 // Zmiana rozmiaru czcionki tytułu
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            min: minWeight - 5,
+                            ticks: {
+                                font: {
+                                    size: 14 // Zmiana rozmiaru czcionki etykiet osi Y
+                                }
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                font: {
+                                    size: 14 // Zmiana rozmiaru czcionki etykiet osi X
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

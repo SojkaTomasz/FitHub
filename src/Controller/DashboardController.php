@@ -21,11 +21,15 @@ class DashboardController extends AbstractController
         ]);
     }
 
-    #[Route('/dashboard/user/{id}', name: 'user')]
-    public function user(User $user): Response
+    #[Route('/dashboard2', name: 'app_dashboard2')]
+    public function indexx(EntityManagerInterface $entityManager): Response
     {
-        return $this->render('dashboard/user.html.twig', [
-            'user' => $user,
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $trainers = $entityManager->getRepository(User::class)->findByTrainer();
+
+        return $this->render('dashboard/index2.html.twig', [
+            'trainers' => $trainers,
         ]);
     }
+
 }

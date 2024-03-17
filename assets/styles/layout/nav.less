@@ -1,0 +1,36 @@
+@import "../mixin.less";
+@import "../vars.less";
+
+header {
+	position: relative;
+	height: 100vh;
+	.icon-array-nav {
+		position: absolute;
+		top: 2px;
+		left: 100%;
+		color: white;
+		background-color: @color-dark-gray;
+		border-radius: 0 5px 5px 0;
+		cursor: pointer;
+		&:hover {
+			background-color: calc(@color-dark-gray + 10%);
+		}
+	}
+	.nav {
+		height: 100%;
+		display: flex;
+		padding: 20px 10px;
+		background-color: @color-dark-gray;
+		width: 220px;
+		
+		div {
+			width: 100%;
+		}
+		.nav-link {
+			color: @color-main;
+		}
+	}
+	.nav.active {
+		width: 0;
+	}
+}

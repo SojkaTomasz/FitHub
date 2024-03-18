@@ -3,5 +3,6 @@ import "./styles/layout/nav.less"
 import "./styles/layout/font.less"
 import "./js/btn-nav"
 import "bootstrap/dist/css/bootstrap.css"
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 

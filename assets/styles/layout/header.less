@@ -1,6 +1,32 @@
 @import "../vars.less";
 @import "../mixins.less";
 
-header {
-	background-color: @color-black;
+body {
+	header {
+		background-color: @color-black;
+		.dropdown-toggle.dropdown-toggle-split {
+			background: transparent;
+			border: 0;
+			&::after {
+				content: none;
+			}
+			.bi.bi-caret-down-square-fill {
+				position: absolute;
+				bottom: -5px;
+				right: -3px;
+				color: @color-main;
+				&::before {
+					background-color: @color-white;
+					border-radius: 50%;
+					font-size: 17px;
+				}
+			}
+		}
+		.nav-link {
+			color: @color-black;
+			&:hover {
+				font-weight: normal;
+			}
+		}
+	}
 }

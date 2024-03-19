@@ -20,16 +20,4 @@ class DashboardController extends AbstractController
             'trainers' => $trainers,
         ]);
     }
-
-    #[Route('/dashboard2', name: 'app_dashboard2')]
-    public function indexx(EntityManagerInterface $entityManager): Response
-    {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $trainers = $entityManager->getRepository(User::class)->findByTrainer();
-
-        return $this->render('dashboard/index2.html.twig', [
-            'trainers' => $trainers,
-        ]);
-    }
-
 }

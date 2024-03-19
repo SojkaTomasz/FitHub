@@ -1,8 +1,8 @@
 import "./styles/layout/global.less"
-import "./styles/layout/nav.less"
+import "./styles/layout/aside.less"
+import "./styles/layout/header.less"
+import "./styles/layout/main.less"
 import "./styles/layout/font.less"
-import "./js/btn-nav"
+import "./js/btn-aside"
 import "bootstrap/dist/css/bootstrap.css"
-import "bootstrap-icons/font/bootstrap-icons.css";
-
-
+import "bootstrap-icons/font/bootstrap-icons.css"

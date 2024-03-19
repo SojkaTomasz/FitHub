@@ -1,10 +1,21 @@
-@import "../mixin.less";
+@import "../mixins.less";
 @import "../vars.less";
 
 body {
-	min-height: 100vh;
-	.box {
-		display: flex;
-		height: 100%;
+	aside,
+	header {
+		i::before {
+			font-size: 22px;
+		}
+		span {
+			color: @color-main;
+		}
+		.nav-link {
+			color: @color-white;
+			&:hover {
+				color: @color-main;
+				font-weight: 600;
+			}
+		}
 	}
 }

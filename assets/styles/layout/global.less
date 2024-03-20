@@ -1,0 +1,73 @@
+@import "../mixins.less";
+@import "../vars.less";
+
+body {
+	position: relative;
+	// max-width: 1920px;
+	margin-left: auto;
+	margin-right: auto;
+	min-height: 100vh;
+	overflow: hidden;
+	aside,
+	header {
+		i::before {
+			font-size: 22px;
+		}
+		span {
+			color: @color-main;
+		}
+		.nav-link {
+			color: @color-white;
+			&:hover {
+				color: @color-main;
+				font-weight: 600;
+			}
+		}
+	}
+	main {
+		//		height: calc(100vh - 60px);
+		margin-left: 230px;
+		.mixin-animate-transition(margin-left);
+		.title-section {
+			background: @color-main;
+			color: @color-white;
+			padding: 0.5rem;
+			padding-left: 1.5rem;
+			margin: 0;
+		}
+		section {
+			padding: 1rem 1.5rem;
+			overflow: auto;
+			height: calc(100vh - 110px);
+			&::-webkit-scrollbar {
+				width: 15px;
+			}
+			&::-webkit-scrollbar-track {
+				background: @color-dark-white;
+			}
+			&::-webkit-scrollbar-thumb {
+				background: @color-dark-main;
+			}
+		}
+	}
+	main.active {
+		margin-left: 0;
+	}
+	.btn {
+		background: @color-main;
+		color: @color-white;
+		text-transform: uppercase;
+		transition: background 0.3s;
+		border-color: @color-main;
+		&:hover {
+			color: @color-white !important;
+			background-color: @color-dark-main !important;
+			border-color: @color-main !important;
+		}
+		&:active {
+			border-color: @color-main !important;
+			background-color: @color-main !important;
+		}
+	}
+
+}

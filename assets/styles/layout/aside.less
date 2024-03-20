@@ -1,0 +1,85 @@
+@import "../vars.less";
+@import "../mixins.less";
+
+aside {
+	position: absolute;
+	top: 0;
+	left: 0;
+	min-height: 100vh;
+	width: 230px;
+	.mixin-animate-transition(width);
+	.icon-nav-arrow {
+		position: absolute;
+		top: 6px;
+		left: 230px;
+		padding: 10px 10px;
+		background-color: @color-dark-gray;
+		border-radius: 0 5px 5px 0;
+		cursor: pointer;
+		.mixin-animate-transition(left);
+		i {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: @color-white;
+			&::before {
+				.mixin-animate-transition(transform);
+			}
+		}
+	}
+	.title-menu {
+		font-weight: 600;
+		color: @color-white;
+	}
+	.nav {
+		position: absolute;
+		left: 0;
+		.mixin-animate-transition(left);
+		background-color: @color-dark-gray;
+		width: 230px;
+		.box-nav {
+			border-radius: 5px;
+			background-color: @color-black;
+			nav {
+				overflow: auto;
+				&::-webkit-scrollbar-track {
+					box-shadow: inset 0 0 5px @color-white;
+					border-radius: 8px;
+				}
+				&::-webkit-scrollbar {
+					width: 10px;
+				}
+				&::-webkit-scrollbar-thumb {
+					background: @color-main;
+					border-radius: 10px;
+				}
+				&::-webkit-scrollbar-thumb:hover {
+					background: @color-dark-main;
+				}
+				@media @max-tablet {
+				}
+			}
+		}
+	}
+	.nav.active {
+		left: -230px;
+	}
+	.icon-nav-arrow.active {
+		left: 0;
+		i::before {
+			transform: rotate(180deg);
+		}
+	}
+}
+aside.active {
+	width: 0;
+}
+.logo {
+	transition: width 1s;
+}
+.logo.active {
+	position: absolute;
+	top: 11px;
+	left: 126%;
+	width: 80px;
+}

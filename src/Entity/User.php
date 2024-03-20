@@ -47,13 +47,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'trainer')]
     private Collection $students;
 
-    #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'user')]
-    private Collection $reviews;
+    #[ORM\OneToMany(targetEntity: Report::class, mappedBy: 'student')]
+    private Collection $reports;
 
     public function __construct()
     {
         $this->students = new ArrayCollection();
-        $this->reviews = new ArrayCollection();
+        $this->reports = new ArrayCollection();
     }
 
 
@@ -198,29 +198,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Review>
+     * @return Collection<int, Report>
      */
-    public function getReviews(): Collection
+    public function getReports(): Collection
     {
-        return $this->reviews;
+        return $this->reports;
     }
 
-    public function addReview(Review $review): static
+    public function addReport(Report $report): static
     {
-        if (!$this->reviews->contains($review)) {
-            $this->reviews->add($review);
-            $review->setUser($this);
+        if (!$this->reports->contains($report)) {
+            $this->reports->add($report);
+            $report->setStudent($this);
         }
 
         return $this;
     }
 
-    public function removeReview(Review $review): static
+    public function removeReport(Report $report): static
     {
-        if ($this->reviews->removeElement($review)) {
+        if ($this->reports->removeElement($report)) {
             // set the owning side to null (unless already changed)
-            if ($review->getUser() === $this) {
-                $review->setUser(null);
+            if ($report->getStudent() === $this) {
+                $report->setStudent(null);
             }
         }
 

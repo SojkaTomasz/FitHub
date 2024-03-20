@@ -10,6 +10,7 @@ body {
 			&::after {
 				content: none;
 			}
+
 			.bi.bi-caret-down-square-fill {
 				position: absolute;
 				bottom: -5px;
@@ -18,8 +19,15 @@ body {
 				&::before {
 					background-color: @color-white;
 					border-radius: 50%;
-					font-size: 17px;
+					font-size: 16px;
 				}
+			}
+		}
+
+		.img-header {
+			transition: transform 0.4s;
+			&:hover {
+				transform: scale(1.03);
 			}
 		}
 		.nav-link {
@@ -27,6 +35,9 @@ body {
 			&:hover {
 				font-weight: normal;
 			}
+		}
+		.dropdown-item:active {
+			background-color: transparent;
 		}
 	}
 }

@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wszyscy Trenerzy
+{% endblock %}
+
+
+{% block main %}
+	{% block titleSection %}
+		<h2 class="title-section">Wszyscy Trenerzy</h2>
+	{% endblock %}
+	{% block section %}
+		<section>
+			{% include "dashboard/components/info.html.twig" %}
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Imię</th>
+						<th scope="col">Nazwisko</th>
+						<th class="text-end" scope="col">Wybieram</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for trainer in trainers %}
+						<tr>
+							<td>{{trainer.firstName}}</td>
+							<td>{{trainer.lastName}}</td>
+							<td class="text-end">
+								<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+									Wybierz
+								</button>
+							</td>
+						</tr>
+						<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h1 class="modal-title fs-5" id="exampleModalLabel">
+											<strong>
+												{% if app.user.trainer.firstname is defined %}
+													Niestety Masz Już Trenera!!
+												{% else %}
+													Potwierdz Twój Wybór!
+												{% endif %}
+											</strong>
+										</h1>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										{% if app.user.trainer.firstname is defined %}
+											Pierwsze zakończ współpracę z aktualnym trenerem.
+										{% else %}
+											Czy napewno potwierdzasz wybór trenera ?
+										{% endif %}
+									</div>
+									<div class="modal-footer">
+										{% if not app.user.trainer.firstname is defined  %}
+											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+											<a type="button" class="btn" href="{{path('chose_trainer', {id: trainer.id})}}">Tak</a>
+										{% else %}
+											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">OK</button>
+										{% endif %}
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</tbody>
+			</table>
+
+		</section>
+	{% endblock %}
+{% endblock %}

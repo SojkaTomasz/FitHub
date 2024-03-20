@@ -19,13 +19,22 @@
 	<body>
 
 		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-			{# <span class="fs-5 btn-lg py-2 mx-2">Zalogowany:
-								{{app.user.email}}</span> #}
+			{% include 'dashboard/header.html.twig' %}
+			{% include 'dashboard/aside.html.twig' %}
 		{% else %}
-			<a type="button" class="btn btn-primary btn-lg mx-1" href="{{path('app_login')}}">Login</a>
-			<a type="button" class="btn btn-primary btn-lg mx-1" href="{{path('app_registration_user')}}">Rejestracja</a>
+			<a type="button" class="btn btn-primary btn-lg mx-1" href="{{path('login')}}">Login</a>
+			<a type="button" class="btn btn-primary btn-lg mx-1" href="{{path('registration_user')}}">Rejestracja</a>
 		{% endif %}
-		{% block body %}{% endblock %}
+		<main class="d-flex flex-column">
+			{% block main %}
+
+				{% block titleSection %}{% endblock %}
+
+				{% block section %}{% endblock %}
+
+
+			{% endblock %}
+		</main>
 
 	</body>
 </html>

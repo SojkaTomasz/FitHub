@@ -9,6 +9,76 @@
 		<h2 class="p-2 ps-3 m-0 title-section">Panel Główny</h2>
 	{% endblock %}
 	{% block section %}
-		<section class="px-4 py-3"></section>
+		<section class="px-4 py-3">
+			
+    <h1 style="text-align: center;">Wykres Wagi Użytkownika</h1>
+    <canvas id="weightChart" width="800" height="400"></canvas>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Dane przekazane z kontrolera
+            const weightData = {{ weightData|json_encode|raw }};
+            
+            // Przygotuj etykiety (daty) i dane (wartości parametrów) do wykresu
+            const labels = weightData.map(entry => entry.date);
+            const parameters = {
+                'Waga': weightData.map(entry => entry.weight),
+                'Obwód łydki': weightData.map(entry => entry.calfCircumference),
+                'Obwód uda': weightData.map(entry => entry.thighCircumference),
+                'Obwód pasa': weightData.map(entry => entry.beltCircumference),
+                'Obwód klatki piersiowej': weightData.map(entry => entry.chestCircumference),
+                'Obwód szyi': weightData.map(entry => entry.neckCircumference),
+                'Obwód bicepsa': weightData.map(entry => entry.bicepsCircumference),
+                'Obwód przedramienia': weightData.map(entry => entry.forearmCircumference),
+                'Procentowy udział diety': weightData.map(entry => entry.percentDiet),
+            };
+
+            // Wygeneruj wykres za pomocą biblioteki Chart.js
+            var ctx = document.getElementById('weightChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: Object.keys(parameters).map(key => ({
+                        label: key,
+                        data: parameters[key],
+                        borderWidth: 2,
+                        pointStyle: 'circle',
+                        pointRadius: 5,
+                    }))
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Wykres Wagi Użytkownika',
+                            font: {
+                                size: 18
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            ticks: {
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+		</section>
 	{% endblock %}
 {% endblock %}

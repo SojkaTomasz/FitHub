@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Raporty
+{% endblock %}
+
+
+{% block main %}
+	{% block titleSection %}
+		<h2 class="title-section">Raporty</h2>
+	{% endblock %}
+	{% block section %}
+		<section>
+			{% include "dashboard/components/info.html.twig" %}
+			<table class="table">
+				<thead>
+					<tr>
+
+						<th scope="col">Data</th>
+						<th scope="col">Waga</th>
+						<th scope="col">Łydka</th>
+						<th scope="col">Udo</th>
+						<th scope="col">Pasa</th>
+						<th scope="col">Klatka</th>
+						<th scope="col">Szyja</th>
+						<th scope="col">Biceps</th>
+						<th scope="col">Przedramienie</th>
+						<th scope="col">Dieta na</th>
+						<th scope="col">Przód</th>
+						<th scope="col">Bok</th>
+						<th scope="col">Tył</th>
+						{# <th scope="col"></th> #}
+					</tr>
+				</thead>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for report in reports %}
+			<tr>
+				<td>{{report.date|date("m.d.Y") }}</td>
+				<td>{{report.weight}}kg</td>
+				<td>{{report.calfCircumference}}cm</td>
+				<td>{{report.thighCircumference}}cm</td>
+				<td>{{report.beltCircumference}}cm</td>
+				<td>{{report.chestCircumference}}cm</td>
+				<td>{{report.neckCircumference}}cm</td>
+				<td>{{report.bicepsCircumference}}cm</td>
+				<td>{{report.forearmCircumference}}cm</td>
+				<td>{{report.percentDiet}}%</td>
+				<td><img src="{{reports_url ~ report.frontImg}}" height="70" alt=""></td>
+				<td><img src="{{reports_url ~ report.sideImg}}" height="70" alt=""></td>
+				<td><img src="{{reports_url ~ report.backImg}}" height="70" alt=""></td>
+			</tr>
+
+		{% endfor %}
+	</tbody>
+</table></section>{% endblock %}{% endblock %}

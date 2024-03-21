@@ -4,16 +4,15 @@ namespace App\Form;
 
 use App\Entity\Report;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\PercentType;
 use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File as ConstraintsFile;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Type;
 
 class ReportType extends AbstractType
@@ -21,7 +20,7 @@ class ReportType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
 
-        $options = [
+        $optionsNumberType = [
             'required' => false,
             'constraints' => [
                 new NotBlank([
@@ -33,18 +32,32 @@ class ReportType extends AbstractType
                 ]),
             ],
             'invalid_message' => 'Wartość musi być liczbą.',
-            'scale' => 2,
+            'scale' => 1,
         ];
 
+        $optionsFileType = [
+            'constraints' => [
+                new ConstraintsFile([
+                    'maxSize' => '2048k',
+                    'mimeTypes' => [
+                        'image/jpeg',
+                        'img/png',
+                    ],
+                    'mimeTypesMessage' => 'Plik musi być formatu jpg lub png i nie przekraczać 2MB'
+                ])
+            ],
+        ];
+
+
         $builder
-            ->add('weight', NumberType::class, $options)
-            ->add('calfCircumference', NumberType::class, $options)
-            ->add('thighCircumference', NumberType::class, $options)
-            ->add('beltCircumference', NumberType::class, $options)
-            ->add('chestCircumference', NumberType::class, $options)
-            ->add('neckCircumference', NumberType::class, $options)
-            ->add('bicepsCircumference', NumberType::class, $options)
-            ->add('forearmCircumference', NumberType::class, $options)
+            ->add('weight', NumberType::class, $optionsNumberType)
+            ->add('calfCircumference', NumberType::class, $optionsNumberType)
+            ->add('thighCircumference', NumberType::class, $optionsNumberType)
+            ->add('beltCircumference', NumberType::class, $optionsNumberType)
+            ->add('chestCircumference', NumberType::class, $optionsNumberType)
+            ->add('neckCircumference', NumberType::class, $optionsNumberType)
+            ->add('bicepsCircumference', NumberType::class, $optionsNumberType)
+            ->add('forearmCircumference', NumberType::class, $optionsNumberType)
             ->add('percentDiet', RangeType::class, [
                 'attr' => [
                     'min' => 0,
@@ -58,6 +71,9 @@ class ReportType extends AbstractType
                 ],
 
             ])
+            ->add('frontImg', FileType::class, $optionsFileType)
+            ->add('sideImg', FileType::class, $optionsFileType)
+            ->add('backImg', FileType::class, $optionsFileType)
             ->add('Comments', TextareaType::class, [
                 'required' => false,
             ])

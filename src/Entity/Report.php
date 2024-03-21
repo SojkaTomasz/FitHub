@@ -50,6 +50,15 @@ class Report
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date;
 
+    #[ORM\Column(length: 255)]
+    private string $frontImg;
+
+    #[ORM\Column(length: 255)]
+    private string $sideImg;
+
+    #[ORM\Column(length: 255)]
+    private string $backImg;
+
 
     public function getId(): int
     {
@@ -196,6 +205,42 @@ class Report
     public function setPercentDiet(int $percentDiet): static
     {
         $this->percentDiet = $percentDiet;
+
+        return $this;
+    }
+
+    public function getFrontImg(): string
+    {
+        return $this->frontImg;
+    }
+
+    public function setFrontImg(string $frontImg): static
+    {
+        $this->frontImg = $frontImg;
+
+        return $this;
+    }
+
+    public function getSideImg(): string
+    {
+        return $this->sideImg;
+    }
+
+    public function setSideImg(string $sideImg): static
+    {
+        $this->sideImg = $sideImg;
+
+        return $this;
+    }
+
+    public function getBackImg(): string
+    {
+        return $this->backImg;
+    }
+
+    public function setBackImg(string $backImg): static
+    {
+        $this->backImg = $backImg;
 
         return $this;
     }

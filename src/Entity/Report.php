@@ -27,6 +27,9 @@ class Report
     private string $beltCircumference;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 2)]
+    private string $chestCircumference;
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 2)]
     private string $neckCircumference;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 2)]
@@ -34,6 +37,12 @@ class Report
 
     #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 2)]
     private string $forearmCircumference;
+    
+    #[ORM\Column]
+    private int $percentDiet;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private string $Comments;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'reports')]
     private User $student;
@@ -41,11 +50,6 @@ class Report
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private string $Comments;
-
-    #[ORM\Column]
-    private int $percentDiet;
 
     public function getId(): int
     {
@@ -108,6 +112,18 @@ class Report
     public function setNeckCircumference(string $neckCircumference): static
     {
         $this->neckCircumference = $neckCircumference;
+
+        return $this;
+    }
+
+    public function getChestCircumference(): string
+    {
+        return $this->chestCircumference;
+    }
+
+    public function setChestCircumference(string $chestCircumference): static
+    {
+        $this->chestCircumference = $chestCircumference;
 
         return $this;
     }

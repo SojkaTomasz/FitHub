@@ -6,11 +6,13 @@
 
 {% block main %}
 	{% block titleSection %}
-		<h2 class="title-section">Dodaj Raport</h2>
+		<div class="title-section">
+			<h2 class="title">Dodaj Raport</h2>
+		</div>
 	{% endblock %}
 	{% block section %}
 		<section>
 			{{ form(form) }}
-			</section>
-		{% endblock %}
+		</section>
 	{% endblock %}
+{% endblock %}

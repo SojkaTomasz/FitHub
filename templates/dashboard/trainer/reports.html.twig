@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Raporty
+{% endblock %}
+
+
+{% block main %}
+	{% block titleSection %}
+		<div class="title-section">
+			<h2 class="title">Raporty</h2>
+		</div>
+	{% endblock %}
+	{% block section %}
+		<section>
+			{% if reports is not empty  %}
+				{% include "shared/info.html.twig" %}
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Sprawdzony</th>
+							<th scope="col">Imię</th>
+							<th scope="col">Nazwisko</th>
+							<th scope="col">Data</th>
+							<th scope="col">Waga</th>
+							<th scope="col">Łydka</th>
+							<th scope="col">Udo</th>
+							<th scope="col">Pasa</th>
+							<th scope="col">Klatka</th>
+							<th scope="col">Szyja</th>
+							<th scope="col">Biceps</th>
+							<th scope="col">Przedramienie</th>
+							<th scope="col">Dieta na</th>
+							<th scope="col">Przód</th>
+							<th scope="col">Bok</th>
+							<th scope="col">Tył</th>
+							{# <th scope="col"></th> #}
+						</tr>
+					</thead>
+				</thead>
+				<tbody>
+					{% for report in reports %}
+						<tr>
+							<td>
+								{% if report.verified %}
+									<a href="{{path('report', {id: report.id} )}}" type="button" class="btn btn-success">Tak</a>
+								{% else %}
+									<a href="{{path('report_analysis', {id: report.id} )}}" type="button" class="btn btn-danger">Nie</a>
+								{% endif %}
+
+							</td>
+							<td>{{ report.student.firstName }}</td>
+							<td>{{ report.student.lastName }}</td>
+							<td>{{report.date|date("d.m.Y") }}</td>
+							<td>{{report.weight}}kg</td>
+							<td>{{report.calfCircumference}}cm</td>
+							<td>{{report.thighCircumference}}cm</td>
+							<td>{{report.beltCircumference}}cm</td>
+							<td>{{report.chestCircumference}}cm</td>
+							<td>{{report.neckCircumference}}cm</td>
+							<td>{{report.bicepsCircumference}}cm</td>
+							<td>{{report.forearmCircumference}}cm</td>
+							<td>{{report.percentDiet}}%</td>
+							<td><img class="object-fit-cover border rounded" src="{{reports_url ~ report.frontImg}}" height="40" alt=""></td>
+							<td><img class="object-fit-cover border rounded" src="{{reports_url ~ report.sideImg}}" height="40" alt=""></td>
+							<td><img class="object-fit-cover border rounded" src="{{reports_url ~ report.backImg}}" height="40" alt=""></td>
+						</tr>
+
+					{% endfor %}
+				</tbody>
+			</table>
+		{% else %}
+			<p>brak podopiecznych</p>
+		{% endif %}
+	</section>
+{% endblock %}{% endblock %}

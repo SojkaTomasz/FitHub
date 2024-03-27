@@ -6,15 +6,23 @@
 
 {% block main %}
 	{% block titleSection %}
-		<h2 class="title-section">Raporty</h2>
+		<div class="title-section">
+			<h2 class="title">Raporty</h2>
+		</div>
 	{% endblock %}
 	{% block section %}
 		<section>
-			{% include "dashboard/components/info.html.twig" %}
+			{% include "shared/info.html.twig" %}
+			<p>dzień tygodnia:
+				{{date}}</p>
+
+			<a href="{{path('student_report_add')}}" type="button" class="btn">Dodaj raport</a>
+
 			<table class="table">
 				<thead>
 					<tr>
 
+						<th scope="col">Sprawdzony</th>
 						<th scope="col">Data</th>
 						<th scope="col">Waga</th>
 						<th scope="col">Łydka</th>
@@ -37,7 +45,15 @@
 	<tbody>
 		{% for report in reports %}
 			<tr>
-				<td>{{report.date|date("m.d.Y") }}</td>
+				<td>
+					{% if report.verified %}
+						<a href="{{path('student_report_analysis', {id: report.id})}}" type="button" class="btn">Tak</a>
+					{% else %}
+						<button type="button" class="btn" disabled>Nie</button>
+					{% endif %}
+
+				</td>
+				<td>{{report.date|date("d.m.Y") }}</td>
 				<td>{{report.weight}}kg</td>
 				<td>{{report.calfCircumference}}cm</td>
 				<td>{{report.thighCircumference}}cm</td>
@@ -47,9 +63,9 @@
 				<td>{{report.bicepsCircumference}}cm</td>
 				<td>{{report.forearmCircumference}}cm</td>
 				<td>{{report.percentDiet}}%</td>
-				<td><img src="{{reports_url ~ report.frontImg}}" height="70" alt=""></td>
-				<td><img src="{{reports_url ~ report.sideImg}}" height="70" alt=""></td>
-				<td><img src="{{reports_url ~ report.backImg}}" height="70" alt=""></td>
+				<td><img class="object-fit-cover border rounded" src="{{reports_url ~ report.frontImg}}" height="40" alt=""></td>
+				<td><img class="object-fit-cover border rounded" src="{{reports_url ~ report.sideImg}}" height="40" alt=""></td>
+				<td><img class="object-fit-cover border rounded" src="{{reports_url ~ report.backImg}}" height="40" alt=""></td>
 			</tr>
 
 		{% endfor %}

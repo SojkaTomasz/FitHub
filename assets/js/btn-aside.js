@@ -4,6 +4,7 @@ const bi = document.querySelector(".bi")
 const aside = document.querySelector("aside")
 const main = document.querySelector("main")
 const logo = document.querySelector(".logo")
+const logoHeder = document.querySelector(".logo-header")
 
 btn.addEventListener("click", () => {
 	header.classList.toggle("active")
@@ -11,4 +12,5 @@ btn.addEventListener("click", () => {
 	aside.classList.toggle("active")
 	main.classList.toggle("active")
 	logo.classList.toggle("active")
+	logoHeder.classList.toggle("active")
 })

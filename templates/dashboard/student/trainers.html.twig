@@ -6,11 +6,13 @@
 
 {% block main %}
 	{% block titleSection %}
-		<h2 class="title-section">Wszyscy Trenerzy</h2>
+		<div class="title-section">
+			<h2 class="title">Wszyscy Trenerzy</h2>
+		</div>
 	{% endblock %}
 	{% block section %}
 		<section>
-			{% include "dashboard/components/info.html.twig" %}
+			{% include "shared/info.html.twig" %}
 			<table class="table">
 				<thead>
 					<tr>

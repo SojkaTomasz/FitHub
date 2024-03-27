@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Analiza Raportu
+{% endblock %}
+
+
+{% block main %}
+	{% block titleSection %}
+		<div class="title-section">
+			<h2 class="title">Analiza raportu podopiecznego:
+				{{report.student.firstName}}
+				{{report.student.lastName}}
+			</h2>
+		</div>
+	{% endblock %}
+	{% block section %}
+		<section>
+			{{ form(form) }}
+			</section>
+		{% endblock %}
+	{% endblock %}

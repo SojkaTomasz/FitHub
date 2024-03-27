@@ -6,6 +6,7 @@
 parameters:
     reports: '/uploads/reports/'
     reports_directory: '%kernel.project_dir%/public%reports%'
+    
 services:
     # default configuration for services in *this* file
     _defaults:

@@ -42,13 +42,21 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
 
-    public function findByTrainer()
+    public function findAllTrainers(): array
     {
-        $qb = $this->createQueryBuilder('u')
-        ->where('u.roles LIKE :role')
-        ->setParameter('role', '%"ROLE_TRAINER"%');
+        return $this->createQueryBuilder('u')
+            ->where('u.roles LIKE :role')
+            ->setParameter('role', '%"ROLE_TRAINER"%')
+            ->getQuery()
+            ->execute();
+    }
 
-        $query = $qb->getQuery();
-        return $query->execute();
+    public function findMyStudents(int $trainerId): array
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.trainer  = :trainerId')
+            ->setParameter('trainerId', $trainerId)
+            ->getQuery()
+            ->execute();
     }
 }

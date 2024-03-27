@@ -28,12 +28,15 @@ body {
 		//		height: calc(100vh - 60px);
 		margin-left: 230px;
 		.mixin-animate-transition(margin-left);
+
 		.title-section {
 			background: @color-main;
-			color: @color-white;
-			padding: 0.5rem;
 			padding-left: 1.5rem;
-			margin: 0;
+			.title {
+				color: @color-white;
+				margin: 0;
+				padding: 0.5rem 0;
+			}
 		}
 		section {
 			padding: 1rem 1.5rem;
@@ -53,7 +56,7 @@ body {
 	main.active {
 		margin-left: 0;
 	}
-	.btn {
+	.btn-main {
 		background: @color-main;
 		color: @color-white;
 		text-transform: uppercase;
@@ -62,7 +65,7 @@ body {
 		&:hover {
 			color: @color-white !important;
 			background-color: @color-dark-main !important;
-			border-color: @color-main !important;
+			border-color: @color-dark-main !important;
 		}
 		&:active {
 			border-color: @color-main !important;

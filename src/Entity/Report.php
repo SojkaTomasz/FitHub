@@ -37,12 +37,12 @@ class Report
 
     #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 2)]
     private string $forearmCircumference;
-    
+
     #[ORM\Column]
     private int $percentDiet;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private string $Comments;
+    private string $comment;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'reports')]
     private User $student;
@@ -58,6 +58,12 @@ class Report
 
     #[ORM\Column(length: 255)]
     private string $backImg;
+
+    #[ORM\Column]
+    private bool $verified;
+
+    #[ORM\OneToOne(mappedBy: 'report', cascade: ['persist', 'remove'])]
+    private ?ReportAnalysis $reportAnalysis = null;
 
 
     public function getId(): int
@@ -185,14 +191,14 @@ class Report
         return $this;
     }
 
-    public function getComments(): string
+    public function getComment(): string
     {
-        return $this->Comments;
+        return $this->comment;
     }
 
-    public function setComments(string $Comments): static
+    public function setComments(string $comment): static
     {
-        $this->Comments = $Comments;
+        $this->comment = $comment;
 
         return $this;
     }
@@ -241,6 +247,35 @@ class Report
     public function setBackImg(string $backImg): static
     {
         $this->backImg = $backImg;
+
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->verified;
+    }
+
+    public function setVerified(bool $verified): static
+    {
+        $this->verified = $verified;
+
+        return $this;
+    }
+
+    public function getReportAnalysis(): ?ReportAnalysis
+    {
+        return $this->reportAnalysis;
+    }
+
+    public function setReportAnalysis(ReportAnalysis $reportAnalysis): static
+    {
+        // set the owning side of the relation if necessary
+        if ($reportAnalysis->getReport() !== $this) {
+            $reportAnalysis->setReport($this);
+        }
+
+        $this->reportAnalysis = $reportAnalysis;
 
         return $this;
     }

@@ -74,7 +74,7 @@ class ReportType extends AbstractType
             ->add('frontImg', FileType::class, $optionsFileType)
             ->add('sideImg', FileType::class, $optionsFileType)
             ->add('backImg', FileType::class, $optionsFileType)
-            ->add('Comments', TextareaType::class, [
+            ->add('comment', TextareaType::class, [
                 'required' => false,
             ])
             ->add('save', SubmitType::class);

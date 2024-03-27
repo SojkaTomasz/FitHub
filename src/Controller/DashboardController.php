@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Report;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,13 +14,15 @@ class DashboardController extends AbstractController
     #[Route('/dashboard', name: 'dashboard')]
     public function dashboardTrainer(EntityManagerInterface $entityManager): Response
     {
-        $reports = $entityManager->getRepository(Report::class)->findAll();
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+        $reports = $user->getReports();
 
         $reportsArray = [];
         foreach ($reports as $report) {
             $reportsArray[] = [
                 // 'weight' => $report->getWeight(),
-                'date' => $report->getDate(),
+                'date' => $report->getDate()->format('Y-m-d'),
                 'calfCircumference' => $report->getCalfCircumference(),
                 'thighCircumference' => $report->getThighCircumference(),
                 'beltCircumference' => $report->getBeltCircumference(),
@@ -34,7 +37,7 @@ class DashboardController extends AbstractController
             ];
         }
 
-        return $this->render('dashboard/index.html.twig', [
+        return $this->render('dashboard/home.html.twig', [
             'weightData' => $reportsArray,
         ]);
     }

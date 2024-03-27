@@ -6,12 +6,16 @@
 
 {% block main %}
 	{% block titleSection %}
-		<h2 class="title-section">Ustawienia</h2>
+		<div class="title-section">
+			<h2 class="title">Ustawienia</h2>
+		</div>
 	{% endblock %}
 	{% block section %}
 		<section>
-			<p>Imię: {{user.firstName}}</p>
-			<p>Nazwisko: {{user.firstName}}</p>
+			<p>Imię:
+				{{user.firstName}}</p>
+			<p>Nazwisko:
+				{{user.firstName}}</p>
 
 		</section>
 	{% endblock %}

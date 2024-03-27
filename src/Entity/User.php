@@ -35,11 +35,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private string $password;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $firstName = null;
+    #[ORM\Column(length: 255)]
+    private string $firstName;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $lastName = null;
+    #[ORM\Column(length: 255)]
+    private string $lastName;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'students')]
     private ?User $trainer = null;
@@ -131,7 +131,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getFirstName(): ?string
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
@@ -143,7 +143,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getLastName(): ?string
+    public function getLastName(): string
     {
         return $this->lastName;
     }

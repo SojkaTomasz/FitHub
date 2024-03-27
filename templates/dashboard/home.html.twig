@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panel Główny
+{% endblock %}
+
+{% block main %}
+	{% block titleSection %}
+		<div class="title-section">
+			<h2 class="title">Panel Główny</h2>
+		</div>
+	{% endblock %}
+	{% block section %}
+		<section class="px-4 py-3">
+			<div style='width: 800px;'>
+				<canvas id="weightChart" width="800" height="400"></canvas>
+			</div>
+
+			<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+			<script>
+				document.addEventListener("DOMContentLoaded", function () { // Dane przekazane z kontrolera
+const weightData = {{ weightData|json_encode|raw }};
+
+// Przygotuj etykiety (daty) i dane (wartości parametrów) do wykresu
+const labels = weightData.map(entry => entry.date);
+const parameters = {
+'Obwód łydki': weightData.map(entry => entry.calfCircumference),
+'Obwód uda': weightData.map(entry => entry.thighCircumference),
+'Obwód pasa': weightData.map(entry => entry.beltCircumference),
+'Obwód klatki piersiowej': weightData.map(entry => entry.chestCircumference),
+'Obwód szyi': weightData.map(entry => entry.neckCircumference),
+'Obwód bicepsa': weightData.map(entry => entry.bicepsCircumference),
+'Obwód przedramienia': weightData.map(entry => entry.forearmCircumference)
+};
+
+// Wygeneruj wykres za pomocą biblioteki Chart.js
+var ctx = document.getElementById('weightChart').getContext('2d');
+var chart = new Chart(ctx, {
+type: 'line',
+data: {
+labels: labels,
+datasets: Object.keys(parameters).map(key => ({
+label: key,
+data: parameters[key],
+borderWidth: 2,
+pointStyle: 'circle',
+pointRadius: 5
+}))
+},
+options: {
+plugins: {
+title: {
+display: true,
+text: 'OBWODY',
+font: {
+size: 18
+}
+}
+},
+scales: {
+y: {
+beginAtZero: false,
+ticks: {
+font: {
+size: 14
+}
+}
+},
+x: {
+ticks: {
+font: {
+size: 14
+}
+}
+}
+}
+}
+});
+});
+			</script>
+		</section>
+	{% endblock %}
+{% endblock %}

@@ -4,40 +4,64 @@
 body {
 	header {
 		background-color: @color-black;
-		.dropdown-toggle.dropdown-toggle-split {
-			background: transparent;
-			border: 0;
-			&::after {
-				content: none;
+		div {
+			.dropdown-toggle.dropdown-toggle-split {
+				background: transparent;
+				border: 0;
+				&::after {
+					content: none;
+				}
+
+				.bi.bi-caret-down-square-fill {
+					position: absolute;
+					bottom: -5px;
+					right: -3px;
+					color: @color-main;
+					&::before {
+						background-color: @color-white;
+						border-radius: 50%;
+						font-size: 16px;
+					}
+				}
 			}
 
-			.bi.bi-caret-down-square-fill {
-				position: absolute;
-				bottom: -5px;
-				right: -3px;
-				color: @color-main;
-				&::before {
-					background-color: @color-white;
-					border-radius: 50%;
-					font-size: 16px;
+			.img-header {
+				transition: transform 0.4s;
+				&:hover {
+					transform: scale(1.03);
+				}
+			}
+			.nav-link {
+				color: @color-black;
+				&:hover {
+					font-weight: normal;
+				}
+			}
+			.dropdown-item:active {
+				background-color: transparent;
+			}
+			button.btn.btn-primary {
+				&:hover {
+					background: transparent !important;
+				}
+				.bi {
+					color: @color-main;
+					&::before {
+						font-size: 25px;
+					}
+				}
+				.rounded-pill {
+					font-size: 10px;
 				}
 			}
 		}
-
-		.img-header {
-			transition: transform 0.4s;
-			&:hover {
-				transform: scale(1.03);
-			}
+		.logo-header {
+			margin-left: 40px;
+			transform: scale(0);
+			transition: transform 1s;
 		}
-		.nav-link {
-			color: @color-black;
-			&:hover {
-				font-weight: normal;
-			}
-		}
-		.dropdown-item:active {
-			background-color: transparent;
+		.logo-header.active {
+			transform: scale(1);
 		}
 	}
 }

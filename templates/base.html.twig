@@ -20,7 +20,12 @@
 
 		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 			{% include 'dashboard/header.html.twig' %}
-			{% include 'dashboard/aside.html.twig' %}
+			{% if is_granted('ROLE_STUDENT')  %}
+				{% include 'dashboard/aside_student.html.twig' %}
+			{% endif %}
+			{% if is_granted('ROLE_TRAINER')  %}
+				{% include 'dashboard/aside_trainer.html.twig' %}
+			{% endif %}
 		{% else %}
 			<a type="button" class="btn btn-primary btn-lg mx-1" href="{{path('login')}}">Login</a>
 			<a type="button" class="btn btn-primary btn-lg mx-1" href="{{path('registration_user')}}">Rejestracja</a>

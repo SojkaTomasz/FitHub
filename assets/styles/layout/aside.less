@@ -68,21 +68,21 @@ aside {
 		left: -230px;
 	}
 	.icon-nav-arrow.active {
+		background-color: @color-main;
 		left: 0;
 		i::before {
 			transform: rotate(180deg);
 		}
 	}
+	.logo {
+		transform: scale(1);
+		transition: transform 0.7s;
+	}
+	.logo.active {
+		transform: scale(0);
+	}
 }
 aside.active {
 	width: 0;
 }
-.logo {
-	transition: width 1s;
-}
-.logo.active {
-	position: absolute;
-	top: 11px;
-	left: 126%;
-	width: 80px;
-}
+

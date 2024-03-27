@@ -3,32 +3,58 @@
 namespace App\Controller\Student;
 
 use App\Entity\Report;
+use App\Entity\ReportAnalysis;
 use App\Form\ReportType;
+use App\Repository\ReportRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class ReportController extends AbstractController
+class ReportForStudentController extends AbstractController
 {
-    #[Route('/dashboard/student/reports', name: 'reports')]
-    public function reports(EntityManagerInterface $entityManager): Response
+    #[Route('/dashboard/student/reports', name: 'student_reports')]
+    public function reports(ReportRepository $reportRepository): Response
     {
-        $reports = $entityManager->getRepository(Report::class)->findAll();
-
-        return $this->render('dashboard/student/reports.html.twig', [
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+        $reports = $reportRepository->findMyReports($user->getId());
+        return $this->render('dashboard/student/student_reports.html.twig', [
             'reports' => $reports,
+            'date' => date('w'),
         ]);
     }
 
-    #[Route('/dashboard/student/report/add', name: 'report-add')]
+    #[Route('/dashboard/student/report-analysis/{id}', name: 'student_report_analysis')]
+    public function reportAnalysis(EntityManagerInterface $entityManager, ?Report $id): Response
+    {
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+
+        if (!$id) {
+            $this->addFlash('error', "Nie znaleziono takie analizy treningu");
+            return $this->redirectToRoute('student_reports');
+        }
+        $report = $entityManager->getRepository(Report::class)->find($id);
+
+        if ($report->getStudent() !== $user) {
+            throw new AccessDeniedException('Ten użytkownik nie ma dostępu do tej analizy raportu.');
+        }
+
+
+        return $this->render('dashboard/student/student_report_analysis.html.twig', [
+            'report' => $report,
+        ]);
+    }
+
+    #[Route('/dashboard/student/report/add', name: 'student_report_add')]
     public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $report = new Report();
         $form = $this->createForm(ReportType::class, $report);
-
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -52,14 +78,15 @@ class ReportController extends AbstractController
             }
             $report->setDate(new \DateTime());
             $report->setStudent($this->getUser());
+            $report->setVerified(false);
             $entityManager->persist($report);
             $entityManager->flush();
 
             $this->addFlash('success', "Raport poprawnie wysłany!");
-            return $this->redirectToRoute('reports');
+            return $this->redirectToRoute('student_reports');
         }
 
-        return $this->render('dashboard/student/report-add.html.twig', [
+        return $this->render('dashboard/student/student_report_add.html.twig', [
             'form' => $form,
         ]);
     }

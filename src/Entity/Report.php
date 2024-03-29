@@ -65,6 +65,9 @@ class Report
     #[ORM\OneToOne(mappedBy: 'report', cascade: ['persist', 'remove'])]
     private ?ReportAnalysis $reportAnalysis = null;
 
+    #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 2)]
+    private ?string $weightDifference = null;
+
 
     public function getId(): int
     {
@@ -196,7 +199,7 @@ class Report
         return $this->comment;
     }
 
-    public function setComments(string $comment): static
+    public function setComment(string $comment): static
     {
         $this->comment = $comment;
 
@@ -276,6 +279,18 @@ class Report
         }
 
         $this->reportAnalysis = $reportAnalysis;
+
+        return $this;
+    }
+
+    public function getWeightDifference(): ?string
+    {
+        return $this->weightDifference;
+    }
+
+    public function setWeightDifference(string $weightDifference): static
+    {
+        $this->weightDifference = $weightDifference;
 
         return $this;
     }

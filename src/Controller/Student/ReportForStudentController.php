@@ -51,7 +51,7 @@ class ReportForStudentController extends AbstractController
     }
 
     #[Route('/dashboard/student/report/add', name: 'student_report_add')]
-    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, ReportRepository $reportRepository): Response
     {
         $report = new Report();
         $form = $this->createForm(ReportType::class, $report);
@@ -76,6 +76,10 @@ class ReportForStudentController extends AbstractController
                     );
                 }
             }
+            /** @var \App\Entity\User $user */
+            $user = $this->getUser();
+            $reports = $reportRepository->findMyReports($user->getId());
+            $report->setWeightDifference($report->getWeight() - $reports[0]->getWeight());
             $report->setDate(new \DateTime());
             $report->setStudent($this->getUser());
             $report->setVerified(false);

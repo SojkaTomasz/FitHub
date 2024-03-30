@@ -19,19 +19,158 @@
 		</div>
 	{% endblock %}
 	{% block section %}
-		<section>
-			{% if is_granted('ROLE_STUDENT')  %}
+		<section class="section-report">
 
-				<div class="progress" role="progressbar" aria-label="Default striped example" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
-					<div class="progress-bar progress-bar-striped" data-value='{{report.percentDiet}}'>Dieta na:
-						{{report.percentDiet}}%</div>
+
+			<div class="row box-report d-flex gap-3">
+				<div class="info col-12 d-flex gap-3">
+					<div class="gallery d-flex ">
+						{% include "dashboard/shared/_img_raport.html.twig" %}
+					</div>
+
+					<div class=" d-flex flex-column justify-content-between flex-grow-1 text-center">
+						<div class="d-flex justify-content-between gap-3 mb-3">
+							<div class="p-3 border rounded bg-body-secondary">
+								<p class="h5 text-uppercase">Sprawdzony przez trenera</p>
+								<div class="d-flex justify-content-center align-items-center ">
+									{% if report.verified %}
+										<p class="text-success h5 me-3">
+											<i class="bi bi-journal-check"></i>
+											TAK
+										</p>
+										<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+											Zobacz
+										</button>
+									{% else %}
+										<p class="text-danger h5 mb-0">
+											<i class="bi bi-journal-x"></i>
+											NIE
+										</p>
+									{% endif %}
+								</div>
+							</div>
+							<div class="p-3 border rounded bg-body-secondary flex-grow-1">
+								<p class="h5 text-uppercase">Raport z dnia</p>
+								<p class="h5">{{report.date | date("d.m.Y")}}</p>
+							</div>
+						</div>
+
+						<div class="p-3 border rounded bg-body-secondary">
+							<p class="h5 text-uppercase">Dieta trzymana na</p>
+							{% if report.percentDiet >= 80 %}
+								<p class="h4 text-success">{{report.percentDiet}}%</p>
+							{% else %}
+								<p class="h4 text-danger">{{report.percentDiet}}%</p>
+							{% endif %}
+							<div class="progress" role="progressbar" aria-label="Default striped example" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+								<div class="progress-bar progress-bar-striped " data-value='{{report.percentDiet}}'></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div>
+					<table class="table mt-3">
+						<thead>
+							<tr>
+								<th scope="col"></th>
+								<th scope="col">Aktualne Wymiary</th>
+								<th scope="col">Poprzednie Wymiray</th>
+								<th scope="col">Różnica</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Waga</td>
+								<td>{{report.weight}}<small>kg</smal></td>
+								<td>{{lastReport[0].weight}}<small>kg</smal></td>
+								<td>{{lastReport[0].weight}}<small>kg</smal></td>
+							</tr>
+							<tr>
+								<td>Łydka</td>
+								<td>{{report.calfCircumference}}<small>cm</smal></td>
+								<td>{{lastReport[0].calfCircumference}}<small>cm</smal></td>
+								<td>{{lastReport[0].calfCircumference - report.calfCircumference}}<small>cm</smal></td>
+
+							</tr>
+							<tr>
+								<td>Udo</td>
+								<td>{{report.thighCircumference}}<small>cm</smal></td>
+								<td>{{lastReport[0].thighCircumference}}<small>cm</smal></td>
+								<td>{{lastReport[0].thighCircumference - report.thighCircumference}}<small>cm</smal></td>
+
+							</tr>
+							<tr>
+								<td>Pas</td>
+								<td>{{report.beltCircumference}}<small>cm</smal></td>
+								<td>{{lastReport[0].beltCircumference}}<small>cm</smal></td>
+								<td>{{lastReport[0].beltCircumference - report.beltCircumference}}<small>cm</smal></td>
+
+							</tr>
+							<tr>
+								<td>Klatka</td>
+								<td>{{report.chestCircumference}}<small>cm</smal></td>
+								<td>{{lastReport[0].chestCircumference}}<small>cm</smal></td>
+								<td>{{lastReport[0].chestCircumference - report.chestCircumference}}<small>cm</smal></td>
+
+							</tr>
+							<tr>
+								<td>Szyja</td>
+								<td>{{report.neckCircumference}}<small>cm</smal></td>
+								<td>{{lastReport[0].neckCircumference}}<small>cm</smal></td>
+								<td>{{lastReport[0].neckCircumference - report.neckCircumference}}<small>cm</smal></td>
+
+							</tr>
+							<tr>
+								<td>Biceps</td>
+								<td>{{report.bicepsCircumference}}<small>cm</smal></td>
+								<td>{{lastReport[0].bicepsCircumference}}<small>cm</smal></td>
+								<td>{{lastReport[0].bicepsCircumference - report.bicepsCircumference}}<small>cm</smal></td>
+
+							</tr>
+							<tr>
+								<td>Przedramie</td>
+								<td>{{report.forearmCircumference}}<small>cm</smal></td>
+								<td>{{lastReport[0].forearmCircumference}}<small>cm</smal></td>
+								<td>{{lastReport[0].forearmCircumference - report.forearmCircumference}}<small>cm</smal></td>
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+				<div class="col-12 text-center">
+					<p class="h5">Komentarz do raportu</p>
+					{% if report.comment is null %}
+						<p>{{report.comment}}</p>
+					{% else %}
+						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum nesciunt, in asperiores corporis quasi sapiente nam officiis dolore nihil fugit repellendus. Ullam facere recusandae, aliquam adipisci perferendis consequatur illum, repellendus reprehenderit obcaecati fuga soluta tempora similique animi, labore fugiat cumque.</p>
+					{% endif %}
+				</div>
+			</div>
+
+
+			{% if is_granted('ROLE_TRAINER')  %}
+				<a href="{{path('report_analysis', {id: report.id} )}}" type="button" class="border rounded bg-light mb-2 d-block ">sprawdz</a>
+			{% else %}
+
+				<div class="modal fade modal-dialog modal-lg" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								...
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-primary">Save changes</button>
+							</div>
+						</div>
+					</div>
 				</div>
 
-			{% else %}
-				<a href="{{path('report_analysis', {id: report.id} )}}" type="button" class="border rounded bg-light mb-2 d-block ">sprawdz</a>
 			{% endif %}
-
-
 		</section>
 	{% endblock %}
 {% endblock %}

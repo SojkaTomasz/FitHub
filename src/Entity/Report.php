@@ -42,7 +42,7 @@ class Report
     private int $percentDiet;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private string $comment;
+    private ?string $comment = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'reports')]
     private User $student;
@@ -196,6 +196,9 @@ class Report
 
     public function getComment(): string
     {
+        if (is_null($this->comment)) {
+            return '';
+        }
         return $this->comment;
     }
 

@@ -50,6 +50,7 @@ class ReportForStudentController extends AbstractController
         if ($report->getStudent() !== $student) {
             throw new AccessDeniedException('Nie masz dostępu do tego raportu!');
         }
+
         return $this->render('dashboard/student-trainer/report.html.twig', [
             'report' => $report,
             'lastReport' =>  $lastReport,

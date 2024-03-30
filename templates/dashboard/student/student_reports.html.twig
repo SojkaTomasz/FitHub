@@ -11,7 +11,7 @@
 	{% endblock %}
 	{% block section %}
 		<section class="box-reports">
-			{% include "shared/info.html.twig" %}
+			{% include "shared_global/info.html.twig" %}
 			<p>dzień raportu:
 				{% set dayName = [
 					"poniedziałek",
@@ -31,12 +31,8 @@
 				<div class="border rounded bg-light mb-2">
 					<div class="d-flex flex-row justify-content-between">
 						<div class="d-flex">
-							<div class="box-img">
-								<button type="button" class="btn btn-transparent p-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{report.id}}">
-									<img class="img rounded object-fit-cover" src="{{reports_url ~ report.frontImg}}" alt="">
-									<img class="img rounded object-fit-cover" src="{{reports_url ~ report.sideImg}}" alt="">
-									<img class="img rounded object-fit-cover" src="{{reports_url ~ report.backImg}}" alt="">
-								</button>
+							<div class="box-img p-2">
+								{% include "dashboard/shared/_img_raport.html.twig" %}
 							</div>
 							<div class="d-flex flex-column justify-content-between p-2">
 								<div class="d-flex justify-content-between align-content-center w-100">
@@ -70,7 +66,7 @@
 						</div>
 						<div class="d-flex align-items-center">
 							<div class="text-center p-2">
-							
+
 								{% if report.verified %}
 									<i class="bi bi-journal-check text-success h3 mb-0 "></i>
 								{% else %}
@@ -79,36 +75,6 @@
 							</div>
 							<div class="p-2">
 								<a href="{{path('report_student', {id: report.id} )}}" class="btn btn-success">Podgląd</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal fade" id="staticBackdrop{{report.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-							</div>
-							<div id="carouselExampleFade{{report.id}}" class="carousel slide carousel-fade">
-								<div class="carousel-inner">
-									<div class="carousel-item active">
-										<img class="img-modal object-fit-cover " src="{{reports_url ~ report.frontImg}}" alt="">
-									</div>
-									<div class="carousel-item">
-										<img class="img-modal object-fit-cover " src="{{reports_url ~ report.sideImg}}" alt="">
-									</div>
-									<div class="carousel-item">
-										<img class="img-modal object-fit-cover" src="{{reports_url ~ report.backImg}}" alt="">
-									</div>
-								</div>
-								<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade{{report.id}}" data-bs-slide="prev">
-									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-									<span class="visually-hidden">Previous</span>
-								</button>
-								<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade{{report.id}}" data-bs-slide="next">
-									<span class="carousel-control-next-icon" aria-hidden="true"></span>
-									<span class="visually-hidden">Next</span>
-								</button>
 							</div>
 						</div>
 					</div>

@@ -30,6 +30,7 @@
 		"start-symfony": "php -S localhost:3000 -t public"
 	},
 	"dependencies": {
+		"@fancyapps/ui": "^5.0.35",
 		"bootstrap-icons": "^1.11.3",
 		"stylus": "^0.58.1",
 		"stylus-loader": "^7.1.3"

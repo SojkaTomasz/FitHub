@@ -1,0 +1,27 @@
+@import "../mixins.less";
+@import "../vars.less";
+
+.section-report {
+	p {
+		margin: 0;
+	}
+	.box-report {
+		.gallery {
+			.img {
+				width: 200px;
+				height: 200px;
+			}
+		}
+		.progress {
+			--bs-progress-height: 1.4rem;
+			.progress-bar {
+				font-size: initial;
+			}
+		}
+		.info {
+			@media (max-width: 1275px) {
+				flex-wrap: wrap;
+			}
+		}
+	}
+}

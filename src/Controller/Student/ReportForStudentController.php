@@ -28,25 +28,31 @@ class ReportForStudentController extends AbstractController
         ]);
     }
 
-    #[Route('/dashboard/student/report-analysis/{id}', name: 'student_report_analysis')]
-    public function reportAnalysis(EntityManagerInterface $entityManager, ?Report $id): Response
+    #[Route('/dashboard/student/report/{id<\d+>}', name: 'report_student')]
+    public function report(EntityManagerInterface $entityManager, ?Report $id, ReportRepository $reportRepository): Response
     {
-        /** @var \App\Entity\User $user */
-        $user = $this->getUser();
+
+        /** @var \App\Entity\User $student */
+        $student = $this->getUser();
 
         if (!$id) {
-            $this->addFlash('error', "Nie znaleziono takie analizy treningu");
+            $this->addFlash('error', "Nie ma takiego raportu!");
             return $this->redirectToRoute('student_reports');
         }
+
         $report = $entityManager->getRepository(Report::class)->find($id);
 
-        if ($report->getStudent() !== $user) {
-            throw new AccessDeniedException('Ten użytkownik nie ma dostępu do tej analizy raportu.');
+        $idSelectedReport = $student->getId();
+        $dateSelectedReport = $report->getDate();
+
+        $lastReport = $reportRepository->findMyLastReport($idSelectedReport, $dateSelectedReport);;
+
+        if ($report->getStudent() !== $student) {
+            throw new AccessDeniedException('Nie masz dostępu do tego raportu!');
         }
-
-
-        return $this->render('dashboard/student/student_report_analysis.html.twig', [
+        return $this->render('dashboard/student-trainer/report.html.twig', [
             'report' => $report,
+            'lastReport' =>  $lastReport,
         ]);
     }
 

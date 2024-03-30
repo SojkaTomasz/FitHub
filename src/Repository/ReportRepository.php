@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Report;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -28,6 +29,18 @@ class ReportRepository extends ServiceEntityRepository
             ->where('r.student  = :studentId')
             ->setParameter('studentId', $studentId)
             ->orderBy('r.date', 'DESC')
+            ->getQuery()
+            ->execute();
+    }
+    public function findMyLastReport(int $idSelectedReport, DateTime $dateSelectedReport): array
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.student  = :id')
+            ->andWhere('r.date < :date')
+            ->setParameter('id', $idSelectedReport)
+            ->setParameter('date', $dateSelectedReport)
+            ->orderBy('r.date', 'DESC')
+            ->setMaxResults(1)
             ->getQuery()
             ->execute();
     }

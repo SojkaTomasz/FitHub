@@ -1,0 +1,47 @@
+@import "../mixins.less";
+@import "../vars.less";
+
+.box-reports {
+	p {
+		margin: 0;
+		color: @color-dark-gray;
+	}
+	.report-box-user {
+		width: max-content;
+	}
+
+	.box-items-report {
+		text-decoration: none;
+		transition: border 0.5s;
+		border-radius: 0 10px 10px 10px;
+		&:hover {
+			border: 1px solid @color-main !important;
+		}
+	}
+
+	.link {
+		color: @color-dark-gray;
+		text-decoration: none;
+		transition: color 0.3s;
+		&:hover {
+			color: @color-dark-main;
+		}
+	}
+
+	.img {
+		height: 3.5rem;
+		width: 3.5rem;
+	}
+	.img-modal {
+		max-height: 80vh;
+	}
+	li {
+		min-width: 6.2rem;
+	}
+	.modal-dialog {
+		max-width: min-content;
+	}
+	.box-img {
+		width: max-content;
+	}
+}

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Raport
+{% endblock %}
+
+
+{% block main %}
+	{% block titleSection %}
+		<div class="title-section">
+			{% if is_granted('ROLE_STUDENT')  %}
+				<h2 class="title">Raport</h2>
+			{% else %}
+				<h2 class="title">Raport podopiecznego:
+					{{report.student.firstName}}
+					{{report.student.lastName}}
+				</h2>
+
+			{% endif %}
+		</div>
+	{% endblock %}
+	{% block section %}
+		<section>
+			{% if is_granted('ROLE_STUDENT')  %}
+
+				<div class="progress" role="progressbar" aria-label="Default striped example" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+					<div class="progress-bar progress-bar-striped" data-value='{{report.percentDiet}}'>Dieta na:
+						{{report.percentDiet}}%</div>
+				</div>
+
+			{% else %}
+				<a href="{{path('report_analysis', {id: report.id} )}}" type="button" class="border rounded bg-light mb-2 d-block ">sprawdz</a>
+			{% endif %}
+
+
+		</section>
+	{% endblock %}
+{% endblock %}

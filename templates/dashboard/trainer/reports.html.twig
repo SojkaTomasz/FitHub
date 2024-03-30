@@ -3,7 +3,6 @@
 {% block title %}Raporty
 {% endblock %}
 
-
 {% block main %}
 	{% block titleSection %}
 		<div class="title-section">
@@ -11,65 +10,73 @@
 		</div>
 	{% endblock %}
 	{% block section %}
-		<section>
+		<section class="box-reports">
 			{% if reports is not empty  %}
 				{% include "shared/info.html.twig" %}
-				<table class="table">
-					<thead>
-						<tr>
-							<th scope="col">Sprawdzony</th>
-							<th scope="col">Imię</th>
-							<th scope="col">Nazwisko</th>
-							<th scope="col">Data</th>
-							<th scope="col">Waga</th>
-							<th scope="col">Łydka</th>
-							<th scope="col">Udo</th>
-							<th scope="col">Pasa</th>
-							<th scope="col">Klatka</th>
-							<th scope="col">Szyja</th>
-							<th scope="col">Biceps</th>
-							<th scope="col">Przedramienie</th>
-							<th scope="col">Dieta na</th>
-							<th scope="col">Przód</th>
-							<th scope="col">Bok</th>
-							<th scope="col">Tył</th>
-							{# <th scope="col"></th> #}
-						</tr>
-					</thead>
-				</thead>
-				<tbody>
-					{% for report in reports %}
-						<tr>
-							<td>
-								{% if report.verified %}
-									<a href="{{path('report', {id: report.id} )}}" type="button" class="btn btn-success">Tak</a>
-								{% else %}
-									<a href="{{path('report_analysis', {id: report.id} )}}" type="button" class="btn btn-danger">Nie</a>
-								{% endif %}
+				{% for report in reports %}
+					<div class="d-flex flex-column">
+						<span class="py-1 px-2 border rounded-top-2 bg-light d-flex align-items-center report-box-user">
+							<img class="me-2" src="/assets/image/mean.png" width="18" alt=" ">
+							<a href="" class="link me-2">
+								{{report.student.firstname}}
+								{{report.student.lastName}}
+							</a>
+							<span class="">Raport z dnia:
+								{{report.date|date("d.m.Y") }}</span>
+						</span>
+						<a href="{{path('report_trainer', {id: report.id} )}}" type="button" class="border bg-light mb-2 d-block box-items-report">
+							<div class="d-flex flex-row justify-content-between">
+								<div class="p-2 box-img">
+									<img class="img rounded object-fit-cover" src="{{reports_url ~ report.frontImg}}" alt="">
+									<img class="img rounded object-fit-cover" src="{{reports_url ~ report.sideImg}}" alt="">
+									<img class="img rounded object-fit-cover" src="{{reports_url ~ report.backImg}}" alt="">
+								</div>
+								<div class="d-flex flex-column justify-content-between p-2 flex-grow-1">
+									<div class="d-flex justify-content-between align-content-center w-100">
+										<div class="d-flex align-items-center">
+											<p class="h5 mb-0 me-3">{{report.weight}}<small>kg</small>
+											</p>
+											<p class="h6 mb-0 text-danger">{{report.weightDifference}}<small>kg</small>
+											</p>
+										</div>
 
-							</td>
-							<td>{{ report.student.firstName }}</td>
-							<td>{{ report.student.lastName }}</td>
-							<td>{{report.date|date("d.m.Y") }}</td>
-							<td>{{report.weight}}kg</td>
-							<td>{{report.calfCircumference}}cm</td>
-							<td>{{report.thighCircumference}}cm</td>
-							<td>{{report.beltCircumference}}cm</td>
-							<td>{{report.chestCircumference}}cm</td>
-							<td>{{report.neckCircumference}}cm</td>
-							<td>{{report.bicepsCircumference}}cm</td>
-							<td>{{report.forearmCircumference}}cm</td>
-							<td>{{report.percentDiet}}%</td>
-							<td><img class="object-fit-cover border rounded" src="{{reports_url ~ report.frontImg}}" height="40" alt=""></td>
-							<td><img class="object-fit-cover border rounded" src="{{reports_url ~ report.sideImg}}" height="40" alt=""></td>
-							<td><img class="object-fit-cover border rounded" src="{{reports_url ~ report.backImg}}" height="40" alt=""></td>
-						</tr>
-
-					{% endfor %}
-				</tbody>
-			</table>
-		{% else %}
-			<p>brak podopiecznych</p>
-		{% endif %}
-	</section>
-{% endblock %}{% endblock %}
+									</div>
+									<ul class="d-flex align-content-center w-100 list-inline mb-0">
+										<li class="list-inline-item text-secondary fw-light me-3">
+											<small>Udo:
+												{{report.thighCircumference}}cm</small>
+										</li>
+										<li class="list-inline-item text-secondary fw-light me-3">
+											<small>Pas:
+												{{report.beltCircumference}}cm</small>
+										</li>
+										<li class="list-inline-item text-secondary fw-light me-3">
+											<small>Klata:
+												{{report.chestCircumference}}cm</small>
+										</li>
+										<li class="list-inline-item text-secondary fw-light">
+											<small>Bicek:
+												{{report.bicepsCircumference}}cm</small>
+										</li>
+									</ul>
+								</div>
+								<div class="d-flex align-items-center">
+									<div class="text-center p-2">
+										<p class="mb-1">Sprawdzony?</p>
+										{% if report.verified %}
+											<i class="bi bi-check2-circle text-success h4 mb-0 "></i>
+										{% else %}
+											<i class="bi bi-ban text-danger h4 mb-0"></i>
+										{% endif %}
+									</div>
+								</div>
+							</div>
+						</a>
+					</div>
+				{% endfor %}
+			{% else %}
+				<p>brak podopiecznych</p>
+			{% endif %}
+		</section>
+	{% endblock %}
+{% endblock %}

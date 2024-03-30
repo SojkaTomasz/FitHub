@@ -3,30 +3,6 @@
 {% block title %}Raporty
 {% endblock %}
 
-{% block style %}
-	<style>
-
-		p {
-			margin: 0;
-		}
-		.img {
-			height: 50px;
-			width: 50px;
-		}
-		.img-modal {
-			max-height: 80vh;
-		}
-		li {}
-		.modal-dialog {
-			max-width: min-content;
-		}
-		.box-img {
-			width: max-content;
-		}
-	</style>
-{% endblock %}
-
-
 {% block main %}
 	{% block titleSection %}
 		<div class="title-section">
@@ -34,7 +10,7 @@
 		</div>
 	{% endblock %}
 	{% block section %}
-		<section>
+		<section class="box-reports">
 			{% include "shared/info.html.twig" %}
 			<p>dzień raportu:
 				{% set dayName = [
@@ -46,9 +22,8 @@
 					"sobota",
 					"niedziela"] 
 				%}
-				{{dayName[date - 1]}} każdego tygodnia</p>
-
-			<style></style>
+				{{dayName[date - 1]}}
+				każdego tygodnia</p>
 
 			<a href="{{path('student_report_add')}}" type="button" class="btn btn-dark my-3">Dodaj raport</a>
 
@@ -56,15 +31,15 @@
 				<div class="border rounded bg-light mb-2">
 					<div class="d-flex flex-row justify-content-between">
 						<div class="d-flex">
-							<div class="p-2 box-img">
-								<button type="button" class="btn btn-transparent" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{report.id}}">
+							<div class="box-img">
+								<button type="button" class="btn btn-transparent p-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{report.id}}">
 									<img class="img rounded object-fit-cover" src="{{reports_url ~ report.frontImg}}" alt="">
 									<img class="img rounded object-fit-cover" src="{{reports_url ~ report.sideImg}}" alt="">
 									<img class="img rounded object-fit-cover" src="{{reports_url ~ report.backImg}}" alt="">
 								</button>
 							</div>
-							<div class="d-flex flex-column justify-content-between  p-2 ">
-								<div class="d-flex justify-content-between align-content-center w-100 ">
+							<div class="d-flex flex-column justify-content-between p-2">
+								<div class="d-flex justify-content-between align-content-center w-100">
 									<div class="d-flex align-items-center">
 										<p class="h5 mb-0 me-3">{{report.weight}}<small>kg</small>
 										</p>
@@ -74,19 +49,19 @@
 									<p>{{report.date|date("d.m.Y") }}</p>
 								</div>
 								<ul class="d-flex align-content-center w-100 list-inline mb-0">
-									<li class="list-inline-item text-secondary me-3">
+									<li class="list-inline-item text-secondary fw-light me-3">
 										<small>Udo:
 											{{report.thighCircumference}}cm</small>
 									</li>
-									<li class="list-inline-item text-secondary me-3">
+									<li class="list-inline-item text-secondary fw-light me-3">
 										<small>Pas:
 											{{report.beltCircumference}}cm</small>
 									</li>
-									<li class="list-inline-item text-secondary me-3">
+									<li class="list-inline-item text-secondary fw-light me-3">
 										<small>Klatka:
 											{{report.chestCircumference}}cm</small>
 									</li>
-									<li class="list-inline-item text-secondary">
+									<li class="list-inline-item text-secondary fw-light">
 										<small>Biceps:
 											{{report.bicepsCircumference}}cm</small>
 									</li>
@@ -95,15 +70,15 @@
 						</div>
 						<div class="d-flex align-items-center">
 							<div class="text-center p-2">
-								<p class="mb-1">sprawdzony</p>
+							
 								{% if report.verified %}
-									<i class="bi bi-check2-circle text-success h3 mb-0 "></i>
+									<i class="bi bi-journal-check text-success h3 mb-0 "></i>
 								{% else %}
-									<i class="bi bi-circle text-danger h3 mb-0"></i>
+									<i class="bi bi-journal-x text-danger h3 mb-0"></i>
 								{% endif %}
 							</div>
 							<div class="p-2">
-								<a href="" class="btn btn-success">Sprawdź</a>
+								<a href="{{path('report_student', {id: report.id} )}}" class="btn btn-success">Podgląd</a>
 							</div>
 						</div>
 					</div>

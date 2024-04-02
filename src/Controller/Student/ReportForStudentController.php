@@ -6,6 +6,7 @@ use App\Entity\Report;
 use App\Entity\ReportAnalysis;
 use App\Form\ReportType;
 use App\Repository\ReportRepository;
+use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,18 +30,15 @@ class ReportForStudentController extends AbstractController
     }
 
     #[Route('/dashboard/student/report/{id<\d+>}', name: 'report_student')]
-    public function report(EntityManagerInterface $entityManager, ?Report $id, ReportRepository $reportRepository): Response
+    public function report(?Report $report, ReportRepository $reportRepository): Response
     {
 
         /** @var \App\Entity\User $student */
         $student = $this->getUser();
-
-        if (!$id) {
+        if (!$report) {
             $this->addFlash('error', "Nie ma takiego raportu!");
             return $this->redirectToRoute('student_reports');
         }
-
-        $report = $entityManager->getRepository(Report::class)->find($id);
 
         $idSelectedReport = $student->getId();
         $dateSelectedReport = $report->getDate();
@@ -58,31 +56,28 @@ class ReportForStudentController extends AbstractController
     }
 
     #[Route('/dashboard/student/report/add', name: 'student_report_add')]
-    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, ReportRepository $reportRepository): Response
+    public function new(?Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, ReportRepository $reportRepository, FileUploader $fileUploader): Response
     {
         $report = new Report();
         $form = $this->createForm(ReportType::class, $report);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $frontImg = $form->get('frontImg')->getData();
-            $sideImg = $form->get('sideImg')->getData();
-            $backImg = $form->get('backImg')->getData();
+            $imagesReport = [
+                'setFrontImg' => $form->get('frontImg')->getData(),
+                'setSideImg' => $form->get('sideImg')->getData(),
+                'setBackImg' => $form->get('backImg')->getData()
+            ];
 
-            $imagesReport = ['setFrontImg' => $frontImg, 'setSideImg' => $sideImg, 'setBackImg' => $backImg];
+            $reportsDirectory = $this->getParameter('reports_directory');
 
             foreach ($imagesReport  as $key => $value) {
                 if ($value) {
-                    $originalFileName = pathinfo($value->getClientOriginalName(), PATHINFO_FILENAME);
-                    $safeFilename = $slugger->slug($originalFileName);
-                    $newFileName = $safeFilename . '-' . uniqid() . '.' . $value->guessExtension();
-                    $report->$key($newFileName);
-                    $value->move(
-                        $this->getParameter('reports_directory'),
-                        $newFileName
-                    );
+                    $uploadedFileName = $fileUploader->upload($value, $reportsDirectory);
+                    $report->$key($uploadedFileName);
                 }
             }
+            
             /** @var \App\Entity\User $user */
             $user = $this->getUser();
             $reports = $reportRepository->findMyReports($user->getId());
@@ -98,6 +93,51 @@ class ReportForStudentController extends AbstractController
         }
 
         return $this->render('dashboard/student/student_report_add.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/dashboard/student/report/edit/{id<\d+>}', name: 'student_report_edit')]
+    public function edit(Request $request, Report $report, EntityManagerInterface $entityManager, SluggerInterface $slugger, ReportRepository $reportRepository, FileUploader $fileUploader): Response
+    {
+        $report->setFrontImg('');
+        $report->setSideImg('');
+        $report->setBackImg('');
+        if ($report->getReportAnalysis()) {
+            $this->addFlash('error', "Nie możesz edytować sprawdzonego przez trenera raportu!");
+            return $this->redirectToRoute('student_reports');
+        }
+        $form = $this->createForm(ReportType::class, $report);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $imagesReport = [
+                'setFrontImg' => $form->get('frontImg')->getData(),
+                'setSideImg' => $form->get('sideImg')->getData(),
+                'setBackImg' => $form->get('backImg')->getData()
+            ];
+
+            $reportsDirectory = $this->getParameter('reports_directory');
+
+            foreach ($imagesReport  as $key => $value) {
+                if ($value) {
+                    $uploadedFileName = $fileUploader->upload($value, $reportsDirectory);
+                    $report->$key($uploadedFileName);
+                }
+            }
+
+            /** @var \App\Entity\User $user */
+            $user = $this->getUser();
+            $reports = $reportRepository->findMyReports($user->getId());
+            $report->setWeightDifference($report->getWeight() - $reports[0]->getWeight());
+            $entityManager->persist($report);
+            $entityManager->flush();
+
+            $this->addFlash('success', "Raport poprawnie wysłany!");
+            return $this->redirectToRoute('student_reports');
+        }
+
+        return $this->render('dashboard/student/student_report_edit.html.twig', [
             'form' => $form,
         ]);
     }

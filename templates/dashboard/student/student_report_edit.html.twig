@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edytuj Raport
+{% endblock %}
+
+
+{% block main %}
+	{% block titleSection %}
+		<div class="title-section">
+			<h2 class="title">Edytuj Raport</h2>
+		</div>
+	{% endblock %}
+	{% block section %}
+		<section>
+			{{ form(form) }}
+			</section>
+		{% endblock %}
+	{% endblock %}

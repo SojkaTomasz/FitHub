@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Report;
+use App\Entity\ReportAnalysis;
 use App\Repository\ReportRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\BrowserKit\Request;

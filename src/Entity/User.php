@@ -53,10 +53,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $avatar = null;
 
+    #[ORM\OneToMany(targetEntity: ReportAnalysis::class, mappedBy: 'trainer')]
+    private Collection $reportAnalyses;
+
     public function __construct()
     {
         $this->students = new ArrayCollection();
         $this->reports = new ArrayCollection();
+        $this->reportAnalyses = new ArrayCollection();
     }
 
 
@@ -238,6 +242,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAvatar(?string $avatar): static
     {
         $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ReportAnalysis>
+     */
+    public function getReportAnalyses(): Collection
+    {
+        return $this->reportAnalyses;
+    }
+
+    public function addReportAnalysis(ReportAnalysis $reportAnalysis): static
+    {
+        if (!$this->reportAnalyses->contains($reportAnalysis)) {
+            $this->reportAnalyses->add($reportAnalysis);
+            $reportAnalysis->setTrainer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReportAnalysis(ReportAnalysis $reportAnalysis): static
+    {
+        if ($this->reportAnalyses->removeElement($reportAnalysis)) {
+            // set the owning side to null (unless already changed)
+            if ($reportAnalysis->getTrainer() === $this) {
+                $reportAnalysis->setTrainer(null);
+            }
+        }
 
         return $this;
     }

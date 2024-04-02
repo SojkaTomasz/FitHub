@@ -26,7 +26,13 @@ html {
 			}
 		}
 		main {
-			//		height: calc(100vh - 60px);
+			.link {
+				color: @color-dark-gray;
+				transition: color 0.3s;
+				&:hover {
+					color: @color-dark-main;
+				}
+			}
 			margin-left: 230px;
 			.mixin-animate-transition(margin-left);
 

@@ -24,6 +24,9 @@ class ReportAnalysis
     #[ORM\JoinColumn(nullable: false)]
     private Report $report;
 
+    #[ORM\ManyToOne(inversedBy: 'reportAnalyses')]
+    private ?User $trainer = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -61,6 +64,18 @@ class ReportAnalysis
     public function setReport(Report $report): static
     {
         $this->report = $report;
+
+        return $this;
+    }
+
+    public function getTrainer(): ?User
+    {
+        return $this->trainer;
+    }
+
+    public function setTrainer(?User $trainer): static
+    {
+        $this->trainer = $trainer;
 
         return $this;
     }

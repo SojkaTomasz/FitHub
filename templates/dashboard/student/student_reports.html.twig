@@ -22,7 +22,7 @@
 					"sobota",
 					"niedziela"] 
 				%}
-				{{dayName[date - 1]}}
+				{{date}}
 				każdego tygodnia</p>
 
 			<a href="{{path('student_report_add')}}" type="button" class="btn btn-dark my-3">Dodaj raport</a>
@@ -75,6 +75,7 @@
 							</div>
 							<div class="p-2">
 								<a href="{{path('report_student', {id: report.id} )}}" class="btn btn-success">Podgląd</a>
+								<a href="{{path('student_report_edit', {id: report.id} )}}" class="btn btn-success">Edytuj</a>
 							</div>
 						</div>
 					</div>

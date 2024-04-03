@@ -14,7 +14,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted('ROLE_STUDENT')]
 class ReportForStudentController extends AbstractController
 {
     #[Route('/dashboard/student/reports', name: 'student_reports')]
@@ -22,27 +24,23 @@ class ReportForStudentController extends AbstractController
     {
         /** @var \App\Entity\User $user */
         $user = $this->getUser();
+
         $reports = $reportRepository->findMyReports($user->getId());
-        return $this->render('dashboard/student/student_reports.html.twig', [
+        return $this->render('dashboard/student/reports.html.twig', [
             'reports' => $reports,
             'date' => date('w'),
         ]);
     }
 
-    #[Route('/dashboard/student/report/{id<\d+>}', name: 'report_student')]
+    #[Route('/dashboard/student/report/{id<\d+>}', name: 'student_report')]
     public function report(?Report $report, ReportRepository $reportRepository): Response
     {
 
         /** @var \App\Entity\User $student */
         $student = $this->getUser();
-        if (!$report) {
-            $this->addFlash('error', "Nie ma takiego raportu!");
-            return $this->redirectToRoute('student_reports');
-        }
 
         $idSelectedReport = $student->getId();
         $dateSelectedReport = $report->getDate();
-
         $lastReport = $reportRepository->findMyLastReport($idSelectedReport, $dateSelectedReport);;
 
         if ($report->getStudent() !== $student) {
@@ -56,7 +54,7 @@ class ReportForStudentController extends AbstractController
     }
 
     #[Route('/dashboard/student/report/add', name: 'student_report_add')]
-    public function new(?Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, ReportRepository $reportRepository, FileUploader $fileUploader): Response
+    public function newReport(?Request $request, EntityManagerInterface $entityManager, ReportRepository $reportRepository, FileUploader $fileUploader): Response
     {
         $report = new Report();
         $form = $this->createForm(ReportType::class, $report);
@@ -77,7 +75,7 @@ class ReportForStudentController extends AbstractController
                     $report->$key($uploadedFileName);
                 }
             }
-            
+
             /** @var \App\Entity\User $user */
             $user = $this->getUser();
             $reports = $reportRepository->findMyReports($user->getId());
@@ -92,17 +90,18 @@ class ReportForStudentController extends AbstractController
             return $this->redirectToRoute('student_reports');
         }
 
-        return $this->render('dashboard/student/student_report_add.html.twig', [
+        return $this->render('dashboard/student/report_add.html.twig', [
             'form' => $form,
         ]);
     }
 
     #[Route('/dashboard/student/report/edit/{id<\d+>}', name: 'student_report_edit')]
-    public function edit(Request $request, Report $report, EntityManagerInterface $entityManager, SluggerInterface $slugger, ReportRepository $reportRepository, FileUploader $fileUploader): Response
+    public function edit(Request $request, ?Report $report, EntityManagerInterface $entityManager, ReportRepository $reportRepository, FileUploader $fileUploader): Response
     {
         $report->setFrontImg('');
         $report->setSideImg('');
         $report->setBackImg('');
+        
         if ($report->getReportAnalysis()) {
             $this->addFlash('error', "Nie możesz edytować sprawdzonego przez trenera raportu!");
             return $this->redirectToRoute('student_reports');
@@ -137,7 +136,7 @@ class ReportForStudentController extends AbstractController
             return $this->redirectToRoute('student_reports');
         }
 
-        return $this->render('dashboard/student/student_report_edit.html.twig', [
+        return $this->render('dashboard/student/report_edit.html.twig', [
             'form' => $form,
         ]);
     }

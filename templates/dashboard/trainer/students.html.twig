@@ -12,8 +12,8 @@
 	{% endblock %}
 	{% block section %}
 		<section>
+			{% include "shared_global/info.html.twig" %}
 			{% if students is not empty  %}
-				{% include "shared_global/info.html.twig" %}
 				<table class="table">
 					<thead>
 						<tr>

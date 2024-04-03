@@ -47,7 +47,7 @@
 											NIE
 										</p>
 										{% if is_granted('ROLE_TRAINER')  %}
-											<a href="{{path('report_analysis', {id: report.id} )}}" type="button" class="btn btn-primary">Sprawdź</a>
+											<a href="{{path('trainer_report_add_analysis', {id: report.id} )}}" type="button" class="btn btn-primary">Sprawdź</a>
 										{% endif %}
 									{% endif %}
 								</div>
@@ -199,7 +199,7 @@
 							</div>
 							<div class="modal-footer">
 								{% if is_granted('ROLE_TRAINER')  %}
-									<a href="{{path('report_analysis_edit', {id: report.reportAnalysis.id})}}" type="button" class="btn btn-primary">Edytuj</a>
+									<a href="{{path('trainer_report_analysis_edit', {id: report.reportAnalysis.id})}}" type="button" class="btn btn-primary">Edytuj</a>
 								{% endif %}
 								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
 							</div>

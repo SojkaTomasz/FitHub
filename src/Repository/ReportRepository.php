@@ -22,7 +22,6 @@ class ReportRepository extends ServiceEntityRepository
         parent::__construct($registry, Report::class);
     }
 
-
     public function findMyReports(int $studentId): array
     {
         return $this->createQueryBuilder('r')
@@ -32,6 +31,7 @@ class ReportRepository extends ServiceEntityRepository
             ->getQuery()
             ->execute();
     }
+
     public function findMyLastReport(int $idSelectedReport, DateTime $dateSelectedReport): array
     {
         return $this->createQueryBuilder('r')

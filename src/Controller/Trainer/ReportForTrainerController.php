@@ -13,54 +13,45 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted('ROLE_TRAINER')]
 class ReportForTrainerController extends AbstractController
 {
-    #[Route('/dashboard/trainer/reports', name: 'reports_student_for_trainer')]
+    #[Route('/dashboard/trainer/reports', name: 'trainer_reports')]
     public function reports(ReportRepository $reportRepository): Response
     {
         /** @var \App\Entity\User $trainer */
         $trainer = $this->getUser();
+
         $reports = $reportRepository->findReportsStudentForTrainer($trainer->getId());
         return $this->render('dashboard/trainer/reports.html.twig', [
             'reports' => $reports,
         ]);
     }
 
-    #[Route('/dashboard/trainer/report/{id}', name: 'report_trainer')]
-    public function report(EntityManagerInterface $entityManager, ?Report $report, ReportRepository $reportRepository, TrainerService $trainerService): Response
+    #[Route('/dashboard/trainer/report/{id<\d+>}', name: 'trainer_report')]
+    public function report(?Report $report, ReportRepository $reportRepository, TrainerService $trainerService): Response
     {
-
         /** @var \App\Entity\User $trainer */
         $trainer = $this->getUser();
 
-        if (!$report) {
-            $this->addFlash('error', "Nie ma takiego raportu!");
-            return $this->redirectToRoute('student_reports');
-        } else {
-            $idSelectedReport = $report->getStudent()->getId();
-            $dateSelectedReport = $report->getDate();
-            $lastReport = $reportRepository->findMyLastReport($idSelectedReport, $dateSelectedReport);
+        $idSelectedReport = $report->getStudent()->getId();
+        $dateSelectedReport = $report->getDate();
+        $lastReport = $reportRepository->findMyLastReport($idSelectedReport, $dateSelectedReport);
+        $trainerService->itsMyStudent($report, $trainer);
 
-            $trainerService->itsMyStudent($report, $trainer);
-
-            return $this->render('dashboard/student-trainer/report.html.twig', [
-                'report' => $report,
-                'lastReport' =>  $lastReport,
-            ]);
-        }
+        return $this->render('dashboard/student-trainer/report.html.twig', [
+            'report' => $report,
+            'lastReport' =>  $lastReport,
+        ]);
     }
 
-    #[Route('/dashboard/trainer/report-analysis/{id}', name: 'report_analysis')]
+    #[Route('/dashboard/trainer/report-analysis/{id<\d+>}', name: 'trainer_report_add_analysis')]
     public function reportAnalysis(EntityManagerInterface $entityManager, Request $request, ?Report $report, TrainerService $trainerService): Response
     {
         /** @var \App\Entity\User $trainer */
         $trainer = $this->getUser();
-
-        if (!$report) {
-            $this->addFlash('error', "Nie ma takiego raportu!");
-            return $this->redirectToRoute('reports_student_for_trainer');
-        }
 
         $trainerService->itsMyStudent($report, $trainer);
 
@@ -75,8 +66,9 @@ class ReportForTrainerController extends AbstractController
             $entityManager->persist($report);
             $entityManager->persist($reportAnalysis);
             $entityManager->flush();
+
             $this->addFlash('success', "Raport poprawnie przeanalizowany!");
-            return $this->redirectToRoute('reports_student_for_trainer');
+            return $this->redirectToRoute('trainer_reports');
         }
 
         return $this->render('dashboard/trainer/reportAnalysis.html.twig', [
@@ -84,16 +76,12 @@ class ReportForTrainerController extends AbstractController
             'form' => $form,
         ]);
     }
-    #[Route('/dashboard/trainer/report-analysis/edit/{id}', name: 'report_analysis_edit')]
+    
+    #[Route('/dashboard/trainer/report-analysis/edit/{id<\d+>}', name: 'trainer_report_analysis_edit')]
     public function reportAnalysisEdit(EntityManagerInterface $entityManager, Request $request, ?ReportAnalysis $reportAnalysis): Response
     {
         /** @var \App\Entity\User $trainer */
         $trainer = $this->getUser();
-
-        if (!$reportAnalysis) {
-            $this->addFlash('error', "Nie ma takiego raportu!");
-            return $this->redirectToRoute('reports_student_for_trainer');
-        }
 
         if ($reportAnalysis->getTrainer() !== $trainer) {
             throw new AccessDeniedException();
@@ -105,7 +93,7 @@ class ReportForTrainerController extends AbstractController
             $entityManager->persist($reportAnalysis);
             $entityManager->flush();
             $this->addFlash('success', "Raport poprawnie przeanalizowany!");
-            return $this->redirectToRoute('reports_student_for_trainer');
+            return $this->redirectToRoute('trainer_reports');
         }
 
         return $this->render('dashboard/trainer/reportAnalysis_edit.html.twig', [

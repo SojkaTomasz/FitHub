@@ -11,8 +11,8 @@
 	{% endblock %}
 	{% block section %}
 		<section class="box-reports">
+			{% include "shared_global/info.html.twig" %}
 			{% if reports is not empty  %}
-				{% include "shared_global/info.html.twig" %}
 				{% for report in reports %}
 					<div class="d-flex flex-column">
 						<span class="py-1 px-2 border rounded-top-2 bg-light d-flex align-items-center report-box-user">
@@ -24,7 +24,7 @@
 							<span class="">Raport z dnia:
 								{{report.date|date("d.m.Y") }}</span>
 						</span>
-						<a href="{{path('report_trainer', {id: report.id} )}}" type="button" class="border bg-light mb-2 d-block box-items-report">
+						<a href="{{path('trainer_report', {id: report.id} )}}" type="button" class="border bg-light mb-2 d-block box-items-report">
 							<div class="d-flex flex-row justify-content-between">
 								<div class="p-2 box-img">
 									<img class="img rounded object-fit-cover" src="{{reports_url ~ report.frontImg}}" alt="">

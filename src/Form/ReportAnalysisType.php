@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Report;
 use App\Entity\ReportAnalysis;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -27,9 +28,14 @@ class ReportAnalysisType extends AbstractType
 
 
         $builder
-            ->add('trainingPlan', TextareaType::class, $text)
-            ->add('nutritionPlan', TextareaType::class, $text)
-            ->add('recommendations', TextareaType::class, $text)
+            ->add('trainingPlan', CKEditorType::class, array(
+                'config' => array(
+                    'toolbar' => 'full',
+                    //...
+                )
+            ))
+            ->add('nutritionPlan', CKEditorType::class)
+            ->add('recommendations', CKEditorType::class)
             ->add('save', SubmitType::class);;
     }
 

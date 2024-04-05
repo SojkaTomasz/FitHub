@@ -1,0 +1,19 @@
+{% set parameters = [
+	{title: 'Waga', actual: report.weight, last: "To pierwszy raport", diference: "To pierwszy raport"},
+	{title: 'Łydka', actual: report.calfCircumference, last:"To pierwszy raport" , diference:"To pierwszy raport" },
+	{title: 'Udo', actual: report.thighCircumference , last:"To pierwszy raport" , diference:"To pierwszy raport" },
+	{title: 'pas', actual: report.beltCircumference , last:"To pierwszy raport" , diference:"To pierwszy raport" },
+	{title: 'Klatka', actual: report.chestCircumference , last:"To pierwszy raport" , diference:"To pierwszy raport" },
+	{title: 'Szyja', actual: report.neckCircumference , last:"To pierwszy raport" , diference:"To pierwszy raport" },
+	{title: 'Biceps', actual: report.bicepsCircumference , last:"To pierwszy raport" , diference:"To pierwszy raport" },
+	{title: 'Przedramię', actual: report.forearmCircumference , last:"To pierwszy raport" , diference:"To pierwszy raport" },
+] %}
+
+{% for parameter in parameters %}
+	<tr>
+		<td>{{parameter.title}}</td>
+		<td>{{parameter.actual}}</td>
+		<td>{{parameter.last}}</td>
+		<td>{{parameter.diference}}</td>
+	</tr>
+{% endfor %}

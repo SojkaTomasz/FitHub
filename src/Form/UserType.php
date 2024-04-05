@@ -2,20 +2,22 @@
 
 namespace App\Form;
 
-use App\Validator\UniqueEmail;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\File as ConstraintsFile;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\IsTrue;
 
-class RegistrationType extends AbstractType
+class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -53,28 +55,28 @@ class RegistrationType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('roles', ChoiceType::class, [
-                'choices' => [
-                    'Student' => 'ROLE_STUDENT',
-                    'Trener' => 'ROLE_TRAINER',
-                ],
-                'expanded' => true,
-                'multiple' => false,
-                'mapped' => false,
+            ->add('avatar', FileType::class, [
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Musisz wybrać rolę.',
-                    ]),
+                    new ConstraintsFile([
+                        'maxSize' => '2048k',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'img/png',
+                        ],
+                        'mimeTypesMessage' => 'Plik musi być formatu jpg lub png i nie przekraczać 2MB'
+                    ])
                 ],
-                'label' => 'Rola', // Dodajemy etykietę dla pola roli
             ])
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
-            ]);
+            ->add('description', TextareaType::class, [
+                'required' => false,
+            ])
+            ->add('save', SubmitType::class);
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => User::class,
+        ]);
     }
 }

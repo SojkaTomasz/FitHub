@@ -16,7 +16,11 @@
 				{% for report in reports %}
 					<div class="d-flex flex-column">
 						<span class="py-1 px-2 border rounded-top-2 bg-light d-flex align-items-center report-box-user">
-							<img class="me-2" src="/assets/image/mean.png" width="18" alt=" ">
+							{% if report.student.avatar %}
+								<img class="rounded-circle object-fit-cover my-1 me-2" width="25" height="25" src="{{avatar_url ~ report.student.avatar}}" alt="">
+							{% else %}
+								<img src="/assets/image/mean.png" width="25" height="25" class="rounded-circle object-fit-cover float-start me-2" alt="...">
+							{% endif %}
 							<a href="" class="link me-2">
 								{{report.student.firstname}}
 								{{report.student.lastName}}

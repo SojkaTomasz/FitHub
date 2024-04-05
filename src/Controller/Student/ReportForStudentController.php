@@ -26,6 +26,7 @@ class ReportForStudentController extends AbstractController
         $user = $this->getUser();
 
         $reports = $reportRepository->findMyReports($user->getId());
+
         return $this->render('dashboard/student/reports.html.twig', [
             'reports' => $reports,
             'date' => date('w'),
@@ -82,6 +83,7 @@ class ReportForStudentController extends AbstractController
             $report->setWeightDifference($report->getWeight() - $reports[0]->getWeight());
             $report->setDate(new \DateTime());
             $report->setStudent($this->getUser());
+            $report->setTrainer($user->getTrainer());
             $report->setVerified(false);
             $entityManager->persist($report);
             $entityManager->flush();
@@ -101,7 +103,7 @@ class ReportForStudentController extends AbstractController
         $report->setFrontImg('');
         $report->setSideImg('');
         $report->setBackImg('');
-        
+
         if ($report->getReportAnalysis()) {
             $this->addFlash('error', "Nie możesz edytować sprawdzonego przez trenera raportu!");
             return $this->redirectToRoute('student_reports');

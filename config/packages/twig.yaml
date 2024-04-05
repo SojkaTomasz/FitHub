@@ -2,6 +2,7 @@ twig:
     file_name_pattern: '*.twig'
     globals:
         reports_url: '%reports%'
+        avatar_url: '%avatar%'
 
 when@test:
     twig:

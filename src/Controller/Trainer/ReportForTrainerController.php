@@ -24,7 +24,7 @@ class ReportForTrainerController extends AbstractController
         /** @var \App\Entity\User $trainer */
         $trainer = $this->getUser();
 
-        $reports = $reportRepository->findReportsStudentForTrainer($trainer->getId());
+        $reports = $reportRepository->findReportsStudentForTrainer($trainer);
         return $this->render('dashboard/trainer/reports.html.twig', [
             'reports' => $reports,
         ]);

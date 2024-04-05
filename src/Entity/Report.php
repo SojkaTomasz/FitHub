@@ -68,6 +68,9 @@ class Report
     #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 2)]
     private ?string $weightDifference = null;
 
+    #[ORM\ManyToOne(inversedBy: 'reportsTrainer')]
+    private User $trainer;
+
 
     public function getId(): int
     {
@@ -286,7 +289,7 @@ class Report
         return $this;
     }
 
-    public function getWeightDifference(): ?string
+    public function getWeightDifference(): string
     {
         return $this->weightDifference;
     }
@@ -294,6 +297,18 @@ class Report
     public function setWeightDifference(string $weightDifference): static
     {
         $this->weightDifference = $weightDifference;
+
+        return $this;
+    }
+
+    public function getTrainer(): User
+    {
+        return $this->trainer;
+    }
+
+    public function setTrainer(?User $trainer): static
+    {
+        $this->trainer = $trainer;
 
         return $this;
     }

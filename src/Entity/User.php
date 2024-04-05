@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -48,7 +49,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $students;
 
     #[ORM\OneToMany(targetEntity: Report::class, mappedBy: 'student')]
-    private Collection $reports;
+    private Collection $reportsStudent;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $avatar = null;
@@ -56,11 +57,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: ReportAnalysis::class, mappedBy: 'trainer')]
     private Collection $reportAnalyses;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
+
+    #[ORM\OneToMany(targetEntity: Report::class, mappedBy: 'trainer')]
+    private Collection $reportsTrainer;
+
     public function __construct()
     {
         $this->students = new ArrayCollection();
-        $this->reports = new ArrayCollection();
+        $this->reportsStudent = new ArrayCollection();
         $this->reportAnalyses = new ArrayCollection();
+        $this->reportsTrainer = new ArrayCollection();
     }
 
 
@@ -207,24 +215,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Report>
      */
-    public function getReports(): Collection
+    public function getReportsStudent(): Collection
     {
-        return $this->reports;
+        return $this->reportsStudent;
     }
 
-    public function addReport(Report $report): static
+    public function addReportStudent(Report $report): static
     {
-        if (!$this->reports->contains($report)) {
-            $this->reports->add($report);
+        if (!$this->reportsStudent->contains($report)) {
+            $this->reportsStudent->add($report);
             $report->setStudent($this);
         }
 
         return $this;
     }
 
-    public function removeReport(Report $report): static
+    public function removeReportStudent(Report $report): static
     {
-        if ($this->reports->removeElement($report)) {
+        if ($this->reportsStudent->removeElement($report)) {
             // set the owning side to null (unless already changed)
             if ($report->getStudent() === $this) {
                 $report->setStudent(null);
@@ -270,6 +278,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($reportAnalysis->getTrainer() === $this) {
                 $reportAnalysis->setTrainer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Report>
+     */
+    public function getReportsTrainer(): Collection
+    {
+        return $this->reportsTrainer;
+    }
+
+    public function addReportsTrainer(Report $reportsTrainer): static
+    {
+        if (!$this->reportsTrainer->contains($reportsTrainer)) {
+            $this->reportsTrainer->add($reportsTrainer);
+            $reportsTrainer->setTrainer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReportsTrainer(Report $reportsTrainer): static
+    {
+        if ($this->reportsTrainer->removeElement($reportsTrainer)) {
+            // set the owning side to null (unless already changed)
+            if ($reportsTrainer->getTrainer() === $this) {
+                $reportsTrainer->setTrainer(null);
             }
         }
 

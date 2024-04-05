@@ -1,39 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ustawienia
+{% block title %}Trener
 {% endblock %}
 
 
 {% block main %}
 	{% block titleSection %}
 		<div class="title-section">
-			<h2 class="title">Ustawienia</h2>
+			<h2 class="title">Trener</h2>
 		</div>
 	{% endblock %}
 	{% block section %}
 		<section>
 			{% include "shared_global/info.html.twig" %}
 			<div class="d-block">
-				{% if app.user.avatar %}
-					<img class="rounded-circle object-fit-cover my-1" width="150" height="150" src="{{avatar_url ~ app.user.avatar}}" alt=""></a>
+				{% if trainer.avatar %}
+					<img class="rounded-circle object-fit-cover my-1" width="150" height="150" src="{{avatar_url ~ trainer.avatar}}" alt=""></a>
 			{% else %}
-
 				<img src="/assets/image/mean.png" width="150" class="rounded-circle float-start" alt="...">
 			{% endif %}
 		</div>
 		<p>Imię:
-			{{app.user.firstName}}</p>
+			{{trainer.firstName}}</p>
 		<p>Nazwisko:
-			{{app.user.firstName}}</p>
+			{{trainer.firstName}}</p>
 		<p>Email:
-			{{app.user.email}}</p>
+			{{trainer.email}}</p>
 		<p>Opis:
-			{% if app.user.description %}
-				{{app.user.description}}
+			{% if trainer.description %}
+				{{trainer.description}}
 			{% else %}
 				Brak opisu
 			{% endif %}
 		</p>
-		<a type="button" class="btn btn-secondary" href="{{path('settings_edit')}}">Edytuj dane</a>
 	</section>
 {% endblock %}{% endblock %}

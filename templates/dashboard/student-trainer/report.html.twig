@@ -90,123 +90,49 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>Waga</td>
-								<td>{{report.weight}}<small>kg</smal>
-								</td>
-								<td>{{lastReport[0].weight}}<small>kg</smal>
-								</td>
-								<td>{{lastReport[0].weight - report.weight}}<small>kg</smal>
-								</td>
-							</tr>
-							<tr>
-								<td>Łydka</td>
-								<td>{{report.calfCircumference}}<small>cm</smal>
-								</td>
-								<td>{{lastReport[0].calfCircumference}}<small>cm</smal>
-								</td>
-								<td>{{lastReport[0].calfCircumference - report.calfCircumference}}<small>cm</smal>
-								</td>
-
-							</tr>
-							<tr>
-								<td>Udo</td>
-								<td>{{report.thighCircumference}}<small>cm</smal>
-								</td>
-								<td>{{lastReport[0].thighCircumference}}<small>cm</smal>
-								</td>
-								<td>{{lastReport[0].thighCircumference - report.thighCircumference}}<small>cm</smal>
-								</td>
-
-							</tr>
-							<tr>
-								<td>Pas</td>
-								<td>{{report.beltCircumference}}<small>cm</smal>
-								</td>
-								<td>{{lastReport[0].beltCircumference}}<small>cm</smal>
-								</td>
-								<td>{{lastReport[0].beltCircumference - report.beltCircumference}}<small>cm</smal>
-								</td>
-
-							</tr>
-							<tr>
-								<td>Klatka</td>
-								<td>{{report.chestCircumference}}<small>cm</smal>
-								</td>
-								<td>{{lastReport[0].chestCircumference}}<small>cm</smal>
-								</td>
-								<td>{{lastReport[0].chestCircumference - report.chestCircumference}}<small>cm</smal>
-								</td>
-
-							</tr>
-							<tr>
-								<td>Szyja</td>
-								<td>{{report.neckCircumference}}<small>cm</smal>
-								</td>
-								<td>{{lastReport[0].neckCircumference}}<small>cm</smal>
-								</td>
-								<td>{{lastReport[0].neckCircumference - report.neckCircumference}}<small>cm</smal>
-								</td>
-
-							</tr>
-							<tr>
-								<td>Biceps</td>
-								<td>{{report.bicepsCircumference}}<small>cm</smal>
-								</td>
-								<td>{{lastReport[0].bicepsCircumference}}<small>cm</smal>
-								</td>
-								<td>{{lastReport[0].bicepsCircumference - report.bicepsCircumference}}<small>cm</smal>
-								</td>
-
-							</tr>
-							<tr>
-								<td>Przedramie</td>
-								<td>{{report.forearmCircumference}}<small>cm</smal>
-								</td>
-								<td>{{lastReport[0].forearmCircumference}}<small>cm</smal>
-								</td>
-								<td>{{lastReport[0].forearmCircumference - report.forearmCircumference}}<small>cm</smal>
-								</td>
-							</tr>
-
+							{% if lastReport %}
+								{% include 'dashboard/student-trainer/_further_reports_data.html.twig'%}
+							{% else %}
+								{% include 'dashboard/student-trainer/_first_report_data.html.twig' %}
+							{% endif %}
 						</tbody>
-					</table>
-				</div>
-
+					</tbody>
+				</table>
 			</div>
 
+		</div>
 
-			{% if report.verified %}
-				<div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-					<div class="modal-dialog modal-xl">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h1 class="modal-title fs-5" id="staticBackdropLabel">Analiza raportu dnia
-									{{report.reportAnalysis.dateAnalysis| date("d.m.Y")}}
-									Analiza przez:
-									<a href="" class="link me-2">{{report.reportAnalysis.trainer.firstName}}
-										{{report.reportAnalysis.trainer.lastName}}</a>
-								</h1>
-								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-							</div>
-							<div class="modal-body">
-								<p class="h5">Plan Treningowy:</p>
-								<p>{{report.reportAnalysis.comment}}</p>
-								<p class="h5 mt-3">Plan Żywieniowy:</p>
-								<p>{{report.reportAnalysis.comment}}</p>
-								<p class="h5 mt-3">Zalecenia:</p>
-								<p>{{report.reportAnalysis.comment}}</p>
-							</div>
-							<div class="modal-footer">
-								{% if is_granted('ROLE_TRAINER')  %}
-									<a href="{{path('trainer_report_analysis_edit', {id: report.reportAnalysis.id})}}" type="button" class="btn btn-primary">Edytuj</a>
-								{% endif %}
-								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-							</div>
+
+		{% if report.verified %}
+			<div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				<div class="modal-dialog modal-xl">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id="staticBackdropLabel">Analiza raportu dnia
+								{{report.reportAnalysis.dateAnalysis| date("d.m.Y")}}
+								Analiza przez:
+								<a href="" class="link me-2">{{report.reportAnalysis.trainer.firstName}}
+									{{report.reportAnalysis.trainer.lastName}}</a>
+							</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<p class="h5">Plan Treningowy:</p>
+							<p>{{report.reportAnalysis.TrainingPlan}}</p>
+							<p class="h5 mt-3">Plan Żywieniowy:</p>
+							<p>{{report.reportAnalysis.NutritionPlan}}</p>
+							<p class="h5 mt-3">Zalecenia:</p>
+							<p>{{report.reportAnalysis.recommendations}}</p>
+						</div>
+						<div class="modal-footer">
+							{% if is_granted('ROLE_TRAINER')  %}
+								<a href="{{path('trainer_report_analysis_edit', {id: report.reportAnalysis.id})}}" type="button" class="btn btn-primary">Edytuj</a>
+							{% endif %}
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
 						</div>
 					</div>
 				</div>
-			{% endif %}
-		</section>
-	{% endblock %}
-{% endblock %}
+			</div>
+		{% endif %}
+	</section>
+{% endblock %}{% endblock %}

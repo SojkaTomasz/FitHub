@@ -14,9 +14,6 @@ class ReportAnalysis
     #[ORM\Column]
     private int $id;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private string $comment;
-
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateAnalysis;
 
@@ -25,23 +22,20 @@ class ReportAnalysis
     private Report $report;
 
     #[ORM\ManyToOne(inversedBy: 'reportAnalyses')]
-    private ?User $trainer = null;
+    private User $trainer;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private string $trainingPlan;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private string $nutritionPlan;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private string $recommendations;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getComment(): string
-    {
-        return $this->comment;
-    }
-
-    public function setComment(string $comment): static
-    {
-        $this->comment = $comment;
-
-        return $this;
     }
 
     public function getDateAnalysis(): ?\DateTimeInterface
@@ -68,14 +62,50 @@ class ReportAnalysis
         return $this;
     }
 
-    public function getTrainer(): ?User
+    public function getTrainer(): User
     {
         return $this->trainer;
     }
 
-    public function setTrainer(?User $trainer): static
+    public function setTrainer(User $trainer): static
     {
         $this->trainer = $trainer;
+
+        return $this;
+    }
+
+    public function getTrainingPlan(): string
+    {
+        return $this->trainingPlan;
+    }
+
+    public function setTrainingPlan(string $trainingPlan): static
+    {
+        $this->trainingPlan = $trainingPlan;
+
+        return $this;
+    }
+
+    public function getNutritionPlan(): ?string
+    {
+        return $this->nutritionPlan;
+    }
+
+    public function setNutritionPlan(string $nutritionPlan): static
+    {
+        $this->nutritionPlan = $nutritionPlan;
+
+        return $this;
+    }
+
+    public function getRecommendations(): ?string
+    {
+        return $this->recommendations;
+    }
+
+    public function setRecommendations(string $recommendations): static
+    {
+        $this->recommendations = $recommendations;
 
         return $this;
     }

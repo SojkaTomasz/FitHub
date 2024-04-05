@@ -19,16 +19,9 @@ class TrainerService
       $this->reportRepository = $reportRepository;
    }
 
-   public function itsMyStudent(?Report $id, $trainer)
+   public function itsMyStudent(?Report $report, $trainer)
    {
-      $reportsTrainer =  $this->reportRepository->findReportsStudentForTrainer($trainer->getId());
-      $report = $this->entityManager->getRepository(Report::class)->find($id);
-
-      $reportsTrainerId = array_map(function ($reportTrainer) {
-         return $reportTrainer->getStudent()->getId();
-      }, $reportsTrainer);
-
-      if (!in_array($report->getStudent()->getId(), $reportsTrainerId)) {
+      if ($trainer->getId() != $report->getTrainer()->getId()) {
          throw new AccessDeniedException();
       }
    }

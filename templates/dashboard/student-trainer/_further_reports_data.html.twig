@@ -1,0 +1,22 @@
+{% set parameters = [
+	{title: 'Waga' , actual: report.weight, last: lastReport[0].weight, diference: lastReport[0].weight - report.weight},
+	{title: 'Łydka' , actual: report.calfCircumference, last: lastReport[0].calfCircumference, diference: lastReport[0].calfCircumference - report.calfCircumference},
+	{title: 'Udo' , actual: report.thighCircumference, last: lastReport[0].thighCircumference, diference: lastReport[0].thighCircumference - report.thighCircumference},
+	{title: 'pas' , actual: report.beltCircumference, last: lastReport[0].beltCircumference, diference: lastReport[0].beltCircumference - report.beltCircumference},
+	{title: 'Klatka' , actual: report.chestCircumference, last: lastReport[0].chestCircumference, diference: lastReport[0].chestCircumference - report.chestCircumference},
+	{title: 'Szyja' , actual: report.neckCircumference, last: lastReport[0].neckCircumference, diference: lastReport[0].neckCircumference - report.neckCircumference},
+	{title: 'Biceps' , actual: report.bicepsCircumference, last: lastReport[0].bicepsCircumference, diference: lastReport[0].bicepsCircumference - report.bicepsCircumference},
+	{title: 'Przedramię' , actual: report.forearmCircumference, last: lastReport[0].forearmCircumference, diference: lastReport[0].forearmCircumference - report.forearmCircumference},
+] %}
+
+{% for parameter in parameters %}
+	<tr>
+		<td>{{parameter.title}}</td>
+		<td>{{parameter.actual}}<small>kg</smal>
+		</td>
+		<td>{{parameter.last}}<small>kg</smal>
+		</td>
+		<td>{{parameter.diference}}<small>kg</smal>
+		</td>
+	</tr>
+{% endfor %}

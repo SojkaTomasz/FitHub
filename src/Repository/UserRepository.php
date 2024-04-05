@@ -20,16 +20,11 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
-    private EntityManagerInterface $entityManager;
-    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
-        $this->entityManager = $entityManager;
     }
 
-    /**
-     * Used to upgrade (rehash) the user's password automatically over time.
-     */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
         if (!$user instanceof User) {
@@ -44,8 +39,19 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function findAllTrainers(): array
     {
         return $this->createQueryBuilder('u')
-            ->where('u.roles LIKE :role')
+            ->andWhere('u.roles LIKE :role')
             ->setParameter('role', '%"ROLE_TRAINER"%')
+            ->getQuery()
+            ->execute();
+    }
+
+    public function findAllTrainersExceptMine(User $myTrainer): array
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.roles LIKE :role')
+            ->andWhere('u.id != :trainer')
+            ->setParameter('role', '%"ROLE_TRAINER"%')
+            ->setParameter('trainer', $myTrainer)
             ->getQuery()
             ->execute();
     }

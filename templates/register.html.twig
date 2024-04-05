@@ -27,6 +27,24 @@
 				{{ form_errors(registrationForm.lastName) }}
 			</div>
 		</div>
+
+
+		<div class="col-md-6">
+			{{ form_label(registrationForm.password.first, 'Hasło', {'label_attr': {'class': 'form-label', }}) }}
+			{{ form_widget(registrationForm.password.first, {'attr': {'class': 'form-control'}}) }}
+			<div class="text-danger">
+				{{ form_errors(registrationForm.password.first) }}
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			{{ form_label(registrationForm.password.second, 'Powtórz Hasło', {'label_attr': {'class': 'form-label', }}) }}
+			{{ form_widget(registrationForm.password.second, {'attr': {'class': 'form-control'}}) }}
+			<div class="text-danger">
+				{{ form_errors(registrationForm.password.second) }}
+			</div>
+		</div>
+
 		<div class="col-md-6">
 			{{ form_label(registrationForm.email, 'Email', {'label_attr': {'class': 'form-label'}}) }}
 			{{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
@@ -35,25 +53,13 @@
 			</div>
 		</div>
 
-		<div class="col-md-6">
-			{{ form_label(registrationForm.password, 'Hasło', {'label_attr': {'class': 'form-label', }}) }}
-			{{ form_widget(registrationForm.password, {'attr': {'class': 'form-control'}}) }}
+		<div class="col-md-6 m-0">
+			<label class="form-label required" for="registration_password_second">Rola</label>
+			{{ form_widget(registrationForm.roles, {'attr': {'class': 'form-check p-0'}}) }}
 			<div class="text-danger">
-				{{ form_errors(registrationForm.password) }}
+				{{ form_errors(registrationForm.roles) }}
 			</div>
 		</div>
-
-		{# <div class="col-md-6 mb-3 ms-2 form-check">
-			<select class="form-select" aria-label="Default select example">
-				<option selected>Open this select menu</option>
-				{% for role in registrationForm.roles.vars.choices  %}
-					<option value="{{role.value }}">{{role.label}}</option>
-				{% endfor %}
-			</select>
-			<div class="text-danger">
-				{{ form_errors(registrationForm.password) }}
-			</div>
-		</div> #}
 
 		<div class="col-md-6 mb-3 ms-2 form-check">
 			{{ form_label(registrationForm.agreeTerms, 'Potwierdzam Regulamin', {'label_attr': {'class': 'form-check-label', }}) }}

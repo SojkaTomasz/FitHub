@@ -45,12 +45,11 @@ class ReportRepository extends ServiceEntityRepository
             ->execute();
     }
 
-    public function findReportsStudentForTrainer(int $trainerId): array
+    public function findReportsStudentForTrainer($trainer): array
     {
         return $this->createQueryBuilder('r')
-            ->join('r.student', 's')
-            ->where('s.trainer = :trainerId')
-            ->setParameter('trainerId', $trainerId)
+            ->where('r.trainer = :trainer')
+            ->setParameter('trainer', $trainer)
             ->orderBy('r.date', 'DESC')
             ->getQuery()
             ->execute();

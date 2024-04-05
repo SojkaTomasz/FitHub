@@ -16,15 +16,20 @@ class ReportAnalysisType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $text = [
+            'required' => false,
+            'constraints' => [
+                new NotBlank([
+                    'message' => 'Musisz wpisać wartość',
+                ])
+            ],
+        ];
+
+
         $builder
-            ->add('comment', TextareaType::class, [
-                'required' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Musisz wpisać wartość',
-                    ])
-                ],
-            ])
+            ->add('trainingPlan', TextareaType::class, $text)
+            ->add('nutritionPlan', TextareaType::class, $text)
+            ->add('recommendations', TextareaType::class, $text)
             ->add('save', SubmitType::class);;
     }
 

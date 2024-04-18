@@ -12,7 +12,7 @@
 	{% endblock %}
 	{% block section %}
 		<section>
-			{{ form(form) }}
-			</section>
-		{% endblock %}
+			{% include "dashboard/shared/_form_report_add.html.twig" %}
+		</section>
 	{% endblock %}
+{% endblock %}

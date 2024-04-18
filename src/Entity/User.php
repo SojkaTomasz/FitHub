@@ -63,12 +63,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Report::class, mappedBy: 'trainer')]
     private Collection $reportsTrainer;
 
+    #[ORM\OneToMany(targetEntity: Reviews::class, mappedBy: 'trainer')]
+    private Collection $reviews;
+
     public function __construct()
     {
         $this->students = new ArrayCollection();
         $this->reportsStudent = new ArrayCollection();
         $this->reportAnalyses = new ArrayCollection();
         $this->reportsTrainer = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
     }
 
 
@@ -320,6 +324,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($reportsTrainer->getTrainer() === $this) {
                 $reportsTrainer->setTrainer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reviews>
+     */
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+
+    public function addReview(Reviews $review): static
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews->add($review);
+            $review->setTrainer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Reviews $review): static
+    {
+        if ($this->reviews->removeElement($review)) {
+            // set the owning side to null (unless already changed)
+            if ($review->getTrainer() === $this) {
+                $review->setTrainer(null);
             }
         }
 

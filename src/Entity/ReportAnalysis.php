@@ -67,7 +67,7 @@ class ReportAnalysis
         return $this->trainer;
     }
 
-    public function setTrainer(User $trainer): static
+    public function setTrainer(?User $trainer): static
     {
         $this->trainer = $trainer;
 

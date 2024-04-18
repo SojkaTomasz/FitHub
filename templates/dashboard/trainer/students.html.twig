@@ -14,59 +14,61 @@
 		<section>
 			{% include "shared_global/info.html.twig" %}
 			{% if students is not empty  %}
-				<table class="table">
-					<thead>
-						<tr>
-							<th scope="col"></th>
-							<th scope="col">Imię</th>
-							<th scope="col">Nazwisko</th>
-							<th class="text-end" scope="col">Zakończ Współpracę</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for student in students %}
+				<div class="rounded-4 p-2 bg-white">
+					<table class="table m-0">
+						<thead>
+							<tr>
+								<th scope="col"></th>
+								<th scope="col">Imię</th>
+								<th scope="col">Nazwisko</th>
+								<th class="text-end" scope="col">Zakończ Współpracę</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for student in students %}
 
-							<td>
-								{% if student.avatar %}
-									<img class="rounded-circle object-fit-cover my-1" width="35" height="35" src="{{avatar_url ~ student.avatar}}" alt=""></a>
-							{% else %}
-								<img src="/assets/image/mean.png" width="35" height="35" class="rounded-circle float-start" alt="...">
-							{% endif %}
+								<td>
+									{% if student.avatar %}
+										<img class="rounded-circle object-fit-cover my-1" width="35" height="35" src="{{avatar_url ~ student.avatar}}" alt=""></a>
+								{% else %}
+									<img src="/assets/image/mean.png" width="35" height="35" class="rounded-circle float-start" alt="...">
+								{% endif %}
 
-						</td>
-						<td>{{student.firstName}}</td>
-						<td>{{student.lastName}}</td>
-						<td class="text-end">
-							<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-								Zakończ
-							</button>
-						</td>
-					</tbody>
-				</tr>
-				<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h1 class="modal-title fs-5" id="exampleModalLabel">
-									<strong>
-										Kończysz współpracę!
-									</strong>
-								</h1>
-								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-							</div>
-							<div class="modal-body">
-								Czy jesteś pewien ?
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
-								<a type="button" class="btn" href="{{path('student_termination', {id: student.id})}}">Tak</a>
+							</td>
+							<td>{{student.firstName}}</td>
+							<td>{{student.lastName}}</td>
+							<td class="text-end">
+								<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+									Zakończ
+								</button>
+							</td>
+						</tbody>
+					</tr>
+					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h1 class="modal-title fs-5" id="exampleModalLabel">
+										<strong>
+											Kończysz współpracę!
+										</strong>
+									</h1>
+									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									Czy jesteś pewien ?
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+									<a type="button" class="btn" href="{{path('student_termination', {id: student.id})}}">Tak</a>
 
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			{% endfor %}
-		</tbody>
+				{% endfor %}
+			</tbody>
+		</div>
 	</table>
 {% else %}
 	<p>brak podopiecznych</p>

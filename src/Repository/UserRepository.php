@@ -9,6 +9,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Doctrine\ORM\Query;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -39,19 +40,25 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function findAllTrainers(): array
     {
         return $this->createQueryBuilder('u')
+            ->select('u, AVG(r.rating) as average_rating')
+            ->leftJoin('u.reviews', 'r')
             ->andWhere('u.roles LIKE :role')
             ->setParameter('role', '%"ROLE_TRAINER"%')
+            ->groupBy('u.id')
             ->getQuery()
-            ->execute();
+            ->getResult();
     }
 
     public function findAllTrainersExceptMine(User $myTrainer): array
     {
         return $this->createQueryBuilder('u')
+            ->select('u, AVG(r.rating) as average_rating')
+            ->leftJoin('u.reviews', 'r')
             ->andWhere('u.roles LIKE :role')
             ->andWhere('u.id != :trainer')
             ->setParameter('role', '%"ROLE_TRAINER"%')
             ->setParameter('trainer', $myTrainer)
+            ->groupBy('u.id')
             ->getQuery()
             ->execute();
     }

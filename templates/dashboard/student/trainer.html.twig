@@ -33,5 +33,44 @@
 				Brak opisu
 			{% endif %}
 		</p>
-	</section>
-{% endblock %}{% endblock %}
+
+		<h2>Opienie:</h2>
+		{% if form %}
+			<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+				Dodaj Opinie
+			</button>
+			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div>
+								{{form(form)}}
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-primary">Save changes</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+			{% if trainer.reviews %}
+				{% for review in trainer.reviews %}
+					<div class="bg-light my-2 p-3">
+						<p>Ocena:
+							{{ review.rating}}</p>
+						<p>Data:
+							{{ review.date | date("d.m.Y")}}
+						</p>
+						<p>{{ review.opinion}}</p>
+					</div>
+				{% endfor %}
+			{% endif %}
+		</section>
+	{% endblock %}
+{% endblock %}

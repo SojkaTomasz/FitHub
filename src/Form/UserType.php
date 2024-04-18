@@ -23,6 +23,7 @@ class UserType extends AbstractType
     {
         $builder
             ->add('firstName', TextType::class, [
+                'required' => false,
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Musisz wpisać wartość',
@@ -30,6 +31,7 @@ class UserType extends AbstractType
                 ],
             ])
             ->add('lastName', TextType::class, [
+                'required' => false,
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Musisz wpisać wartość',
@@ -39,6 +41,7 @@ class UserType extends AbstractType
             ->add('email', EmailType::class)
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
+                'required' => false,
                 'invalid_message' => 'Hasła muszą się zgadzać !',
                 'options' => ['attr' => ['class' => 'password-field']],
                 'first_options'  => ['label' => 'Password'],
@@ -56,6 +59,7 @@ class UserType extends AbstractType
                 ],
             ])
             ->add('avatar', FileType::class, [
+                'required' => false,
                 'constraints' => [
                     new ConstraintsFile([
                         'maxSize' => '2048k',

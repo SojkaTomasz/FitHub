@@ -3,7 +3,11 @@
 
 body {
 	header {
-		background-color: @color-black;
+		position: absolute;
+		top: 0;
+		right: 0;
+		z-index: 2;
+		margin: 1.5rem 1.2rem;
 		div {
 			.dropdown-toggle.dropdown-toggle-split {
 				background: transparent;
@@ -16,7 +20,7 @@ body {
 					position: absolute;
 					bottom: -5px;
 					right: -3px;
-					color: @color-main;
+					color: @bg-main;
 					&::before {
 						background-color: @color-white;
 						border-radius: 50%;
@@ -45,18 +49,19 @@ body {
 					background: transparent !important;
 				}
 				.bi {
-					color: @color-main;
+					color: @text-black;
 					&::before {
 						font-size: 25px;
 					}
 				}
 				.rounded-pill {
+					top: 5px;
+					background-color: @text-main;
 					font-size: 10px;
 				}
 			}
 		}
 		.logo-header {
-			margin-left: 40px;
 			transform: scale(0);
 			transition: transform 1s;
 		}

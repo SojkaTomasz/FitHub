@@ -2,6 +2,22 @@
 @import "../vars.less";
 
 html {
+	.form-control:focus {
+		box-shadow: 0 0 0 0.05rem @bg-main !important;
+		border-color: @bg-main;
+	}
+	input[type="range"] {
+		&::-webkit-slider-runnable-track {
+			background: @bg-dark-gray;
+			height: 0.5rem;
+		}
+		&::-webkit-slider-thumb {
+			background-color: @bg-main;
+		}
+		&::-webkit-slider-thumb:focus {
+			background-color: @bg-main;
+		}
+	}
 	tr:last-child {
 		td {
 			border-bottom: none;
@@ -10,12 +26,8 @@ html {
 	}
 
 	body {
-		position: relative;
-		// max-width: 1920px;
-		margin-left: auto;
-		margin-right: auto;
-		min-height: 100vh;
-		overflow: hidden;
+		display: flex;
+		background-color: @bg-light-dark-gray;
 		aside,
 		header {
 			i::before {
@@ -24,16 +36,9 @@ html {
 			span {
 				color: @color-main;
 			}
-			.nav-link {
-				color: @color-white;
-				&:hover {
-					color: @color-main;
-					font-weight: 600;
-				}
-			}
 		}
 		main {
-			background-color: @color-light-white;
+			min-height: 100vh;
 			.link {
 				color: @color-dark-gray;
 				transition: color 0.3s;
@@ -41,36 +46,39 @@ html {
 					color: @color-dark-main;
 				}
 			}
-			margin-left: 230px;
 			.mixin-animate-transition(margin-left);
 
 			.title-section {
-				background: @color-main;
-				padding-left: 1.5rem;
+				position: relative;
+				top: 0;
+				width: -webkit-fill-available;
+				margin: 1rem 1.5rem 0.7rem 0.7rem;
+				border-radius: 20px;
+				background: @bg-light-gray;
+				padding-left: 1.2rem;
 				.title {
-					color: @color-white;
+					color: @text-black;
 					margin: 0;
 					padding: 0.5rem 0;
-					font-size: 1.5rem;
 				}
 			}
 			section {
-				padding: 1.7rem;
+				flex-grow: 1;
+				padding: 0.7rem 1.7rem 1rem 0.7rem;
 				overflow: auto;
-				height: calc(100vh - 110px);
 				&::-webkit-scrollbar {
+					border-radius: 50px;
 					width: 15px;
 				}
 				&::-webkit-scrollbar-track {
+					border-radius: 50px;
 					background: @color-dark-white;
 				}
 				&::-webkit-scrollbar-thumb {
+					border-radius: 50px;
 					background: @color-dark-main;
 				}
 			}
-		}
-		main.active {
-			margin-left: 0;
 		}
 		.btn-main {
 			background: @color-main;

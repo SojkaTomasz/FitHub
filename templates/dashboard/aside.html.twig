@@ -1,0 +1,46 @@
+<aside class="position-sticky top-0">
+	<div class="h-100 p-4 nav rounded-5">
+		<div class="text-end box-nav">
+			<div class="d-flex align-items-center justify-content-between mb-3">
+				<img class="logo" src="/assets/image/logo.png" width="80" alt="">
+				<div class="icon-nav-arrow p-2 rounded-4">
+					<i class="bi bi-arrow-left"></i>
+				</div>
+			</div>
+			<nav>
+				{% if is_granted('ROLE_STUDENT')  %}
+					{% set itemsStudentPanel = [
+						{route: 'dashboard' , title: 'Panel Główny'},
+						{route: 'dashboard' , title: 'Trening'},
+						{route: 'dashboard' , title: 'Dieta'},
+						{route: 'student_reports' , title: 'Raporty'},
+						{route: 'all_trainers' , title: 'Trenerzy'},
+					]  %}
+
+					{% for itemStudentPanel in itemsStudentPanel %}
+						{% include 'dashboard/_aside.html.twig' with {
+							route: itemStudentPanel.route , title: itemStudentPanel.title
+						} %}
+					{% endfor %}
+				{% endif %}
+				{% if is_granted('ROLE_TRAINER')  %}
+
+					{% set itemsTrainerPanel = [
+						{route: 'dashboard' , title: 'Panel Główny'},
+						{route: 'dashboard' , title: 'Trening'},
+						{route: 'dashboard' , title: 'Dieta'},
+						{route: 'student_reports' , title: 'Raporty'},
+						{route: 'students_trainer_all' , title: 'Podopieczni'},
+						{route: 'trainer_reports' , title: 'Raporty Podopiecznych'},
+					]  %}
+
+					{% for itemTrainerPanel in itemsTrainerPanel %}
+						{% include 'dashboard/_aside.html.twig' with {
+							route: itemTrainerPanel.route , title: itemTrainerPanel.title
+						} %}
+					{% endfor %}
+				{% endif %}
+			</nav>
+		</div>
+	</div>
+</aside>

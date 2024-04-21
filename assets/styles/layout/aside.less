@@ -2,40 +2,35 @@
 @import "../mixins.less";
 
 aside {
-	position: absolute;
-	top: 0;
-	left: 0;
-	min-height: 100vh;
-	width: 230px;
+	max-height: 100vh;
+	background-color: @bg-light-dark-gray;
+	padding: 1rem;
+	.nav-link {
+		color: @text-gray;
+		&:hover {
+			color: @text-main;
+		}
+	}
 	.mixin-animate-transition(width);
 	.icon-nav-arrow {
-		position: absolute;
-		top: 6px;
-		left: 230px;
-		padding: 10px 10px;
-		background-color: @color-dark-gray;
-		border-radius: 0 5px 5px 0;
 		cursor: pointer;
+		background-color: @bg-main;
 		.mixin-animate-transition(left);
 		i {
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			color: @color-white;
+			color: @text-white;
 			&::before {
 				.mixin-animate-transition(transform);
 			}
 		}
 	}
 	.nav {
-		position: absolute;
 		left: 0;
 		.mixin-animate-transition(left);
-		background-color: @color-dark-gray;
-		width: 230px;
+		background-color: @bg-light-gray;
 		.box-nav {
-			border-radius: 5px;
-			background-color: @color-black;
 			nav {
 				overflow: auto;
 				&::-webkit-scrollbar-track {
@@ -56,33 +51,37 @@ aside {
 				}
 				.title-menu {
 					font-weight: 600;
-					color: @color-white;
+					color: @color-dark-gray;
 				}
 				.nav-link:focus {
-					color: @color-main;
+					color: @color-black;
 				}
 			}
 		}
 	}
-	.nav.active {
-		left: -230px;
-	}
 	.icon-nav-arrow.active {
 		background-color: @color-main;
-		left: 0;
 		i::before {
 			transform: rotate(180deg);
 		}
 	}
 	.logo {
-		transform: scale(1);
-		transition: transform 0.7s;
+		transition: width 0.7s;
 	}
 	.logo.active {
-		transform: scale(0);
+		width: 0;
+	}
+	.name-page {
+		overflow: hidden;
+	}
+	.name-page p {
+		overflow: hidden;
+		margin-left: 1rem;
+		transition: width 0.7s, transform 0.7s, margin 0.7s;
+	}
+	.name-page.active p {
+		transform: translate(-200%);
+		width: 0;
+		margin: 0;
 	}
 }
-aside.active {
-	width: 0;
-}
-

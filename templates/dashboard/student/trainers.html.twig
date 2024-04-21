@@ -18,8 +18,8 @@
 
 
 				<p class="h5">Twój Trener</p>
-				<div class="rounded-4 p-2 bg-white">
-					<table class="table m-0">
+				<div class="rounded-5 p-3 my-bg-white">
+					<table class="table m-0 my-bg-white">
 						<thead>
 							<tr>
 								<th scope="col"></th>
@@ -40,22 +40,24 @@
 							</td>
 							<td>{{app.user.trainer.id}}</td>
 							<td>
-								<a href="{{path('student_trainer', {id: app.user.trainer.id})}}">{{app.user.trainer.firstName}}</a>
+								{{app.user.trainer.firstName}}
 							</td>
 							<td>{{app.user.trainer.lastName}}</td>
 							<td>{{app.user.trainer.email}}</td>
 							<td class="text-end">
+							<a type="button" class="btn" href="{{path('student_trainer', {id: app.user.trainer.id})}}">Czytaj...</a>
 								<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
 									Zakończ
 								</button>
+
 							</td>
 						</tbody>
 					</table>
 				</div>
 				<p class="h5 mt-5">Pozostali</p>
 			{% endif %}
-			<div class="rounded-4 p-2 bg-white">
-				<table class="table m-0">
+			<div class="rounded-5 p-3 my-bg-white">
+				<table class="table m-0 my-bg-white">
 					<thead>
 						<tr>
 							<th scope="col"></th>
@@ -80,12 +82,12 @@
 
 								<td>{{trainer[0].id}}</td>
 								<td>
-									<a href="{{path('student_trainer', {id: trainer[0].id})}}">{{trainer[0].firstName}}</a>
+								{{trainer[0].firstName}}
 								</td>
 								<td>{{trainer[0].lastName}}</td>
 								<td>
 									{% if trainer.average_rating %}
-										<i class="bi bi-star-fill text-warning"></i>
+										<i class="bi bi-star-fill text-success"></i>
 										{{trainer.average_rating | number_format(2, '.', ',') }}
 									{% else %}
 										brak ocen
@@ -93,6 +95,7 @@
 								</td>
 								<td>{{trainer[0].email}}</td>
 								<td class="text-end">
+									<a type="button" class="btn" href="{{path('student_trainer', {id: trainer[0].id})}}">Czytaj...</a>
 									<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal{{trainer[0].id}}">
 										Wybierz
 									</button>

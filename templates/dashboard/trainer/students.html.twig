@@ -14,8 +14,8 @@
 		<section>
 			{% include "shared_global/info.html.twig" %}
 			{% if students is not empty  %}
-				<div class="rounded-4 p-2 bg-white">
-					<table class="table m-0">
+				<div class="rounded-5 p-3 my-bg-white">
+					<table class="table m-0 my-bg-white">
 						<thead>
 							<tr>
 								<th scope="col"></th>
@@ -38,7 +38,7 @@
 							<td>{{student.firstName}}</td>
 							<td>{{student.lastName}}</td>
 							<td class="text-end">
-								<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+								<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
 									Zakończ
 								</button>
 							</td>
@@ -59,9 +59,8 @@
 									Czy jesteś pewien ?
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
-									<a type="button" class="btn" href="{{path('student_termination', {id: student.id})}}">Tak</a>
-
+									<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Anuluj</button>
+									<a type="button" class="btn btn-success" href="{{path('student_termination', {id: student.id})}}">Tak</a>
 								</div>
 							</div>
 						</div>

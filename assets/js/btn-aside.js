@@ -1,16 +1,15 @@
 const btn = document.querySelector(".icon-nav-arrow")
-const header = document.querySelector(".nav")
 const bi = document.querySelector(".bi")
-const aside = document.querySelector("aside")
-const main = document.querySelector("main")
 const logo = document.querySelector(".logo")
 const logoHeder = document.querySelector(".logo-header")
+const navLink = document.querySelectorAll("nav .nav-link .name-page")
 
 btn.addEventListener("click", () => {
-	header.classList.toggle("active")
+	bi.classList.toggle("active")
 	btn.classList.toggle("active")
-	aside.classList.toggle("active")
-	main.classList.toggle("active")
 	logo.classList.toggle("active")
 	logoHeder.classList.toggle("active")
+	navLink.forEach(element => {
+		element.classList.toggle("active")
+	})
 })

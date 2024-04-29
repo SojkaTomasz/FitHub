@@ -11,8 +11,7 @@
 				{% if is_granted('ROLE_STUDENT')  %}
 					{% set itemsStudentPanel = [
 						{route: 'dashboard' , title: 'Panel Główny'},
-						{route: 'dashboard' , title: 'Trening'},
-						{route: 'dashboard' , title: 'Dieta'},
+						{route: 'student_reports_analysis' , title: 'Plany'},
 						{route: 'student_reports' , title: 'Raporty'},
 						{route: 'all_trainers' , title: 'Trenerzy'},
 					]  %}

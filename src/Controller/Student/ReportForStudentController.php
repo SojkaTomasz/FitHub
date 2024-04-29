@@ -5,6 +5,7 @@ namespace App\Controller\Student;
 use App\Entity\Report;
 use App\Entity\ReportAnalysis;
 use App\Form\ReportType;
+use App\Repository\ReportAnalysisRepository;
 use App\Repository\ReportRepository;
 use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
@@ -140,6 +141,17 @@ class ReportForStudentController extends AbstractController
 
         return $this->render('dashboard/student/report_edit.html.twig', [
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/dashboard/student/diets', name: 'student_reports_analysis')]
+    public function diets(ReportAnalysisRepository $reportAnalysisRepository): Response
+    {
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+        $reportsAnalysis = $reportAnalysisRepository->findMyReportsAnalysis($user->getId());
+        return $this->render('dashboard/student/diets.html.twig', [
+            'reportsAnalysis' => $reportsAnalysis
         ]);
     }
 }

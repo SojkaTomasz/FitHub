@@ -21,28 +21,15 @@ class ReportAnalysisRepository extends ServiceEntityRepository
         parent::__construct($registry, ReportAnalysis::class);
     }
 
-    //    /**
-    //     * @return ReportAnalysis[] Returns an array of ReportAnalysis objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('r.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
 
-    //    public function findOneBySomeField($value): ?ReportAnalysis
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findMyReportsAnalysis(int $studentId): array
+    {
+        return $this->createQueryBuilder('r')
+            ->join('r.report', 'report')
+            ->andWhere('report.student  = :studentId')
+            ->setParameter('studentId', $studentId)
+            ->orderBy('r.dateAnalysis', 'DESC')
+            ->getQuery()
+            ->execute();
+    }
 }

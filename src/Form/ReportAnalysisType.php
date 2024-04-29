@@ -13,9 +13,21 @@ class ReportAnalysisType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('trainingPlan')
-            ->add('nutritionPlan')
-            ->add('recommendations')
+            ->add('trainingPlan', null, [
+                'attr' => [
+                    'class' => 'quill-editor'
+                ]
+            ])
+            ->add('nutritionPlan', null, [
+                'attr' => [
+                    'class' => 'quill-editor'
+                ]
+            ])
+            ->add('recommendations', null, [
+                'attr' => [
+                    'class' => 'quill-editor'
+                ]
+            ])
             ->add('save', SubmitType::class);
     }
 

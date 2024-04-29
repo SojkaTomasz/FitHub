@@ -118,11 +118,11 @@
 						</div>
 						<div class="modal-body">
 							<p class="h6">Plan Treningowy:</p>
-							<p>{{report.reportAnalysis.TrainingPlan}}</p>
+							<p>{{report.reportAnalysis.TrainingPlan | raw}}</p>
 							<p class="h6 mt-3">Plan Żywieniowy:</p>
-							<p>{{report.reportAnalysis.NutritionPlan}}</p>
+							<p>{{report.reportAnalysis.NutritionPlan | raw}}</p>
 							<p class="h6 mt-3">Zalecenia:</p>
-							<p>{{report.reportAnalysis.recommendations}}</p>
+							<p>{{report.reportAnalysis.recommendations | raw}}</p>
 						</div>
 						<div class="modal-footer">
 							{% if is_granted('ROLE_TRAINER')  %}

@@ -13,28 +13,32 @@
 	{% block section %}
 		<section>
 			{% include "shared_global/info.html.twig" %}
+		<div class="d-flex align-items-center">
 			<div class="d-block">
-				{% if trainer.avatar %}
-					<img class="rounded-circle object-fit-cover my-1" width="150" height="150" src="{{avatar_url ~ trainer.avatar}}" alt=""></a>
-			{% else %}
-				<img src="/assets/image/mean.png" width="150" class="rounded-circle float-start" alt="...">
-			{% endif %}
+					{% if trainer.avatar %}
+						<img class="rounded-circle object-fit-cover my-1" width="150" height="150" src="{{avatar_url ~ trainer.avatar}}" alt=""></a>
+				{% else %}
+					<img src="/assets/image/mean.png" width="150" class="rounded-circle float-start" alt="...">
+				{% endif %}
+			</div>
+			<div class="p-3 ms-3 rounded-5 my-bg-white flex-grow-1">		
+				<p><strong>Imię:</strong>
+					{{trainer.firstName}}</p>
+				<p><strong>Nazwisko:</strong>
+					{{trainer.firstName}}</p>
+				<p><strong>Email:</strong>
+					{{trainer.email}}</p>
+				<p><strong>Opis:</strong>
+					{% if trainer.description %}
+						{{trainer.description}}
+					{% else %}
+						Brak opisu
+					{% endif %}
+				</p>
+			</div>
 		</div>
-		<p>Imię:
-			{{trainer.firstName}}</p>
-		<p>Nazwisko:
-			{{trainer.firstName}}</p>
-		<p>Email:
-			{{trainer.email}}</p>
-		<p>Opis:
-			{% if trainer.description %}
-				{{trainer.description}}
-			{% else %}
-				Brak opisu
-			{% endif %}
-		</p>
 
-		<h2>Opienie:</h2>
+		<h3>Opienie:</h3>
 		{% if form %}
 			<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
 				Dodaj Opinie
@@ -72,6 +76,10 @@
 						<p class="m-0">{{ review.opinion}}</p>
 					</div>
 				{% endfor %}
+			{% else %}
+				<div class="my-bg-white my-2 p-3 rounded-5">
+					<p>brak opini</p>
+				</div>
 			{% endif %}
 		</section>
 	{% endblock %}

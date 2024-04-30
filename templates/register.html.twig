@@ -3,7 +3,7 @@
 {% block title %}Register
 {% endblock %}
 
-{% block main %}
+{% block home %}
 	<div class="container mt-5">
 		<h1>Rejestracja
 		</h1>
@@ -70,5 +70,6 @@
 		</div>
 		<button type="submit" class="btn btn-success">Register</button>
 		{{ form_end(registrationForm) }}
+	<a type="button" class="btn btn-success btn-lg mx-1" href="{{path('login')}}">Login</a>
 	</div>
 {% endblock %}

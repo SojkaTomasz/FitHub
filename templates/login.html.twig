@@ -3,7 +3,7 @@
 {% block title %}Hello LoginController!
 {% endblock %}
 
-{% block main %}
+{% block home %}
 	<div class="container my-5">
 		{% include "shared_global/info.html.twig" %}
 		<h1>Logowanie</h1>
@@ -24,5 +24,6 @@
 			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 			<button class="btn btn-success" type="submit">login</button>
 		</form>
+	<a type="button" class="btn btn-success btn-lg mx-1" href="{{path('registration_user')}}">Rejestracja</a>
 	</div>
 {% endblock %}

@@ -19,25 +19,21 @@
 		{% block head %}{% endblock %}
 	</head>
 	<body>
-
 		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 				{% include 'dashboard/aside.html.twig' %}
+				{% include 'dashboard/header.html.twig' %}
+				<main class="d-flex flex-column flex-grow-1">
+				{% block main %}
+					{% block titleSection %}{% endblock %}
+					{% block section %}{% endblock %}
+				{% endblock %}
+				</main>
 		{% else %}
+		{% block home %}
 			<a type="button" class="btn btn-success btn-lg mx-1" href="{{path('login')}}">Login</a>
 			<a type="button" class="btn btn-success btn-lg mx-1" href="{{path('registration_user')}}">Rejestracja</a>
+		{% endblock %}
+
 		{% endif %}
-			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-				{% include 'dashboard/header.html.twig' %}
-			{% endif %}
-		<main class="d-flex flex-column flex-grow-1">
-			{% block main %}
-				{% block titleSection %}{% endblock %}
-
-				{% block section %}{% endblock %}
-
-
-			{% endblock %}
-		</main>
-
 	</body>
 </html>

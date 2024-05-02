@@ -1,0 +1,16 @@
+<div>
+	{{ form_errors(formEmail) }}
+	{{ form_start(formEmail, {'attr':{'class': 'row g-3 needs-validation'}}) }}
+
+	<div class="col-md-12">
+		{{ form_label(formEmail.email, 'Edytuj Email', {'label_attr': {'class': 'form-label h3'}}) }}
+		{{ form_widget(formEmail.email, {'attr': {'class': 'form-control my-bg-white'}}) }}
+		<div class="text-danger">
+			<small>{{ form_errors(formEmail.email) }}</small>
+		</div>
+	</div>
+	<div class="text-end">
+		<button type="submit" class="btn btn-success">Zapisz</button>
+	</div>
+	{{ form_end(formEmail) }}
+</div>

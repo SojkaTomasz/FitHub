@@ -29,4 +29,25 @@ html {
 	.progress-bar {
 		background-color: @color-main;
 	}
+
+	.list-group-item.active {
+		background-color: @color-main !important;
+		border-color: transparent !important;
+	}
+	.list-group-item {
+		border-radius: 0 !important;
+		background-color: @bg-light-gray;
+		--bs-table-bg: @bg-light-gray;
+		border-top: 0 !important;
+		border-left: 0 !important;
+		border-bottom: 0 !important;
+		margin-bottom: 0.1rem;
+	}
+	.list-group-item:first-child {
+		border-radius: 1rem 0 0 0!important;
+	}
+	.list-group-item:last-child {
+		border-radius: 0 0 0 1rem !important;
+		margin: 0;
+	}
 }

@@ -1,0 +1,16 @@
+<div>
+	{{ form_errors(formDescription) }}
+	{{ form_start(formDescription, {'attr':{'class': 'row g-3 needs-validation'}}
+	)}}
+	<div class="col-md-12">
+		{{ form_label(formDescription.description, 'Edytuj Opis', {'label_attr': {'class': 'form-label h3'}}) }}
+		{{ form_widget(formDescription.description, {'attr': {'class': 'form-control my-bg-white'}}) }}
+		<div class="text-danger">
+			<small>{{ form_errors(formDescription.description) }}</small>
+		</div>
+	</div>
+	<div class="text-end">
+		<button type="submit" class="btn btn-success">Zapisz</button>
+	</div>
+	{{ form_end(formDescription) }}
+</div>

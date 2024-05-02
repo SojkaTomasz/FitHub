@@ -1,12 +1,12 @@
 {% set parameters = [
-	{title: 'Waga' , actual: report.weight, last: lastReport[0].weight, diference: lastReport[0].weight - report.weight, measure: "kg"},
-	{title: 'Łydka' , actual: report.calfCircumference, last: lastReport[0].calfCircumference, diference: lastReport[0].calfCircumference - report.calfCircumference, measure: "cm"},
-	{title: 'Udo' , actual: report.thighCircumference, last: lastReport[0].thighCircumference, diference: lastReport[0].thighCircumference - report.thighCircumference, measure: "cm"},
-	{title: 'pas' , actual: report.beltCircumference, last: lastReport[0].beltCircumference, diference: lastReport[0].beltCircumference - report.beltCircumference, measure: "cm"},
-	{title: 'Klatka' , actual: report.chestCircumference, last: lastReport[0].chestCircumference, diference: lastReport[0].chestCircumference - report.chestCircumference, measure: "cm"},
-	{title: 'Szyja' , actual: report.neckCircumference, last: lastReport[0].neckCircumference, diference: lastReport[0].neckCircumference - report.neckCircumference, measure: "cm"},
-	{title: 'Biceps' , actual: report.bicepsCircumference, last: lastReport[0].bicepsCircumference, diference: lastReport[0].bicepsCircumference - report.bicepsCircumference, measure: "cm"},
-	{title: 'Przedramię' , actual: report.forearmCircumference, last: lastReport[0].forearmCircumference, diference: lastReport[0].forearmCircumference - report.forearmCircumference, measure: "cm"},
+	{title: 'Waga' , actual: report.weight, last: lastReport[0].weight, diference: report.weight - lastReport[0].weight, measure: "kg"},
+	{title: 'Łydka' , actual: report.calfCircumference, last: lastReport[0].calfCircumference, diference:  report.calfCircumference -  lastReport[0].calfCircumference, measure: "cm"},
+	{title: 'Udo' , actual: report.thighCircumference, last: lastReport[0].thighCircumference, diference:  report.thighCircumference -  lastReport[0].thighCircumference, measure: "cm"},
+	{title: 'pas' , actual: report.beltCircumference, last: lastReport[0].beltCircumference, diference:  report.beltCircumference -  lastReport[0].beltCircumference, measure: "cm"},
+	{title: 'Klatka' , actual: report.chestCircumference, last: lastReport[0].chestCircumference, diference:  report.chestCircumference -  lastReport[0].chestCircumference, measure: "cm"},
+	{title: 'Szyja' , actual: report.neckCircumference, last: lastReport[0].neckCircumference, diference:  report.neckCircumference -  lastReport[0].neckCircumference, measure: "cm"},
+	{title: 'Biceps' , actual: report.bicepsCircumference, last: lastReport[0].bicepsCircumference, diference:  report.bicepsCircumference -  lastReport[0].bicepsCircumference, measure: "cm"},
+	{title: 'Przedramię' , actual: report.forearmCircumference, last: lastReport[0].forearmCircumference, diference:  report.forearmCircumference -  lastReport[0].forearmCircumference, measure: "cm"},
 ] %}
 
 {% for parameter in parameters %}

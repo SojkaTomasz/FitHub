@@ -3,7 +3,6 @@
 {% block title %}Ustawienia
 {% endblock %}
 
-
 {% block main %}
 	{% block titleSection %}
 		<div class="title-section">
@@ -13,27 +12,54 @@
 	{% block section %}
 		<section>
 			{% include "shared_global/info.html.twig" %}
-			<div class="d-block">
-				{% if app.user.avatar %}
-					<img class="rounded-circle object-fit-cover my-1" width="150" height="150" src="{{avatar_url ~ app.user.avatar}}" alt=""></a>
-			{% else %}
-
-				<img src="/assets/image/mean.png" width="150" class="rounded-circle float-start" alt="...">
-			{% endif %}
+			<div class="row">
+				<div class="col-2 pe-0">
+					<div class="list-group" id="list-tab" role="tablist">
+						<a class="rounded list-group-item list-group-item-action active text-center" id="list-home-list" data-bs-toggle="list" href="#list-home" role="tab" aria-controls="list-home">Dane</a>
+						<a class="rounded list-group-item list-group-item-action text-center" id="list-password-list" data-bs-toggle="list" href="#list-password" role="tab" aria-controls="list-password">Edytuj hasło</a>
+						<a class="rounded list-group-item list-group-item-action text-center" id="list-description-list" data-bs-toggle="list" href="#list-description" role="tab" aria-controls="list-description">Edytuj opis</a>
+						<a class="rounded list-group-item list-group-item-action text-center" id="list-email-list" data-bs-toggle="list" href="#list-email" role="tab" aria-controls="list-email">Edytuj email</a>
+						<a class="rounded list-group-item list-group-item-action text-center" id="list-avatar-list" data-bs-toggle="list" href="#list-avatar" role="tab" aria-controls="list-avatar">Edytuj avatar</a>
+					</div>
+				</div>
+				<div class="col-10 my-bg-white rounded-end-5 p-3 d-flex align-items-center">
+					<div class="tab-content w-100" id="nav-tabContent">
+						<div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+							<div class="d-flex align-items-center">
+								{% if app.user.avatar %}
+									<img class="rounded-circle object-fit-cover me-2 mb-2" width="150" height="150" src="{{avatar_url ~ app.user.avatar}}" alt=""></a>
+							{% else %}
+								<img src="/assets/image/mean.png" width="150" height="150" class="rounded-circle float-start me-2 mb-2" alt="...">
+							{% endif %}
+							<div class=" ms-3">
+								<p>
+									<strong>Imię:</strong>
+									{{app.user.firstName}}</p>
+								<p>
+									<strong>Nazwisko:</strong>
+									{{app.user.lastName}}</p>
+								<p>
+									<strong>Email:</strong>
+									{{app.user.email}}</p>
+							</div>
+						</div>
+						<div class="text-center">
+							<p class="col-12">
+								<strong>Opis:</strong>
+							</p>
+							{% if app.user.description %}
+								<p>{{app.user.description}}</p>
+							{% else %}
+								<p>Brak opisu</p>
+							{% endif %}
+						</div>
+					</div>
+					<div class="tab-pane fade" id="list-password" role="tabpanel" aria-labelledby="list-password-list">{% include "dashboard/_edit_password.html.twig" %}</div>
+					<div class="tab-pane fade" id="list-description" role="tabpanel" aria-labelledby="list-description-list">{% include "dashboard/_edit_description.html.twig" %}</div>
+					<div class="tab-pane fade" id="list-email" role="tabpanel" aria-labelledby="list-email-list">{% include "dashboard/_edit_email.html.twig" %}</div>
+					<div class="tab-pane fade" id="list-avatar" role="tabpanel" aria-labelledby="list-avatar-list">{% include "dashboard/_edit_avatar.html.twig" %}</div>
+				</div>
+			</div>
 		</div>
-		<p>Imię:
-			{{app.user.firstName}}</p>
-		<p>Nazwisko:
-			{{app.user.lastName}}</p>
-		<p>Email:
-			{{app.user.email}}</p>
-		<p>Opis:
-			{% if app.user.description %}
-				{{app.user.description}}
-			{% else %}
-				Brak opisu
-			{% endif %}
-		</p>
-		<a type="button" class="btn btn-success" href="{{path('settings_edit')}}">Edytuj dane</a>
 	</section>
 {% endblock %}{% endblock %}

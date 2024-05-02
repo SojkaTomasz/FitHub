@@ -2,6 +2,16 @@
 @import "../vars.less";
 
 html {
+	.form-errors {
+		small ul {
+			list-style: none;
+			padding-left: 0.3rem;
+			margin: 0;
+			li {
+				color: @color-main;
+			}
+		}
+	}
 	.form-control:focus {
 		box-shadow: 0 0 0 0.05rem @bg-main !important;
 		border-color: @bg-main;

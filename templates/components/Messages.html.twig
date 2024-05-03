@@ -1,0 +1,11 @@
+{# messages_component.html.twig #}
+
+{# Początek definicji komponentu Twig #}
+<div {{ attributes }}>
+    <strong>{{ this.randomNumber }}</strong>
+
+    <button
+        data-action="live#$render"
+    >Generate a new number!</button>
+</div>
+{# Koniec definicji komponentu Twig #}

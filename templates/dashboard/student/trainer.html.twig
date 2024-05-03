@@ -13,28 +13,33 @@
 	{% block section %}
 		<section>
 			{% include "shared_global/info.html.twig" %}
-		<div class="d-flex align-items-center">
-			<div class="d-block">
+			<div class="d-flex align-items-center">
+				<div class="d-block">
 					{% if trainer.avatar %}
 						<img class="rounded-circle object-fit-cover my-1" width="150" height="150" src="{{avatar_url ~ trainer.avatar}}" alt=""></a>
 				{% else %}
 					<img src="/assets/image/mean.png" width="150" class="rounded-circle float-start" alt="...">
 				{% endif %}
 			</div>
-			<div class="p-3 ms-3 rounded-5 my-bg-white flex-grow-1">		
-				<p><strong>Imię:</strong>
+			<div class="p-3 ms-3 rounded-5 my-bg-white flex-grow-1">
+				<p>
+					<strong>Imię:</strong>
 					{{trainer.firstName}}</p>
-				<p><strong>Nazwisko:</strong>
-					{{trainer.firstName}}</p>
-				<p><strong>Email:</strong>
+				<p>
+					<strong>Nazwisko:</strong>
+					{{trainer.lastName}}</p>
+				<p>
+					<strong>Email:</strong>
 					{{trainer.email}}</p>
-				<p><strong>Opis:</strong>
+				<p>
+					<strong>Opis:</strong>
 					{% if trainer.description %}
 						{{trainer.description}}
 					{% else %}
 						Brak opisu
 					{% endif %}
 				</p>
+				<a href="{{path('message', {id:trainer.id})}}">Wyślij Wiadomość</a>
 			</div>
 		</div>
 
@@ -67,11 +72,11 @@
 				{% for review in trainer.reviews %}
 					<div class="my-bg-white my-2 p-3 rounded-5">
 						<div class="d-flex flex-wrap justify-content-between align-items-center">
-						<p class="m-0">Ocena:
-							{{ review.rating}}</p>
-						<p class="m-0">Data:
-							{{ review.date | date("d.m.Y")}}
-						</p>
+							<p class="m-0">Ocena:
+								{{ review.rating}}</p>
+							<p class="m-0">Data:
+								{{ review.date | date("d.m.Y")}}
+							</p>
 						</div>
 						<p class="m-0">{{ review.opinion}}</p>
 					</div>

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\MessageRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -12,29 +13,32 @@ class Message
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: "integer")]
-    private $id;
+    #[ORM\Column]
+    private int $id;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private $sender;
+    private User $sender;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private $recipient;
+    private User $recipient;
 
-    #[ORM\Column(type: "text")]
-    private $content;
+    #[ORM\Column(type: Types::TEXT)]
+    private string $content;
 
-    #[ORM\Column(type: "datetime")]
-    private $createdAt;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $createdAt;
 
-    public function getId(): ?int
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $seen;
+
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getSender(): ?User
+    public function getSender(): User
     {
         return $this->sender;
     }
@@ -46,7 +50,7 @@ class Message
         return $this;
     }
 
-    public function getRecipient(): ?User
+    public function getRecipient(): User
     {
         return $this->recipient;
     }
@@ -78,6 +82,18 @@ class Message
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function isSeen(): bool
+    {
+        return $this->seen;
+    }
+
+    public function setSeen(bool $seen): static
+    {
+        $this->seen = $seen;
 
         return $this;
     }

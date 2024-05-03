@@ -66,6 +66,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Reviews::class, mappedBy: 'trainer')]
     private Collection $reviews;
 
+    #[ORM\Column]
+    private int $unreadMessageCount = 0;
+
     public function __construct()
     {
         $this->students = new ArrayCollection();
@@ -356,6 +359,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $review->setTrainer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUnreadMessageCount(): ?int
+    {
+        return $this->unreadMessageCount;
+    }
+
+    public function setUnreadMessageCount(int $unreadMessageCount): static
+    {
+        $this->unreadMessageCount = $unreadMessageCount;
 
         return $this;
     }

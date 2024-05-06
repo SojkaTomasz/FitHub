@@ -11,25 +11,24 @@
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 {% endblock %}
 
-
 {% block main %}
 	{% block titleSection %}
 		<div class="title-section">
-			<h2 class="title">Analiza raportu podopiecznego:
+			<h3 class="title">Analiza raportu podopiecznego:
 				{{report.student.firstName}}
 				{{report.student.lastName}}
-			</h2>
+			</h3>
 		</div>
 	{% endblock %}
 	{% block section %}
 		<section>
 			{{ form(form) }}
-			</section>
-		{% endblock %}
 
 		<script>
 			$(document).ready(function () {
 				$('.quill-editor').summernote();
 			});
 		</script>
+				</section>
 	{% endblock %}
+{% endblock %}

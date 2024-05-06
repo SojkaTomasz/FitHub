@@ -4,11 +4,11 @@
 		<div
 			class="d-flex">
 			{# <button type="button" class="btn btn-primary position-relative p-0 border-0 bg-transparent mx-2 mt-1">
-													<i class="bi bi-info-circle"></i>
-													<span class="position-absolute start-100 translate-middle badge rounded-pill">
-														12
-													</span>
-												</button> #}
+																<i class="bi bi-info-circle"></i>
+																<span class="position-absolute start-100 translate-middle badge rounded-pill">
+																	12
+																</span>
+															</button> #}
 			<button type="button" class="btn btn-primary position-relative p-0 border-0 bg-transparent mx-2 mt-1">
 				<a href="{{path('messages')}}">
 					<i class="bi bi-chat-dots"></i>
@@ -22,11 +22,7 @@
 			<div class="d-flex flex-column align-items-center mx-2">
 				<div class="btn-group dropdown ">
 					<button type="button" class="dropdown-toggle dropdown-toggle-split p-0 img-header" data-bs-toggle="dropdown" aria-expanded="false">
-						{% if app.user.avatar %}
-							<img class="rounded-circle object-fit-cover" width="40" height="40" src="{{avatar_url ~ app.user.avatar}}" alt=""></a>
-					{% else %}
-						<img src="/assets/image/mean.png" width="40" height="40" class="rounded-circle float-start" alt="...">
-					{% endif %}
+						{% include 'dashboard/shared/_img_avatar.html.twig' with {avatar: app.user.avatar , width: 40, height: 40} %}
 					<i class="bi bi-caret-down-square-fill"></i>
 				</button>
 				<ul class="dropdown-menu border-0">

@@ -6,10 +6,10 @@
 {% block main %}
 	{% block titleSection %}
 		<div class="title-section">
-			<h2 class="title">Wiadomość z
+			<h3 class="title">Wiadomość z
 				{{recipient.firstName}}
 				{{ recipient.lastName}}
-			</h2>
+			</h3>
 		</div>
 	{% endblock %}
 	{% block section %}
@@ -19,52 +19,38 @@
 					{% for message in messages %}
 						{% if app.user == message.sender  %}
 							<div class="text-end d-flex flex-column align-items-end mb-2">
-								<small class="d-flex align-items-end">{{message.createdAt|date(" d.m.y m:h") }}
-									{% if app.user.avatar %}
-										<img class="rounded-circle object-fit-cover ms-1 mb-1" width="30" height="30" src="{{avatar_url ~ app.user.avatar}}" alt=""></a>
-								{% else %}
-									<img src="/assets/image/mean.png" width="30" height="30" class="rounded-circle float-start" alt="...">
-								{% endif %}
-							</small>
-							<span class="bg-success rounded-4 py-2 px-3 text-white">
-								{{message.content}}
-							</span>
-						</div>
-					{% else %}
-
-						<div class="d-flex flex-column align-items-start mb-2">
-							<small class="d-flex align-items-end">
-								{% if recipient.avatar %}
-									<img class="rounded-circle object-fit-cover me-1 mb-1" width="30" height="30" src="{{avatar_url ~ recipient.avatar}}" alt=""></a>
-							{% else %}
-								<img src="/assets/image/mean.png" width="30" height="30" class="rounded-circle float-start me-1" alt="...">
-							{% endif %}
-							{{message.createdAt|date(" d.m.y m:h") }}</small>
-						<span class="my-bg-white rounded-4 py-2 px-3">
-							{{message.content}}</span>
-					</div>
-
+								<div class="d-flex align-items-end">
+									<small class="me-1">{{message.createdAt|date(" d.m.y m:h") }}</small>
+									{% include 'dashboard/shared/_img_avatar.html.twig' with {avatar: app.user.avatar , width: 30, height: 30} %}
+								</div>
+								<span class="bg-success rounded-4 py-2 px-3 text-white">
+									{{message.content}}
+								</span>
+							</div>
+						{% else %}
+							<div class="d-flex flex-column align-items-start mb-2">
+								<div class="d-flex align-items-end">
+									{% include 'dashboard/shared/_img_avatar.html.twig' with {avatar: recipient.avatar , width: 30, height: 30} %}
+									<small class="ms-1">{{message.createdAt|date(" d.m.y m:h") }}</small>
+								</div>
+								<span class="my-bg-white rounded-4 py-2 px-3">
+									{{message.content}}</span>
+							</div>
+						{% endif %}
+					{% endfor %}
+				{% else %}
+					<p class='my-bg-white rounded-4 p-3 h4 text-center text-uppercase'>Brak wiadomości</p>
 				{% endif %}
-			{% endfor %}
-		{% else %}
-			<p class='my-bg-white rounded-4 p-3 h4 text-center text-uppercase'>Brak wiadomości</p>
-		{% endif %}
-	</div>
-
-
-	<div class="position-sticky bottom-0 my-bg-light pb-3">
-		{{ form_errors(form) }}
-		{{ form_start(form, {'attr':{'class': 'row g-3 needs-validation'}})}}
-		<div class="col-md-12">
-			{{ form_widget(form.content, {'attr': {'class': 'form-control my-bg-white'}}) }}
-			<div class="form-errors">
-				<small>{{ form_errors(form.content) }}</small>
 			</div>
-		</div>
-		<div class="text-end">
-			<button type="submit" class="btn btn-success">Wyślij</button>
-		</div>
-		{{ form_end(form) }}
-	</div>
-
-</section>{% endblock %}{% endblock %}
+			<div class="position-sticky bottom-0 my-bg-light pb-3">
+				{{ form_errors(form) }}
+				{{ form_start(form, {'attr':{'class': 'row g-3 needs-validation'}})}}
+				{{ form_widget(form.content, {'attr': {'class': 'col-md-12 form-control my-bg-white'}}) }}
+				<div class="text-end">
+					<button type="submit" class="btn btn-success">Wyślij</button>
+				</div>
+				{{ form_end(form) }}
+			</div>
+		</section>
+	{% endblock %}
+{% endblock %}

@@ -6,7 +6,7 @@
 {% block main %}
 	{% block titleSection %}
 		<div class="title-section">
-			<h2 class="title">Ustawienia</h2>
+			<h3 class="title">Ustawienia</h3>
 		</div>
 	{% endblock %}
 	{% block section %}
@@ -26,40 +26,37 @@
 					<div class="tab-content w-100" id="nav-tabContent">
 						<div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
 							<div class="d-flex align-items-center">
-								{% if app.user.avatar %}
-									<img class="rounded-circle object-fit-cover me-2 mb-2" width="150" height="150" src="{{avatar_url ~ app.user.avatar}}" alt=""></a>
-							{% else %}
-								<img src="/assets/image/mean.png" width="150" height="150" class="rounded-circle float-start me-2 mb-2" alt="...">
-							{% endif %}
-							<div class=" ms-3">
-								<p>
-									<strong>Imię:</strong>
-									{{app.user.firstName}}</p>
-								<p>
-									<strong>Nazwisko:</strong>
-									{{app.user.lastName}}</p>
-								<p>
-									<strong>Email:</strong>
-									{{app.user.email}}</p>
+								{% include 'dashboard/shared/_img_avatar.html.twig' with {avatar: app.user.avatar , width: 150, height: 150} %}
+								<div class=" ms-3">
+									<p>
+										<strong>Imię:</strong>
+										{{app.user.firstName}}</p>
+									<p>
+										<strong>Nazwisko:</strong>
+										{{app.user.lastName}}</p>
+									<p>
+										<strong>Email:</strong>
+										{{app.user.email}}</p>
+								</div>
+							</div>
+							<div class="text-center">
+								<p class="col-12">
+									<strong>Opis:</strong>
+								</p>
+								{% if app.user.description %}
+									<p>{{app.user.description}}</p>
+								{% else %}
+									<p>Brak opisu</p>
+								{% endif %}
 							</div>
 						</div>
-						<div class="text-center">
-							<p class="col-12">
-								<strong>Opis:</strong>
-							</p>
-							{% if app.user.description %}
-								<p>{{app.user.description}}</p>
-							{% else %}
-								<p>Brak opisu</p>
-							{% endif %}
-						</div>
+						<div class="tab-pane fade" id="list-password" role="tabpanel" aria-labelledby="list-password-list">{% include "dashboard/_edit_password.html.twig" %}</div>
+						<div class="tab-pane fade" id="list-description" role="tabpanel" aria-labelledby="list-description-list">{% include "dashboard/_edit_description.html.twig" %}</div>
+						<div class="tab-pane fade" id="list-email" role="tabpanel" aria-labelledby="list-email-list">{% include "dashboard/_edit_email.html.twig" %}</div>
+						<div class="tab-pane fade" id="list-avatar" role="tabpanel" aria-labelledby="list-avatar-list">{% include "dashboard/_edit_avatar.html.twig" %}</div>
 					</div>
-					<div class="tab-pane fade" id="list-password" role="tabpanel" aria-labelledby="list-password-list">{% include "dashboard/_edit_password.html.twig" %}</div>
-					<div class="tab-pane fade" id="list-description" role="tabpanel" aria-labelledby="list-description-list">{% include "dashboard/_edit_description.html.twig" %}</div>
-					<div class="tab-pane fade" id="list-email" role="tabpanel" aria-labelledby="list-email-list">{% include "dashboard/_edit_email.html.twig" %}</div>
-					<div class="tab-pane fade" id="list-avatar" role="tabpanel" aria-labelledby="list-avatar-list">{% include "dashboard/_edit_avatar.html.twig" %}</div>
 				</div>
 			</div>
-		</div>
-	</section>
-{% endblock %}{% endblock %}
+		</section>
+	{% endblock %}
+{% endblock %}

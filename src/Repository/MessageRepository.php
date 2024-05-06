@@ -38,8 +38,10 @@ class MessageRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('m')
             ->orWhere('m.sender = :recipientId')
+            ->orWhere('m.recipient = :recipientId')
             ->setParameter('recipientId', $recipientId)
             ->groupBy('m.sender,m.recipient')
+            ->orderBy("m.createdAt", "DESC")
             ->getQuery()
             ->getResult();
     }

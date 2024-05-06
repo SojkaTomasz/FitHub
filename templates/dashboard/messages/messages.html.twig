@@ -7,7 +7,7 @@
 {% block main %}
 	{% block titleSection %}
 		<div class="title-section">
-			<h2 class="title">Wszystkie wiadomości</h2>
+			<h3 class="title">Wszystkie wiadomości</h3>
 		</div>
 	{% endblock %}
 	{% block section %}
@@ -25,33 +25,32 @@
 					</thead>
 					<tbody>
 						{% for message in messages %}
-							<tr>
-								<td>
-									{% if message.recipient.avatar %}
-										<img class="rounded-circle object-fit-cover my-1" width="35" height="35" src="{{avatar_url ~ message.recipient.avatar}}" alt="">
-									{% else %}
-										<img src="/assets/image/mean.png" width="35" height="35" class="rounded-circle float-start" alt="...">
-									{% endif %}
-								</td>
-								<td>
-									{{message.recipient.firstName}}
-								</td>
-								<td>{{message.recipient.lastName}}</td>
-								<td class="text-end">
-									<div class="position-relative">
-										<a type="button" class="btn btn-danger text-decoration-none text-white" href="{{path('message', {id:message.recipient.id})}}">Czytaj</a>
-										{% if message.seen %}
-											<span class="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">
-												<span class="visually-hidden">New alerts</span>
-											</span>
-										{% endif %}
-									</div>
-								</td>
-							</tr>
+							{% if app.user != message.sender  %}
+								<tr class="line-height">
+									<td>
+										{% include 'dashboard/shared/_img_avatar.html.twig' with {avatar: message.sender.avatar , width: 35, height: 35} %}
+									</td>
+									<td>
+										{{message.sender.firstName}}
+									</td>
+									<td>{{message.sender.lastName}}</td>
+									<td class="text-end">
+										<div class="position-relative">
+											<a type="button" class="btn btn-danger text-decoration-none text-white" href="{{path('message', {id:message.sender.id})}}">Czytaj</a>
+											{% if app.user == message.recipient and message.seen == false %}
+												<span class="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">
+													<span class="visually-hidden">New alerts</span>
+												</span>
+											{% endif %}
+										</div>
+									</td>
+								</tr>
+								{% else %}
+							{% endif %}
 						{% endfor %}
 					</tbody>
-				</tbody>
-			</table>
-		</div>
-	</section>
-{% endblock %}{% endblock %}
+				</table>
+			</div>
+		</section>
+	{% endblock %}
+{% endblock %}

@@ -1,0 +1,5 @@
+{% if avatar %}
+	<img class="rounded-circle object-fit-cover my-1" width={{width}} height={{height}} src="{{avatar_url ~ avatar}}" alt="">
+{% else %}
+   <img src="/assets/image/mean.png" width={{width}} height={{height}} class="rounded-circle float-start" alt="...">
+{% endif %}

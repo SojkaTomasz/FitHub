@@ -26,9 +26,7 @@ class ReportForStudentController extends AbstractController
     {
         /** @var \App\Entity\User $user */
         $user = $this->getUser();
-
         $reports = $reportRepository->findMyReports($user->getId());
-
         return $this->render('dashboard/student/reports.html.twig', [
             'reports' => $reports,
             'date' => date('w'),
@@ -44,7 +42,7 @@ class ReportForStudentController extends AbstractController
 
         $idSelectedReport = $student->getId();
         $dateSelectedReport = $report->getDate();
-        $lastReport = $reportRepository->findMyLastReport($idSelectedReport, $dateSelectedReport);;
+        $lastReport = $reportRepository->findLastReport($idSelectedReport, $dateSelectedReport);;
 
         if ($report->getStudent() !== $student) {
             throw new AccessDeniedException('Nie masz dostępu do tego raportu!');

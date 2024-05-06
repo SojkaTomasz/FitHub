@@ -12,8 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Component\Validator\Constraints\Date;
-use Symfony\Component\Validator\Constraints\Regex;
 
 #[IsGranted('ROLE_STUDENT')]
 class StudentsController extends AbstractController
@@ -22,9 +20,9 @@ class StudentsController extends AbstractController
     public function trainers(UserRepository $userRepository): Response
     {
         /** @var App\Entity\User $user */
-
         $user = $this->getUser();
         $myTrainer = $user->getTrainer();
+
         if ($myTrainer) {
             $trainers = $userRepository->findAllTrainersExceptMine($myTrainer);
         } else {
@@ -37,11 +35,17 @@ class StudentsController extends AbstractController
     }
 
     #[Route('/dashboard/student/trainer/{id}', name: 'student_trainer')]
-    public function trainer(User $trainer, Request $request, EntityManagerInterface $entityManager): Response
+    public function trainer(?User $trainer, Request $request, EntityManagerInterface $entityManager): Response
     {
 
         /** @var App\Entity\User $student*/
         $student = $this->getUser();
+
+        if (!$trainer || !in_array("ROLE_TRAINER", $trainer->getRoles())) {
+            $this->addFlash('error', "Nie znaleziono trenera!");
+            return $this->redirectToRoute('all_trainers');
+        }
+
         if ($trainer->getStudents()->contains($student)) {
             $review = new Reviews();
             $form = $this->createForm(ReviewsType::class, $review);

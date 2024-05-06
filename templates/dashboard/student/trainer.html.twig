@@ -3,11 +3,10 @@
 {% block title %}Trener
 {% endblock %}
 
-
 {% block main %}
 	{% block titleSection %}
 		<div class="title-section">
-			<h2 class="title">Trener</h2>
+			<h3 class="title">Trener</h3>
 		</div>
 	{% endblock %}
 	{% block section %}
@@ -15,23 +14,15 @@
 			{% include "shared_global/info.html.twig" %}
 			<div class="d-flex align-items-center">
 				<div class="d-block">
-					{% if trainer.avatar %}
-						<img class="rounded-circle object-fit-cover my-1" width="150" height="150" src="{{avatar_url ~ trainer.avatar}}" alt=""></a>
-				{% else %}
-					<img src="/assets/image/mean.png" width="150" class="rounded-circle float-start" alt="...">
-				{% endif %}
-			</div>
-			<div class="p-3 ms-3 rounded-5 my-bg-white flex-grow-1">
-				<p>
-					<strong>Imię:</strong>
-					{{trainer.firstName}}</p>
-				<p>
-					<strong>Nazwisko:</strong>
-					{{trainer.lastName}}</p>
-				<p>
-					<strong>Email:</strong>
-					{{trainer.email}}</p>
-				<p>
+					{% include 'dashboard/shared/_img_avatar.html.twig' with {avatar: trainer.avatar , width: 150, height: 150} %}
+				</div>
+				<div class="p-3 ms-3 rounded-5 my-bg-white flex-grow-1">
+					<p>
+						<strong>Imię:</strong>
+						{{trainer.firstName}}</p>
+					<p>
+						<strong>Nazwisko:</strong>
+						{{trainer.lastName}}</p>
 					<strong>Opis:</strong>
 					{% if trainer.description %}
 						{{trainer.description}}
@@ -39,10 +30,74 @@
 						Brak opisu
 					{% endif %}
 				</p>
-				<a href="{{path('message', {id:trainer.id})}}">Wyślij Wiadomość</a>
+				<a type="button" class="btn btn-success" href="{{path('message', {id:trainer.id})}}">Wyślij Wiadomość</a>
+				{% if trainer == app.user.trainer %}
+					<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalEndWork">
+						Zakończ Współpracę
+					</button>
+				{% else %}
+					<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalChoseTrainer">
+						Rozpocznij Współpracę
+					</button>
+				{% endif %}
+				<div class="modal fade" id="exampleModalChoseTrainer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h1 class="modal-title fs-5" id="exampleModalLabel">
+									<strong>
+										{% if app.user.trainer is defined %}
+											Niestety Masz Już Trenera!!
+										{% else %}
+											Potwierdz Twój Wybór!
+										{% endif %}
+									</strong>
+								</h1>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								{% if app.user.trainer is defined %}
+									<p>Pierwsze zakończ współpracę z aktualnym trenerem.</p>
+									<p>Wyślij automatyczną Prośbę o zakończenie współrpacy z autkualnym trenerem</p>
+									<a type="button" class="btn btn-success" href="{{path('message', {id:app.user.trainer.id, autoMessage:true})}}">Wyślij Wiadomość</a>
+								{% else %}
+									Czy napewno potwierdzasz wybór trenera ?
+								{% endif %}
+							</div>
+							<div class="modal-footer">
+								{% if not app.user.trainer is defined  %}
+									<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Anuluj</button>
+									<a type="button" class="btn btn-success" type="button" class="btn" href="{{path('chose_trainer', {id: trainer.id})}}">Tak</a>
+								{% else %}
+									<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Anuluj</button>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal fade" id="exampleModalEndWork" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h1 class="modal-title fs-5" id="exampleModalLabel">
+									<strong>
+										Czy Jesteś Pewien!?
+									</strong>
+								</h1>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<p>Wyślij automatyczną Prośbę o zakończenie współrpacy z autkualnym trenerem</p>
+								<a type="button" class="btn btn-success" href="{{path('message', {id:app.user.trainer.id, autoMessage:true})}}">Wyślij Wiadomość</a>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Anuluj</button>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-
 		<h3>Opienie:</h3>
 		{% if form %}
 			<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -67,25 +122,25 @@
 						</div>
 					</div>
 				</div>
-			{% endif %}
-			{% if trainer.reviews %}
-				{% for review in trainer.reviews %}
-					<div class="my-bg-white my-2 p-3 rounded-5">
-						<div class="d-flex flex-wrap justify-content-between align-items-center">
-							<p class="m-0">Ocena:
-								{{ review.rating}}</p>
-							<p class="m-0">Data:
-								{{ review.date | date("d.m.Y")}}
-							</p>
-						</div>
-						<p class="m-0">{{ review.opinion}}</p>
-					</div>
-				{% endfor %}
-			{% else %}
+			</div>
+		{% endif %}
+		{% if trainer.reviews %}
+			{% for review in trainer.reviews %}
 				<div class="my-bg-white my-2 p-3 rounded-5">
-					<p>brak opini</p>
+					<div class="d-flex flex-wrap justify-content-between align-items-center">
+						<p class="m-0">Ocena:
+							{{ review.rating}}</p>
+						<p class="m-0">Data:
+							{{ review.date | date("d.m.Y")}}
+						</p>
+					</div>
+					<p class="m-0">{{ review.opinion}}</p>
 				</div>
-			{% endif %}
-		</section>
-	{% endblock %}
-{% endblock %}
+			{% endfor %}
+		{% else %}
+			<div class="my-bg-white my-2 p-3 rounded-5">
+				<p>brak opini</p>
+			</div>
+		{% endif %}
+	</section>
+{% endblock %}{% endblock %}

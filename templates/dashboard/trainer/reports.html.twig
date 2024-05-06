@@ -6,7 +6,7 @@
 {% block main %}
 	{% block titleSection %}
 		<div class="title-section">
-			<h2 class="title">Raporty</h2>
+			<h3 class="title">Raporty</h3>
 		</div>
 	{% endblock %}
 	{% block section %}
@@ -14,21 +14,14 @@
 			{% include "shared_global/info.html.twig" %}
 			{% if reports is not empty  %}
 				{% for report in reports %}
-
 					<a href="{{path('trainer_report', {id: report.id} )}}" type="button" class=" my-bg-white mb-2 rounded-5 d-block px-2 report-hover">
 						<div class="d-flex flex-row justify-content-between">
 							<div class="p-2 d-flex flex-column align-items-center justify-content-center">
-								{% if report.student.avatar %}
-									<img class="rounded-circle object-fit-cover my-1 me-2" width="25" height="25" src="{{avatar_url ~ report.student.avatar}}" alt="">
-								{% else %}
-									<img src="/assets/image/mean.png" width="25" height="25" class="rounded-circle object-fit-cover float-start me-2" alt="...">
-								{% endif %}
-
-								<p class="link me-2 ">
+								{% include 'dashboard/shared/_img_avatar.html.twig' with {avatar: report.student.avatar , width: 25, height: 25} %}
+								<p class="me-2">
 									{{report.student.firstname}}
 									{{report.student.lastName}}
 								</p>
-
 							</div>
 							<div class="p-2 box-img">
 								<img class="img rounded-4 object-fit-cover" src="{{reports_url ~ report.frontImg}}" alt="">
@@ -69,15 +62,16 @@
 							<div class="d-flex flex-column align-items-center text-center p-2">
 								<p class="mb-1">Sprawdzony?</p>
 								{% if report.verified %}
-									<i class="bi bi-check2-circle text-success h4 mb-0 "></i>
+									<i class="bi bi-check2-circle text-success h5 mb-0 ">
+										TAK</i>
+
 								{% else %}
-									<i class="bi bi-ban text-danger h4 mb-0"></i>
+									<i class="bi bi-ban text-danger h5 mb-0">
+										NIE</i>
 								{% endif %}
 							</div>
-
 						</div>
 					</a>
-
 				{% endfor %}
 			{% else %}
 				<p>brak podopiecznych</p>

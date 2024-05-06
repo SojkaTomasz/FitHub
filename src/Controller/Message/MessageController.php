@@ -14,8 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class MessageController extends AbstractController
 {
-    #[Route('dashboard/message/{id}', name: 'message')]
-    public function message(Request $request, EntityManagerInterface $entityManager, ?User $recipient, MessageRepository $messageRepository): Response
+    #[Route('dashboard/message/{id}/{autoMessage?}', name: 'message')]
+    public function message(Request $request, $autoMessage = false, EntityManagerInterface $entityManager, ?User $recipient, MessageRepository $messageRepository): Response
     {
         /** @var \App\Entity\User $sender */
         $sender = $this->getUser();
@@ -26,6 +26,9 @@ class MessageController extends AbstractController
         }
 
         $message = new Message();
+        if ($autoMessage) {
+            $message->setContent("Niestety jestem zmuszony zakończyć współpracę, proszę o potwierdzenie!");
+        }
         $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
 
@@ -65,10 +68,7 @@ class MessageController extends AbstractController
     {
         /** @var \App\Entity\User $user */
         $user = $this->getUser();
-
-
         $AllMessages = $messageRepository->countMessagesPerSender($user);
-
         return $this->render('dashboard/messages/messages.html.twig', [
             'messages' => $AllMessages,
         ]);

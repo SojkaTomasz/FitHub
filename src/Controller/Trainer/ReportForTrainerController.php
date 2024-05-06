@@ -23,7 +23,6 @@ class ReportForTrainerController extends AbstractController
     {
         /** @var \App\Entity\User $trainer */
         $trainer = $this->getUser();
-
         $reports = $reportRepository->findReportsStudentForTrainer($trainer);
         return $this->render('dashboard/trainer/reports.html.twig', [
             'reports' => $reports,
@@ -36,10 +35,15 @@ class ReportForTrainerController extends AbstractController
         /** @var \App\Entity\User $trainer */
         $trainer = $this->getUser();
 
+        if (!$report) {
+            $this->addFlash('error', "Nie ma takiego raportu");
+            return $this->redirectToRoute('trainer_reports');
+        }
+        $trainerService->itsMyStudent($report, $trainer);
+
         $idSelectedReport = $report->getStudent()->getId();
         $dateSelectedReport = $report->getDate();
-        $lastReport = $reportRepository->findMyLastReport($idSelectedReport, $dateSelectedReport);
-        $trainerService->itsMyStudent($report, $trainer);
+        $lastReport = $reportRepository->findLastReport($idSelectedReport, $dateSelectedReport);
 
         return $this->render('dashboard/student-trainer/report.html.twig', [
             'report' => $report,
@@ -53,6 +57,10 @@ class ReportForTrainerController extends AbstractController
         /** @var \App\Entity\User $trainer */
         $trainer = $this->getUser();
 
+        if (!$report) {
+            $this->addFlash('error', "Nie ma takiego raportu");
+            return $this->redirectToRoute('trainer_reports');
+        }
         $trainerService->itsMyStudent($report, $trainer);
 
         $reportAnalysis = new ReportAnalysis();
@@ -76,12 +84,17 @@ class ReportForTrainerController extends AbstractController
             'form' => $form,
         ]);
     }
-    
+
     #[Route('/dashboard/trainer/report-analysis/edit/{id<\d+>}', name: 'trainer_report_analysis_edit')]
     public function reportAnalysisEdit(EntityManagerInterface $entityManager, Request $request, ?ReportAnalysis $reportAnalysis): Response
     {
         /** @var \App\Entity\User $trainer */
         $trainer = $this->getUser();
+
+        if (!$reportAnalysis) {
+            $this->addFlash('error', "Nie ma takiego raportu");
+            return $this->redirectToRoute('trainer_reports');
+        }
 
         if ($reportAnalysis->getTrainer() !== $trainer) {
             throw new AccessDeniedException();
@@ -92,7 +105,7 @@ class ReportForTrainerController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($reportAnalysis);
             $entityManager->flush();
-            $this->addFlash('success', "Raport poprawnie przeanalizowany!");
+            $this->addFlash('success', "Analiza raportu poprawnie edytowana!");
             return $this->redirectToRoute('trainer_reports');
         }
 

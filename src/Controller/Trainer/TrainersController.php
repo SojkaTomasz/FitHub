@@ -15,13 +15,34 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class TrainersController extends AbstractController
 {
     #[Route('/dashboard/trainer/students', name: 'students_trainer_all')]
-    public function index(UserRepository $userRepository): Response
+    public function students(UserRepository $userRepository): Response
     {
         /** @var \App\Entity\User $user */
         $user = $this->getUser();
         $students = $userRepository->findMyStudents($user->getId());
         return $this->render('dashboard/trainer/students.html.twig', [
             'students' => $students,
+        ]);
+    }
+
+    #[Route('/dashboard/trainer/student/{id<\d+>}', name: 'trainer_student')]
+    public function student(UserRepository $userRepository, ?User $student): Response
+    {
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+
+        if (!$student) {
+            $this->addFlash('error', "Nie ma takiego studenta");
+            return $this->redirectToRoute('students_trainer_all');
+        }
+
+        $students = $userRepository->findMyStudents($user->getId());
+
+        if (!in_array($student, $students)) {
+            throw new AccessDeniedException();
+        }
+        return $this->render('dashboard/trainer/student.html.twig', [
+            'student' => $student,
         ]);
     }
 
@@ -34,10 +55,12 @@ class TrainersController extends AbstractController
         if ($student->getTrainer() !== $trainer) {
             throw new AccessDeniedException();
         }
-        
+
         $student->setTrainer(null);
         $entityManager->persist($student);
         $entityManager->flush();
+
+        $this->addFlash('success', "Poprawnie zakończono współpracę z {$student->getFirstName()} {$student->getLastName()}");
         return $this->redirectToRoute('students_trainer_all');
     }
 }

@@ -7,7 +7,7 @@
 {% block main %}
 	{% block titleSection %}
 		<div class="title-section">
-			<h2 class="title">Wszyscy Trenerzy</h2>
+			<h3 class="title">Wszyscy Trenerzy</h3>
 		</div>
 	{% endblock %}
 	{% block section %}
@@ -26,31 +26,23 @@
 								<th scope="col">Id</th>
 								<th scope="col">Imię</th>
 								<th scope="col">Nazwisko</th>
-								<th scope="col">Email</th>
-								<th class="text-end" scope="col">Wybieram</th>
+								<th scope="col">Ocena</th>
+								<th class="text-end" scope="col">Zobacz Profil</th>
 							</tr>
 						</thead>
 						<tbody>
-							<td>
-								{% if app.user.trainer.avatar %}
-									<img class="rounded-circle object-fit-cover my-1" width="35" height="35" src="{{avatar_url ~ app.user.trainer.avatar}}" alt="">
-								{% else %}
-									<img src="/assets/image/mean.png" width="35" height="35" class="rounded-circle float-start" alt="...">
-								{% endif %}
-							</td>
-							<td>{{app.user.trainer.id}}</td>
-							<td>
-								{{app.user.trainer.firstName}}
-							</td>
-							<td>{{app.user.trainer.lastName}}</td>
-							<td>{{app.user.trainer.email}}</td>
-							<td class="text-end">
-							<a type="button" class="btn" href="{{path('student_trainer', {id: app.user.trainer.id})}}">Czytaj...</a>
-								<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
-									Zakończ
-								</button>
-
-							</td>
+							<tr class="line-height">
+								<td>
+									{% include 'dashboard/shared/_img_avatar.html.twig' with {avatar: app.user.trainer.avatar , width: 35, height: 35} %}
+								</td>
+								<td>{{app.user.trainer.id}}</td>
+								<td>{{app.user.trainer.firstName}}</td>
+								<td>{{app.user.trainer.lastName}}</td>
+								<td>brak ocen</td>
+								<td class="text-end">
+									<a type="button" class="btn btn-success" type="button" class="btn" href="{{path('student_trainer', {id: app.user.trainer.id})}}">Czytaj</a>
+								</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -65,25 +57,17 @@
 							<th scope="col">Imię</th>
 							<th scope="col">Nazwisko</th>
 							<th scope="col">Ocena</th>
-							<th scope="col">Email</th>
-							<th class="text-end" scope="col">Wybieram</th>
+							<th class="text-end" scope="col">Zobacz Profil</th>
 						</tr>
 					</thead>
 					<tbody>
 						{% for trainer in trainers %}
-							<tr>
+							<tr class="line-height">
 								<td>
-									{% if trainer[0].avatar %}
-										<img class="rounded-circle object-fit-cover my-1" width="35" height="35" src="{{avatar_url ~ trainer[0].avatar}}" alt="">
-									{% else %}
-										<img src="/assets/image/mean.png" width="35" height="35" class="rounded-circle float-start" alt="...">
-									{% endif %}
+									{% include 'dashboard/shared/_img_avatar.html.twig' with {avatar: trainer[0].avatar , width: 35, height: 35} %}
 								</td>
-
 								<td>{{trainer[0].id}}</td>
-								<td>
-								{{trainer[0].firstName}}
-								</td>
+								<td>{{trainer[0].firstName}}</td>
 								<td>{{trainer[0].lastName}}</td>
 								<td>
 									{% if trainer.average_rating %}
@@ -93,52 +77,16 @@
 										brak ocen
 									{% endif %}
 								</td>
-								<td>{{trainer[0].email}}</td>
 								<td class="text-end">
-									<a type="button" class="btn" href="{{path('student_trainer', {id: trainer[0].id})}}">Czytaj...</a>
-									<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal{{trainer[0].id}}">
-										Wybierz
-									</button>
+									<a type="button" class="btn btn-success" type="button" class="btn" href="{{path('student_trainer', {id: trainer[0].id})}}">Czytaj<a>
 								</td>
-
-								<div class="modal fade" id="exampleModal{{trainer[0].id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-									<div class="modal-dialog">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h1 class="modal-title fs-5" id="exampleModalLabel">
-													<strong>
-														{% if app.user.trainer.firstname is defined %}
-															Niestety Masz Już Trenera!!
-														{% else %}
-															Potwierdz Twój Wybór!
-														{% endif %}
-													</strong>
-												</h1>
-												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-											</div>
-											<div class="modal-body">
-												{% if app.user.trainer.firstname is defined %}
-													Pierwsze zakończ współpracę z aktualnym trenerem.
-												{% else %}
-													Czy napewno potwierdzasz wybór trenera ?
-												{% endif %}
-											</div>
-											<div class="modal-footer">
-												{% if not app.user.trainer.firstname is defined  %}
-													<button type="button" class="btn btn-success" data-bs-dismiss="modal">Anuluj</button>
-													<a type="button" class="btn" href="{{path('chose_trainer', {id: trainer[0].id})}}">Tak</a>
-												{% else %}
-													<button type="button" class="btn btn-success" data-bs-dismiss="modal">OK</button>
-												{% endif %}
-											</div>
-										</div>
-									</div>
-								</div>
+									</tr>
+								{% endfor %}
 							</tr>
-						{% endfor %}
+						</tbody>
 					</tbody>
-				</tbody>
-			</table>
-		</div>
-	</section>
-{% endblock %}{% endblock %}
+				</table>
+			</div>
+		</section>
+	{% endblock %}
+{% endblock %}

@@ -32,7 +32,7 @@ class ReportRepository extends ServiceEntityRepository
             ->execute();
     }
 
-    public function findMyLastReport(int $idSelectedReport, DateTime $dateSelectedReport): array
+    public function findLastReport(int $idSelectedReport, DateTime $dateSelectedReport): array
     {
         return $this->createQueryBuilder('r')
             ->andWhere('r.student  = :id')

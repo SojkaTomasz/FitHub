@@ -6,14 +6,13 @@
 {% block main %}
 	{% block titleSection %}
 		<div class="title-section">
-			<h2 class="title">Plany</h2>
+			<h3 class="title">Plany</h3>
 		</div>
 	{% endblock %}
 	{% block section %}
 		<section class="box-reports">
 			{% include "shared_global/info.html.twig" %}
 			<div class="rounded-5 p-3 my-bg-white">
-
 				<table class="table m-0 my-bg-white">
 					<thead>
 						<tr>
@@ -62,7 +61,9 @@
 											</div>
 											<div class="modal-footer">
 												<p>Kliknij i pobierz:</p>
-												<a href="{{ path('student_report_pdf', {'id': reportAnalyst.id, 'type' : 'recommendations'}) }}"><i class="text-success h2 bi bi-file-earmark-pdf"></i></a>
+												<a href="{{ path('student_report_pdf', {'id': reportAnalyst.id, 'type' : 'recommendations'}) }}">
+													<i class="text-success h2 bi bi-file-earmark-pdf"></i>
+												</a>
 												{# <i class="text-success h2 bi bi-file-earmark-word"></i> #}
 												<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Zamknij</button>
 											</div>
@@ -83,7 +84,9 @@
 											</div>
 											<div class="modal-footer">
 												<p>Kliknij i pobierz:</p>
-												<a href="{{ path('student_report_pdf', {'id': reportAnalyst.id, 'type' : 'NutritionPlan'}) }}"><i class="text-success h2 bi bi-file-earmark-pdf"></i></a>
+												<a href="{{ path('student_report_pdf', {'id': reportAnalyst.id, 'type' : 'NutritionPlan'}) }}">
+													<i class="text-success h2 bi bi-file-earmark-pdf"></i>
+												</a>
 												{# <i class="text-success h2 bi bi-file-earmark-word"></i> #}
 												<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Zamknij</button>
 											</div>
@@ -104,7 +107,9 @@
 											</div>
 											<div class="modal-footer">
 												<p>Kliknij i pobierz:</p>
-												<a href="{{ path('student_report_pdf', {'id': reportAnalyst.id, 'type' : 'TrainingPlan'}) }}"><i class="text-success h2 bi bi-file-earmark-pdf"></i></a>
+												<a href="{{ path('student_report_pdf', {'id': reportAnalyst.id, 'type' : 'TrainingPlan'}) }}">
+													<i class="text-success h2 bi bi-file-earmark-pdf"></i>
+												</a>
 												{# <i class="text-success h2 bi bi-file-earmark-word"></i> #}
 												<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Zamknij</button>
 											</div>
@@ -114,8 +119,8 @@
 							</tr>
 						{% endfor %}
 					</tbody>
-				</tbody>
-			</table>
-		</div>
-	</section>
-{% endblock %}{% endblock %}
+				</table>
+			</div>
+		</section>
+	{% endblock %}
+{% endblock %}

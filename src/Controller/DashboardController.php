@@ -37,6 +37,8 @@ class DashboardController extends AbstractController
             ];
         }
 
+        
+
         return $this->render('dashboard/home.html.twig', [
             'weightData' => $reportsArray,
         ]);

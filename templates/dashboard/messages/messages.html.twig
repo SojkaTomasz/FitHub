@@ -13,44 +13,48 @@
 	{% block section %}
 		<section>
 			{% include "shared_global/info.html.twig" %}
-			<div class="rounded-5 p-3 my-bg-white">
-				<table class="table m-0 my-bg-white">
-					<thead>
-						<tr>
-							<th scope="col"></th>
-							<th scope="col">Imię</th>
-							<th scope="col">Nazwisko</th>
-							<th class="text-end" scope="col"></th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for message in messages %}
-							{% if app.user != message.sender  %}
-								<tr class="line-height">
-									<td>
-										{% include 'dashboard/shared/_img_avatar.html.twig' with {avatar: message.sender.avatar , width: 35, height: 35} %}
-									</td>
-									<td>
-										{{message.sender.firstName}}
-									</td>
-									<td>{{message.sender.lastName}}</td>
-									<td class="text-end">
-										<div class="position-relative">
-											<a type="button" class="btn btn-danger text-decoration-none text-white" href="{{path('message', {id:message.sender.id})}}">Czytaj</a>
-											{% if app.user == message.recipient and message.seen == false %}
-												<span class="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">
-													<span class="visually-hidden">New alerts</span>
-												</span>
-											{% endif %}
-										</div>
-									</td>
-								</tr>
-								{% else %}
-							{% endif %}
-						{% endfor %}
-					</tbody>
-				</table>
-			</div>
+			{% if messages %}
+				<div class="rounded-5 p-3 my-bg-white">
+					<table class="table m-0 my-bg-white">
+						<thead>
+							<tr>
+								<th scope="col"></th>
+								<th scope="col">Imię</th>
+								<th scope="col">Nazwisko</th>
+								<th class="text-end" scope="col"></th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for message in messages %}
+								{% if app.user != message.sender  %}
+									<tr class="line-height">
+										<td>
+											{% include 'dashboard/shared/_img_avatar.html.twig' with {avatar: message.sender.avatar , width: 35, height: 35} %}
+										</td>
+										<td>
+											{{message.sender.firstName}}
+										</td>
+										<td>{{message.sender.lastName}}</td>
+										<td class="text-end">
+											<div class="position-relative">
+												<a type="button" class="btn btn-danger text-decoration-none text-white" href="{{path('message', {id:message.sender.id})}}">Czytaj</a>
+												{% if app.user == message.recipient and message.seedAt == false %}
+													<span class="position-absolute top-0 start-100 translate-middle p-2 bg-success border border-light rounded-circle">
+														<span class="visually-hidden">New alerts</span>
+													</span>
+												{% endif %}
+											</div>
+										</td>
+									</tr>
+									{% else %}
+								{% endif %}
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			{% else %}
+				<p class='my-bg-white rounded-4 p-3 h4 text-center text-uppercase'>Brak historii wiadomości</p>
+			{% endif %}
 		</section>
 	{% endblock %}
 {% endblock %}

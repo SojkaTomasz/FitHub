@@ -43,12 +43,12 @@ html {
 			i::before {
 				font-size: 22px;
 			}
-			span {
+			.dropdown span {
 				color: @color-main;
 			}
 		}
 		main {
-			.line-height td{
+			.line-height td {
 				line-height: 2.5rem;
 			}
 			min-height: 100vh;
@@ -90,6 +90,33 @@ html {
 				&::-webkit-scrollbar-thumb {
 					border-radius: 50px;
 					background: @color-dark-main;
+				}
+				.nav-link {
+					color: @text-gray;
+					&:hover {
+						color: @text-main;
+					}
+				}
+				.nav-link.active {
+					color: @color-white;
+					background-color: @text-main !important;
+				}
+				.analyze-report {
+					overflow-y: scroll;
+					scroll-behavior: smooth;
+					max-height: 65vh;
+					&::-webkit-scrollbar {
+						border-radius: 50px;
+						width: 15px;
+					}
+					&::-webkit-scrollbar-track {
+						border-radius: 50px;
+						background: @color-dark-white;
+					}
+					&::-webkit-scrollbar-thumb {
+						border-radius: 50px;
+						background: @color-dark-main;
+					}
 				}
 			}
 		}

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ReportAnalysisRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -32,6 +34,14 @@ class ReportAnalysis
 
     #[ORM\Column(type: Types::TEXT)]
     private string $recommendations;
+
+    #[ORM\OneToMany(targetEntity: Info::class, mappedBy: 'reportAnalysis')]
+    private Collection $infos;
+
+    public function __construct()
+    {
+        $this->infos = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -106,6 +116,36 @@ class ReportAnalysis
     public function setRecommendations(string $recommendations): static
     {
         $this->recommendations = $recommendations;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Info>
+     */
+    public function getInfos(): Collection
+    {
+        return $this->infos;
+    }
+
+    public function addInfo(Info $info): static
+    {
+        if (!$this->infos->contains($info)) {
+            $this->infos->add($info);
+            $info->setReportAnalysis($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInfo(Info $info): static
+    {
+        if ($this->infos->removeElement($info)) {
+            // set the owning side to null (unless already changed)
+            if ($info->getReportAnalysis() === $this) {
+                $info->setReportAnalysis(null);
+            }
+        }
 
         return $this;
     }

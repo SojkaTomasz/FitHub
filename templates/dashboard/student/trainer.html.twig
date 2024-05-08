@@ -98,7 +98,7 @@
 				</div>
 			</div>
 		</div>
-		<h3>Opienie:</h3>
+		<p class="mt-3 h5">Opienie</p>
 		{% if form %}
 			<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
 				Dodaj Opinie
@@ -124,7 +124,7 @@
 				</div>
 			</div>
 		{% endif %}
-		{% if trainer.reviews %}
+		
 			{% for review in trainer.reviews %}
 				<div class="my-bg-white my-2 p-3 rounded-5">
 					<div class="d-flex flex-wrap justify-content-between align-items-center">
@@ -137,10 +137,6 @@
 					<p class="m-0">{{ review.opinion}}</p>
 				</div>
 			{% endfor %}
-		{% else %}
-			<div class="my-bg-white my-2 p-3 rounded-5">
-				<p>brak opini</p>
-			</div>
-		{% endif %}
+
 	</section>
 {% endblock %}{% endblock %}

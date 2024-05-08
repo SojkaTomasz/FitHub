@@ -30,8 +30,8 @@ class Message
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
-    private bool $seen;
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $seedAt = null;
 
     public function getId(): int
     {
@@ -86,14 +86,14 @@ class Message
         return $this;
     }
 
-    public function isSeen(): bool
+    public function getSeedAt(): ?\DateTimeImmutable
     {
-        return $this->seen;
+        return $this->seedAt;
     }
 
-    public function setSeen(bool $seen): static
+    public function setSeedAt(?\DateTimeImmutable $seedAt): static
     {
-        $this->seen = $seen;
+        $this->seedAt = $seedAt;
 
         return $this;
     }

@@ -6,6 +6,7 @@ use App\Entity\Report;
 use App\Entity\ReportAnalysis;
 use App\Form\ReportAnalysisType;
 use App\Repository\ReportRepository;
+use App\Service\InfoService;
 use App\Service\TrainerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -52,7 +53,7 @@ class ReportForTrainerController extends AbstractController
     }
 
     #[Route('/dashboard/trainer/report-analysis/{id<\d+>}', name: 'trainer_report_add_analysis')]
-    public function reportAnalysis(EntityManagerInterface $entityManager, Request $request, ?Report $report, TrainerService $trainerService): Response
+    public function reportAnalysis(EntityManagerInterface $entityManager, Request $request, ?Report $report, TrainerService $trainerService, InfoService $infoService): Response
     {
         /** @var \App\Entity\User $trainer */
         $trainer = $this->getUser();
@@ -71,6 +72,7 @@ class ReportForTrainerController extends AbstractController
             $reportAnalysis->setReport($report);
             $reportAnalysis->setTrainer($trainer);
             $report->setVerified(true);
+            $infoService->newInfo("Nowa Analiza Raportu", $report->getStudent(), $reportAnalysis);
             $entityManager->persist($report);
             $entityManager->persist($reportAnalysis);
             $entityManager->flush();

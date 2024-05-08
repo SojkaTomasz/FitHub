@@ -1,19 +1,19 @@
 <header class="">
 	<div class="d-flex align-items-center justify-content-between w-100 px-2">
 		<img class="logo-header me-2" src="/assets/image/logo.png" width="80" alt="">
-		<div
-			class="d-flex">
-			{# <button type="button" class="btn btn-primary position-relative p-0 border-0 bg-transparent mx-2 mt-1">
-																<i class="bi bi-info-circle"></i>
-																<span class="position-absolute start-100 translate-middle badge rounded-pill">
-																	12
-																</span>
-															</button> #}
+		<div class="d-flex">
+			<button type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" class="btn btn-primary position-relative p-0 border-0 bg-transparent mx-2 mt-1">
+				<i class="bi bi-info-circle"></i>
+				<span class="position-absolute start-100 translate-middle badge rounded-pill">
+					{{app.user.infos|length}}
+				</span>
+
+			</button>
 			<button type="button" class="btn btn-primary position-relative p-0 border-0 bg-transparent mx-2 mt-1">
 				<a href="{{path('messages')}}">
 					<i class="bi bi-chat-dots"></i>
 					<span class="position-absolute start-100 translate-middle badge rounded-pill">
-						{{app.user.unreadMessageCount}}
+					{{app.user.unreadMessageCount}}
 					</span>
 				</a>
 			</button>
@@ -23,28 +23,84 @@
 				<div class="btn-group dropdown ">
 					<button type="button" class="dropdown-toggle dropdown-toggle-split p-0 img-header" data-bs-toggle="dropdown" aria-expanded="false">
 						{% include 'dashboard/shared/_img_avatar.html.twig' with {avatar: app.user.avatar , width: 40, height: 40} %}
-					<i class="bi bi-caret-down-square-fill"></i>
-				</button>
-				<ul class="dropdown-menu border-0">
-					<li class="my-1 dropdown-item">
-						<a class="d-flex align-items-center nav-link px-0 p-1" href="{{path('settings')}}">
-							<span class="me-2">
-								<i class="bi bi-tools"></i>
-							</span>Ustawnienia
-						</a>
-					</li>
-					<li><hr class="dropdown-divider"></li>
-					<li class="my-1  dropdown-item">
-						<form method="GET" action={{path('logout')}}>
-							<button type="submit" class="d-flex align-items-center nav-link px-0 p-1 my-1">
-								<span type="submit" class="me-2">
-									<i class="bi bi-door-open"></i>
-								</span>Wyloguj
-							</button>
-						</form>
-					</li>
-				</ul>
+						<i class="bi bi-caret-down-square-fill"></i>
+					</button>
+					<ul class="dropdown-menu border-0">
+						<li class="my-1 dropdown-item">
+							<a class="d-flex align-items-center nav-link px-0 p-1" href="{{path('settings')}}">
+								<span class="me-2">
+									<i class="bi bi-tools"></i>
+								</span>Ustawnienia
+							</a>
+						</li>
+						<li><hr class="dropdown-divider"></li>
+						<li class="my-1  dropdown-item">
+							<form method="GET" action={{path('logout')}}>
+								<button type="submit" class="d-flex align-items-center nav-link px-0 p-1 my-1">
+									<span type="submit" class="me-2">
+										<i class="bi bi-door-open"></i>
+									</span>Wyloguj
+								</button>
+							</form>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
-</div></header>
+</header>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+	<div class="offcanvas-header">
+		<h5 class="offcanvas-title" id="offcanvasRightLabel">Informacje</h5>
+		<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+	</div>
+	<div class="offcanvas-body pt-0">
+		{% if app.user.infos is not empty %}
+				{% for info in app.user.infos %}
+						<div class="mb-2 border-bottom pb-2 d-flex">
+							<i class="bi bi-clipboard-data me-2 text-success "></i>
+							<div class="flex-grow-1">
+								<div class="toast-header">
+									<strong class="me-auto">{{info.action}}</strong>
+
+
+									<small>
+									{# Pobierz bieżącą datę i czas #}
+{% set currentTime = "now"|date("U") %}
+
+{# Pobierz datę i czas utworzenia informacji #}
+{% set infoTime = info.createdAt|date("U") %}
+
+{# Oblicz różnicę czasu w sekundach #}
+{% set timeDifference = currentTime - infoTime %}
+
+{# Oblicz różnicę czasu w minutach, godzinach, dniach, tygodniach #}
+{% set minutesAgo = (timeDifference / 60)|round %}
+{% set hoursAgo = (timeDifference / 3600)|round %}
+{% set daysAgo = (timeDifference / 86400)|round %}
+{% set weeksAgo = (timeDifference / 604800)|round %}
+
+{# Wyświetl czas w odpowiednim formacie #}
+{% if weeksAgo > 0 %}
+    {{ weeksAgo }} tydzień{{ weeksAgo > 1 ? 's' : '' }} temu
+{% elseif daysAgo > 0 %}
+    {{ daysAgo }} dni{{ daysAgo > 1 ? 's' : '' }} temu
+{% elseif hoursAgo > 0 %}
+    {{ hoursAgo }} godzin{{ hoursAgo > 1 ? 'y' : '' }} temu
+{% else %}
+    {{ minutesAgo }} minut{{ minutesAgo > 1 ? 's' : '' }} temu
+{% endif %}
+
+									</small>
+								</div>
+								<div class="toast-body d-flex justify-content-between align-items-center">
+									<p class="m-0">{{info.action}}</p>
+									<a href="{{path('student_report', {id: info.reportAnalysis.report.id} )}}" class="btn btn-sm btn-success py-0">Zobacz</a>
+								</div>
+							</div>
+						</div>
+				{% endfor %}
+		{% endif %}
+	</div>
+</div>

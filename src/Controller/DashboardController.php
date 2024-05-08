@@ -17,7 +17,6 @@ class DashboardController extends AbstractController
         /** @var \App\Entity\User $user */
         $user = $this->getUser();
         $reports = $user->getReportsStudent();
-
         $reportsArray = [];
         foreach ($reports as $report) {
             $reportsArray[] = [

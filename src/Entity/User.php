@@ -69,6 +69,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private int $unreadMessageCount = 0;
 
+    #[ORM\OneToMany(targetEntity: Info::class, mappedBy: 'user')]
+    private Collection $infos;
+
     public function __construct()
     {
         $this->students = new ArrayCollection();
@@ -76,6 +79,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->reportAnalyses = new ArrayCollection();
         $this->reportsTrainer = new ArrayCollection();
         $this->reviews = new ArrayCollection();
+        $this->infos = new ArrayCollection();
     }
 
 
@@ -371,6 +375,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUnreadMessageCount(int $unreadMessageCount): static
     {
         $this->unreadMessageCount = $unreadMessageCount;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Info>
+     */
+    public function getInfos(): Collection
+    {
+        return $this->infos;
+    }
+
+    public function addInfo(Info $info): static
+    {
+        if (!$this->infos->contains($info)) {
+            $this->infos->add($info);
+            $info->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInfo(Info $info): static
+    {
+        if ($this->infos->removeElement($info)) {
+            // set the owning side to null (unless already changed)
+            if ($info->getUser() === $this) {
+                $info->setUser(null);
+            }
+        }
 
         return $this;
     }

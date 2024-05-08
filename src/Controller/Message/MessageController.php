@@ -22,7 +22,12 @@ class MessageController extends AbstractController
 
         if (is_null($recipient)) {
             $this->addFlash('error', "Nie ma tekigo użytkownika!");
-            return $this->redirectToRoute('student_reports');
+            return $this->redirectToRoute('messages');
+        }
+
+        if ($sender == $recipient) {
+            $this->addFlash('error', "Nie możesz wysłać wiadomości do siebie!");
+            return $this->redirectToRoute('messages');
         }
 
         $message = new Message();
@@ -38,7 +43,6 @@ class MessageController extends AbstractController
             $message->setSender($sender);
             $message->setRecipient($recipient);
             $message->setCreatedAt(new \DateTime());
-            $message->setSeen(false);
             $entityManager->persist($message);
             $entityManager->flush();
             return $this->redirectToRoute('message', ['id' => $recipient->getId()]);
@@ -47,8 +51,8 @@ class MessageController extends AbstractController
         $AllMessages = $messageRepository->findAllMessage($sender, $recipient);
 
         foreach ($AllMessages as $message) {
-            if (!$message->isSeen() and $message->getSender() !== $sender) {
-                $message->setSeen(true);
+            if (!$message->getSeedAt() and $message->getSender() !== $sender) {
+                $message->setSeedAt(new \DateTimeImmutable());
                 $unreadMessageCountSender = $sender->getUnreadMessageCount();
                 $sender->setUnreadMessageCount($unreadMessageCountSender - 1);
                 $entityManager->persist($message);

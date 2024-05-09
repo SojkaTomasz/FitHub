@@ -35,9 +35,7 @@ class DashboardController extends AbstractController
                 // 'backImg' => $report->getBackImg(),
             ];
         }
-
-        
-
+    
         return $this->render('dashboard/home.html.twig', [
             'weightData' => $reportsArray,
         ]);

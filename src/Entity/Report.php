@@ -71,6 +71,9 @@ class Report
     #[ORM\ManyToOne(inversedBy: 'reportsTrainer')]
     private User $trainer;
 
+    #[ORM\OneToOne(mappedBy: 'report', cascade: ['persist', 'remove'])]
+    private ?Info $info = null;
+
 
     public function getId(): int
     {
@@ -309,6 +312,28 @@ class Report
     public function setTrainer(?User $trainer): static
     {
         $this->trainer = $trainer;
+
+        return $this;
+    }
+
+    public function getInfo(): ?Info
+    {
+        return $this->info;
+    }
+
+    public function setInfo(?Info $info): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($info === null && $this->info !== null) {
+            $this->info->setReport(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($info !== null && $info->getReport() !== $this) {
+            $info->setReport($this);
+        }
+
+        $this->info = $info;
 
         return $this;
     }

@@ -21,7 +21,7 @@
 	<body>
 		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 				{% include 'dashboard/aside.html.twig' %}
-				{% include 'dashboard/header.html.twig' %}
+				{% include 'dashboard/header/header.html.twig' %}
 				<main class="d-flex flex-column flex-grow-1">
 				{% block main %}
 					{% block titleSection %}{% endblock %}

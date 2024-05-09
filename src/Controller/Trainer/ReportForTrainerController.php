@@ -72,7 +72,7 @@ class ReportForTrainerController extends AbstractController
             $reportAnalysis->setReport($report);
             $reportAnalysis->setTrainer($trainer);
             $report->setVerified(true);
-            $infoService->newInfo("Nowa Analiza Raportu", $report->getStudent(), $reportAnalysis);
+            $infoService->newInfo("new-analysis-report", $report->getStudent(), $reportAnalysis);
             $entityManager->persist($report);
             $entityManager->persist($reportAnalysis);
             $entityManager->flush();
@@ -88,7 +88,7 @@ class ReportForTrainerController extends AbstractController
     }
 
     #[Route('/dashboard/trainer/report-analysis/edit/{id<\d+>}', name: 'trainer_report_analysis_edit')]
-    public function reportAnalysisEdit(EntityManagerInterface $entityManager, Request $request, ?ReportAnalysis $reportAnalysis): Response
+    public function reportAnalysisEdit(EntityManagerInterface $entityManager, Request $request, ?ReportAnalysis $reportAnalysis, InfoService $infoService): Response
     {
         /** @var \App\Entity\User $trainer */
         $trainer = $this->getUser();
@@ -105,6 +105,7 @@ class ReportForTrainerController extends AbstractController
         $form = $this->createForm(ReportAnalysisType::class, $reportAnalysis);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $infoService->newInfo("edit-analysis-report", $reportAnalysis->getReport()->getStudent(), $reportAnalysis);
             $entityManager->persist($reportAnalysis);
             $entityManager->flush();
             $this->addFlash('success', "Analiza raportu poprawnie edytowana!");

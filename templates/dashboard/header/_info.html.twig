@@ -1,0 +1,48 @@
+<div class="mb-2 border-bottom pb-2 d-flex">
+	<i class="{{icon}} me-2 text-success"></i>
+	<div class="flex-grow-1">
+		<div class="toast-header">
+			{% if info.seedAt is null %}
+				<strong class="me-auto">{{title}}</strong>
+			{% else %}
+				<strong class="me-auto m-0">{{title}}</strong>
+			{% endif %}
+			<small>
+				{% set currentTime = "now"|date("U") %}
+				{% set infoTime = info.createdAt|date("U") %}
+				{% set timeDifference = currentTime - infoTime %}
+				{% set minutesAgo = (timeDifference / 60)|round %}
+				{% set hoursAgo = (timeDifference / 3600)|round %}
+				{% set daysAgo = (timeDifference / 86400)|round %}
+				{% set weeksAgo = (timeDifference / 604800)|round %}
+				{% if weeksAgo > 0 %}
+					{{ weeksAgo }}
+					{{ weeksAgo > 1 ? 'tygodni' : 'tydzień' }}
+					temu
+				{% elseif daysAgo > 0 %}
+					{{ daysAgo }}
+					{{ daysAgo > 1 ? 'dni' : 'dzień' }}
+					temu
+				{% elseif hoursAgo > 0 %}
+					{{ hoursAgo }}
+					{{ hoursAgo > 1 ? 'godziny' : 'godzinę' }}
+					temu
+				{% else %}
+					{{ minutesAgo }}
+					{{ minutesAgo > 1 ? 'minut' : 'minute' }}
+					temu
+				{% endif %}
+			</small>
+		</div>
+
+		<div class="toast-body d-flex justify-content-between align-items-center">
+			<small class="m-0">{{subTitle}}</small>
+			{% if is_granted('ROLE_STUDENT') %}
+				<a href="{{path('student_report', {id: id} )}}" class="btn btn-sm btn-success py-0">Zobacz</a>
+			{% endif %}
+			{% if is_granted('ROLE_TRAINER') %}
+				<a href="{{path('trainer_report', {id: id} )}}" class="btn btn-sm btn-success py-0">Zobacz</a>
+			{% endif %}
+		</div>
+	</div>
+</div>

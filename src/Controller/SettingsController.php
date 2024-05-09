@@ -67,7 +67,7 @@ class SettingsController extends AbstractController
             return $this->redirectToRoute('settings');
         }
 
-        return $this->render('dashboard/settings.html.twig', [
+        return $this->render('dashboard/settings/settings.html.twig', [
             'formPassword' => $formPassword,
             'formDescription' => $formDescription,
             'formEmail' => $formEmail,

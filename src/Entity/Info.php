@@ -19,14 +19,17 @@ class Info
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $seedAt = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $action;
-
     #[ORM\ManyToOne(inversedBy: 'infos')]
     private ?User $user;
 
-    #[ORM\ManyToOne(inversedBy: 'infos')]
+    #[ORM\Column(length: 255)]
+    private ?string $action = null;
+
+    #[ORM\OneToOne(inversedBy: 'info', cascade: ['persist', 'remove'])]
     private ?ReportAnalysis $reportAnalysis = null;
+
+    #[ORM\OneToOne(inversedBy: 'info', cascade: ['persist', 'remove'])]
+    private ?Report $report = null;
 
     public function getId(): int
     {
@@ -57,18 +60,6 @@ class Info
         return $this;
     }
 
-    public function getAction(): string
-    {
-        return $this->action;
-    }
-
-    public function setAction(string $action): static
-    {
-        $this->action = $action;
-
-        return $this;
-    }
-
     public function getUser(): User
     {
         return $this->user;
@@ -81,6 +72,19 @@ class Info
         return $this;
     }
 
+
+    public function getAction(): ?string
+    {
+        return $this->action;
+    }
+
+    public function setAction(string $action): static
+    {
+        $this->action = $action;
+
+        return $this;
+    }
+
     public function getReportAnalysis(): ?ReportAnalysis
     {
         return $this->reportAnalysis;
@@ -89,6 +93,18 @@ class Info
     public function setReportAnalysis(?ReportAnalysis $reportAnalysis): static
     {
         $this->reportAnalysis = $reportAnalysis;
+
+        return $this;
+    }
+
+    public function getReport(): ?Report
+    {
+        return $this->report;
+    }
+
+    public function setReport(?Report $report): static
+    {
+        $this->report = $report;
 
         return $this;
     }

@@ -7,6 +7,7 @@ use App\Form\ReportType;
 use App\Repository\ReportAnalysisRepository;
 use App\Repository\ReportRepository;
 use App\Service\FileUploader;
+use App\Service\InfoService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,7 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Dompdf\Dompdf;
 
 
 #[IsGranted('ROLE_STUDENT')]
@@ -33,7 +33,7 @@ class ReportForStudentController extends AbstractController
     }
 
     #[Route('/dashboard/student/report/{id<\d+>}', name: 'student_report')]
-    public function report(?Report $report, ReportRepository $reportRepository): Response
+    public function report(?Report $report, ReportRepository $reportRepository, InfoService $infoService): Response
     {
 
         /** @var \App\Entity\User $student */
@@ -46,6 +46,8 @@ class ReportForStudentController extends AbstractController
         if ($report->getStudent() !== $student) {
             throw new AccessDeniedException('Nie masz dostępu do tego raportu!');
         }
+        
+        $infoService->closeInfo($report->getReportAnalysis()->getInfo());
 
         return $this->render('dashboard/student-trainer/report.html.twig', [
             'report' => $report,
@@ -65,7 +67,7 @@ class ReportForStudentController extends AbstractController
     }
 
     #[Route('/dashboard/student/report/add', name: 'student_report_add')]
-    public function newReport(?Request $request, EntityManagerInterface $entityManager, ReportRepository $reportRepository, FileUploader $fileUploader): Response
+    public function newReport(?Request $request, EntityManagerInterface $entityManager, ReportRepository $reportRepository, FileUploader $fileUploader, InfoService $infoService): Response
     {
         $report = new Report();
         $form = $this->createForm(ReportType::class, $report);
@@ -95,6 +97,7 @@ class ReportForStudentController extends AbstractController
             $report->setStudent($this->getUser());
             $report->setTrainer($user->getTrainer());
             $report->setVerified(false);
+            $infoService->newInfo("new-report", $user->getTrainer(), $report);
             $entityManager->persist($report);
             $entityManager->flush();
 
@@ -108,7 +111,7 @@ class ReportForStudentController extends AbstractController
     }
 
     #[Route('/dashboard/student/report/edit/{id<\d+>}', name: 'student_report_edit')]
-    public function edit(Request $request, ?Report $report, EntityManagerInterface $entityManager, ReportRepository $reportRepository, FileUploader $fileUploader): Response
+    public function edit(Request $request, ?Report $report, EntityManagerInterface $entityManager, ReportRepository $reportRepository, FileUploader $fileUploader, InfoService $infoService): Response
     {
         $report->setFrontImg('');
         $report->setSideImg('');
@@ -141,6 +144,7 @@ class ReportForStudentController extends AbstractController
             $user = $this->getUser();
             $reports = $reportRepository->findMyReports($user->getId());
             $report->setWeightDifference($report->getWeight() - $reports[0]->getWeight());
+            $infoService->newInfo("edit-report", $user->getTrainer(), $report);
             $entityManager->persist($report);
             $entityManager->flush();
 

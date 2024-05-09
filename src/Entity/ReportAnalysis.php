@@ -38,6 +38,9 @@ class ReportAnalysis
     #[ORM\OneToMany(targetEntity: Info::class, mappedBy: 'reportAnalysis')]
     private Collection $infos;
 
+    #[ORM\OneToOne(mappedBy: 'reportAnalysis', cascade: ['persist', 'remove'])]
+    private ?Info $info = null;
+
     public function __construct()
     {
         $this->infos = new ArrayCollection();
@@ -146,6 +149,28 @@ class ReportAnalysis
                 $info->setReportAnalysis(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getInfo(): ?Info
+    {
+        return $this->info;
+    }
+
+    public function setInfo(?Info $info): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($info === null && $this->info !== null) {
+            $this->info->setReportAnalysis(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($info !== null && $info->getReportAnalysis() !== $this) {
+            $info->setReportAnalysis($this);
+        }
+
+        $this->info = $info;
 
         return $this;
     }

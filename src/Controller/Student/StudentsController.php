@@ -6,6 +6,7 @@ use App\Entity\Reviews;
 use App\Entity\User;
 use App\Form\ReviewsType;
 use App\Repository\UserRepository;
+use App\Service\InfoService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -67,7 +68,7 @@ class StudentsController extends AbstractController
     }
 
     #[Route('/dashboard/student/chose/trainer/{id<\d+>}', name: 'chose_trainer')]
-    public function add(EntityManagerInterface $entityManager, ?User $trainer): Response
+    public function add(EntityManagerInterface $entityManager, ?User $trainer, InfoService $infoService): Response
     {
         /** @var \App\Entity\User $user */
         $user = $this->getUser();
@@ -78,6 +79,7 @@ class StudentsController extends AbstractController
 
         $user->setTrainer($trainer);
         $entityManager->persist($user);
+        $infoService->newInfo("new-student", $trainer, $user);
         $entityManager->flush();
         $this->addFlash('success', "Wybrałeś użytkownika {$trainer->getFirstName()}");
 

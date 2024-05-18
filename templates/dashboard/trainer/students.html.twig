@@ -7,7 +7,7 @@
 {% block main %}
 	{% block titleSection %}
 		<div class="title-section">
-			<h2 class="title">Wszyscy Podopieczni</h2>
+			<h3 class="title">Wszyscy Podopieczni</h3>
 		</div>
 	{% endblock %}
 	{% block section %}
@@ -33,7 +33,7 @@
 									<td>{{student.firstName}}</td>
 									<td>{{student.lastName}}</td>
 									<td class="text-end">
-										<a type="button" class="btn btn-success" href="{{path('trainer_student', {id:student.id})}}">Czytaj</a>
+										<a type="button" class="btn btn-warning" href="{{path('trainer_student', {id:student.id})}}">Czytaj</a>
 									</td>
 								</tr>
 							{% endfor %}
@@ -41,7 +41,7 @@
 					</table>
 				</div>
 			{% else %}
-				<p>brak podopiecznych</p>
+				{% include "dashboard/shared/_no_students.html.twig" %}
 			{% endif %}
 		</section>
 	{% endblock %}

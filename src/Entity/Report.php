@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ReportRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -71,8 +73,17 @@ class Report
     #[ORM\ManyToOne(inversedBy: 'reportsTrainer')]
     private User $trainer;
 
-    #[ORM\OneToOne(mappedBy: 'report', cascade: ['persist', 'remove'])]
-    private ?Info $info = null;
+
+    #[ORM\OneToMany(targetEntity: Info::class, mappedBy: 'report')]
+    private Collection $infos;
+
+    #[ORM\Column]
+    private int $numberReport;
+
+    public function __construct()
+    {
+        $this->infos = new ArrayCollection();
+    }
 
 
     public function getId(): int
@@ -316,24 +327,44 @@ class Report
         return $this;
     }
 
-    public function getInfo(): ?Info
+    /**
+     * @return Collection<int, Info>
+     */
+    public function getInfos(): Collection
     {
-        return $this->info;
+        return $this->infos;
     }
 
-    public function setInfo(?Info $info): static
+    public function addInfo(Info $info): static
     {
-        // unset the owning side of the relation if necessary
-        if ($info === null && $this->info !== null) {
-            $this->info->setReport(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($info !== null && $info->getReport() !== $this) {
+        if (!$this->infos->contains($info)) {
+            $this->infos->add($info);
             $info->setReport($this);
         }
 
-        $this->info = $info;
+        return $this;
+    }
+
+    public function removeInfo(Info $info): static
+    {
+        if ($this->infos->removeElement($info)) {
+            // set the owning side to null (unless already changed)
+            if ($info->getReport() === $this) {
+                $info->setReport(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getNumberReport(): ?int
+    {
+        return $this->numberReport;
+    }
+
+    public function setNumberReport(int $numberReport): static
+    {
+        $this->numberReport = $numberReport;
 
         return $this;
     }

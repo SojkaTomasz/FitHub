@@ -46,9 +46,8 @@ class ReportForStudentController extends AbstractController
         if ($report->getStudent() !== $student) {
             throw new AccessDeniedException('Nie masz dostępu do tego raportu!');
         }
-        
-        $infoService->closeInfo($report->getReportAnalysis()->getInfo());
-
+        $infos = $report->getReportAnalysis() ? $report->getReportAnalysis()->getInfos() : null;
+        $infoService->closeInfo($infos);
         return $this->render('dashboard/student-trainer/report.html.twig', [
             'report' => $report,
             'lastReport' =>  $lastReport,
@@ -92,8 +91,11 @@ class ReportForStudentController extends AbstractController
             /** @var \App\Entity\User $user */
             $user = $this->getUser();
             $reports = $reportRepository->findMyReports($user->getId());
-            $report->setWeightDifference($report->getWeight() - $reports[0]->getWeight());
+            $weightDifference = (empty($reports)) ? 0 : $report->getWeight() - $reports[0]->getWeight();
+            $report->setWeightDifference($weightDifference);
             $report->setDate(new \DateTime());
+            $numberReport = (empty($reports)) ? 1 : $reports[0]->getNumberReport() + 1;
+            $report->setNumberReport($numberReport);
             $report->setStudent($this->getUser());
             $report->setTrainer($user->getTrainer());
             $report->setVerified(false);
@@ -144,7 +146,7 @@ class ReportForStudentController extends AbstractController
             $user = $this->getUser();
             $reports = $reportRepository->findMyReports($user->getId());
             $report->setWeightDifference($report->getWeight() - $reports[0]->getWeight());
-            $infoService->newInfo("edit-report", $user->getTrainer(), $report);
+            // $infoService->newInfo("edit-report", $user->getTrainer(), $report);
             $entityManager->persist($report);
             $entityManager->flush();
 

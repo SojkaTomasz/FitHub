@@ -5,12 +5,12 @@
 	<div class="col-md-12">
 		{{ form_label(formAvatar.avatar, 'Zmień Avatar', {'label_attr': {'class': 'form-label h3'}}) }}
 		{{ form_widget(formAvatar.avatar, {'attr': {'class': 'form-control my-bg-white'}}) }}
-		<div class="text-danger">
+		<div class="text-dark">
 			<small>{{ form_errors(formAvatar.avatar) }}</small>
 		</div>
 	</div>
 	<div class="text-end">
-		<button type="submit" class="btn btn-success">Zapisz</button>
+		<button type="submit" class="btn btn-warning">Zapisz</button>
 	</div>
 	{{ form_end(formAvatar) }}
 </div>

@@ -5,12 +5,12 @@
 	<div class="col-md-12">
 		{{ form_label(formDescription.description, 'Edytuj Opis', {'label_attr': {'class': 'form-label h3'}}) }}
 		{{ form_widget(formDescription.description, {'attr': {'class': 'form-control my-bg-white'}}) }}
-		<div class="text-danger">
+		<div class="text-dark">
 			<small>{{ form_errors(formDescription.description) }}</small>
 		</div>
 	</div>
 	<div class="text-end">
-		<button type="submit" class="btn btn-success">Zapisz</button>
+		<button type="submit" class="btn btn-warning">Zapisz</button>
 	</div>
 	{{ form_end(formDescription) }}
 </div>

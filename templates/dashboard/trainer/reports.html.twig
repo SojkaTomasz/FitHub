@@ -16,12 +16,22 @@
 				{% for report in reports %}
 					<a href="{{path('trainer_report', {id: report.id} )}}" type="button" class=" my-bg-white mb-2 rounded-5 d-block px-2 report-hover">
 						<div class="d-flex flex-row justify-content-between">
-							<div class="p-2 d-flex flex-column align-items-center justify-content-center">
-								{% include 'dashboard/shared/_img_avatar.html.twig' with {avatar: report.student.avatar , width: 25, height: 25} %}
-								<p class="me-2">
-									{{report.student.firstname}}
-									{{report.student.lastName}}
-								</p>
+							<div class="d-flex align-items-center justify-content-center p-2">
+								<p class="h3">#{{report.numberReport}}</p>
+							</div>
+							<div class="p-2 d-flex flex-column align-items-center justify-content-center ">
+								<div class="position-relative">
+									{% include 'dashboard/shared/_img_avatar.html.twig' with {avatar: report.student.avatar , width: 45, height: 45} %}
+									{% if report.student.trainer is not null %}
+										{% if report.student.trainer.id == app.user.id %}
+											<span style="top: 5px; left: 5px" class="position-absolute translate-middle p-2 bg-success border border-light rounded-circle"></span>
+										{% else %}
+											<span style="top: 5px; left: 5px" class="position-absolute translate-middle p-2 bg-danger border border-light rounded-circle"></span>
+										{% endif %}
+									{% else %}
+										<span style="top: 5px; left: 5px" class="position-absolute translate-middle p-2 bg-danger border border-light rounded-circle"></span>
+									{% endif %}
+								</div>
 							</div>
 							<div class="p-2 box-img">
 								<img class="img rounded-4 object-fit-cover" src="{{reports_url ~ report.frontImg}}" alt="">
@@ -33,7 +43,7 @@
 									<div class="d-flex align-items-center">
 										<p class="h5 mb-0 me-3">{{report.weight}}<small>kg</small>
 										</p>
-										<p class="h6 mb-0 text-danger">{{report.weightDifference}}<small>kg</small>
+										<p class="h6 mb-0 text-dark">{{report.weightDifference}}<small>kg</small>
 										</p>
 									</div>
 									<span class="text-dark">Raport z dnia:
@@ -62,11 +72,10 @@
 							<div class="d-flex flex-column align-items-center text-center p-2">
 								<p class="mb-1">Sprawdzony?</p>
 								{% if report.verified %}
-									<i class="bi bi-check2-circle text-success h5 mb-0 ">
+									<i class="bi bi-journal-check text-warning h5 mb-0 ">
 										TAK</i>
-
 								{% else %}
-									<i class="bi bi-ban text-danger h5 mb-0">
+									<i class="bi bi-journal-x text-dark h5 mb-0">
 										NIE</i>
 								{% endif %}
 							</div>
@@ -74,7 +83,12 @@
 					</a>
 				{% endfor %}
 			{% else %}
-				<p>brak podopiecznych</p>
+				<div class="text-center mt-2">
+					<p class="h4 mb-2">Brak Danych!</p>
+					<p class="mb-2">
+						Gdy Twój podopieczny doda raport, tutaj pojawi się lista wszystkich raportów wszystkich podopiecznych.
+					</p>
+				</div>
 			{% endif %}
 		</section>
 	{% endblock %}

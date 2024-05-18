@@ -4,6 +4,7 @@ namespace App\Controller\Trainer;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Service\InfoService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -26,7 +27,7 @@ class TrainersController extends AbstractController
     }
 
     #[Route('/dashboard/trainer/student/{id<\d+>}', name: 'trainer_student')]
-    public function student(UserRepository $userRepository, ?User $student): Response
+    public function student(UserRepository $userRepository, ?User $student, InfoService $infoService): Response
     {
         /** @var \App\Entity\User $user */
         $user = $this->getUser();
@@ -37,6 +38,8 @@ class TrainersController extends AbstractController
         }
 
         $students = $userRepository->findMyStudents($user->getId());
+
+        $infoService->closeInfo($user->getInfos(), $student);
 
         if (!in_array($student, $students)) {
             throw new AccessDeniedException();

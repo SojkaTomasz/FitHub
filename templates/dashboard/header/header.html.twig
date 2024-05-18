@@ -4,17 +4,27 @@
 		<div class="d-flex">
 			<button type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" class="btn btn-primary position-relative p-0 border-0 bg-transparent mx-2 mt-1">
 				<i class="bi bi-info-circle"></i>
-				<span class="position-absolute start-100 translate-middle badge rounded-pill">
-					{{app.user.infos|length}}
-				</span>
+				{% set var = 0 %}
+				{% for info in app.user.infos %}
+					{% if info.seedAt is null %}
+						{% set var = var + 1 %}
+					{% endif %}
+				{% endfor %}
+				{% if var > 0 %}
+					<span class="position-absolute start-100 translate-middle badge rounded-pill">
+						{{ var }}
+					</span>
+				{% endif %}
 
 			</button>
 			<button type="button" class="btn btn-primary position-relative p-0 border-0 bg-transparent mx-2 mt-1">
 				<a href="{{path('messages')}}">
 					<i class="bi bi-chat-dots"></i>
-					<span class="position-absolute start-100 translate-middle badge rounded-pill">
-						{{app.user.unreadMessageCount}}
-					</span>
+					{% if app.user.unreadMessageCount > 0 %}
+						<span class="position-absolute start-100 translate-middle badge rounded-pill">
+							{{app.user.unreadMessageCount}}
+						</span>
+					{% endif %}
 				</a>
 			</button>
 
@@ -59,34 +69,47 @@
 	<div class="offcanvas-body pt-0">
 		{% if app.user.infos is not empty %}
 			{% for info in app.user.infos|reverse %}
+
 				{# {% if info.action == 'new-report' and info.seedAt is null %} #}
 				{% if info.action == 'new-report'%}
 					{% include 'dashboard/header/_info.html.twig' with {
 						icon : "bi bi-clipboard-data-fill",
     					title: "Nowy Raport" , 
-    					subTitle: 'Raport użytkownika ' ~ info.report.student.firstName ~ ' ' ~ info.report.student.lastName,
-						id: info.report.id
+    					subTitle: 'Raport #' ~ info.report.numberReport ~ ' użytkownika ' ~ info.report.student.firstName ~ ' ' ~ info.report.student.lastName,
+						id: info.report.id,
+						type: "report"
 				} %}
 				{% elseif  info.action == 'edit-report'%}
 					{% include 'dashboard/header/_info.html.twig' with {
 						icon : "bi bi-clipboard-data-fill",
-    					title: "Edytowany Raport" , 
+    					title: "Edytowany Raport #" ~ info.reportAnalysis.report.numberReport,
     					subTitle: 'Użytkownika' ~ info.report.student.firstName ~ ' ' ~ info.report.student.lastName ~ 'edytował raport',
-						id: info.report.id
+						id: info.report.id,
+						type: "report"
 				} %}
 				{% elseif  info.action == 'new-analysis-report'%}
 					{% include 'dashboard/header/_info.html.twig' with {
 						icon : "bi bi-clipboard-data-fill",
-    					title: "Nowa Analiza Raportu", 
+    					title: "Nowa Analiza Raportu #" ~ info.reportAnalysis.report.numberReport, 
     					subTitle: 'Raport z dnia' ~ info.reportAnalysis.report.date|date(" d.m.Y"),
-						id: info.reportAnalysis.report.id
+						id: info.reportAnalysis.report.id,
+						type: "report"
 				} %}
 				{% elseif  info.action == 'edit-analysis-report'%}
 					{% include 'dashboard/header/_info.html.twig' with {
 						icon : "bi bi-clipboard-data",
-    					title: "Edytowano Analizę Raportu" , 
+    					title: "Edytowano Analizę Raportu #" ~ info.reportAnalysis.report.numberReport, 
     					subTitle: 'Raport z dnia' ~ info.reportAnalysis.report.date|date(" d.m.Y"),
-						id: info.reportAnalysis.report.id
+						id: info.reportAnalysis.report.id,
+						type: "report"
+				} %}
+				{% elseif  info.action == 'new-student'%}
+					{% include 'dashboard/header/_info.html.twig' with {
+						icon : "bi-person-fill-add",
+    					title: "Nowy Podopieczny", 
+    					subTitle: 'Raport z dnia',
+						id: info.newStudent.id,
+						type: "user"
 				} %}
 				{% else %}
 					<div class="text-center mb-2">

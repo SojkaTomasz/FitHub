@@ -10,15 +10,17 @@
 				<h3 class="title">Raport</h3>
 			{% else %}
 				<h3 class="title">Raport:
-					{{report.student.firstName}}
-					{{report.student.lastName}}
+					<a class="text-warning" href="{{path('trainer_student', {id: report.student.id})}}">
+						{{report.student.firstName}}
+						{{report.student.lastName}}</a>
+					#{{report.numberReport}}
 				</h3>
 			{% endif %}
 		</div>
 	{% endblock %}
 	{% block section %}
 		<section class="section-report">
-		
+
 			<div class="row box-report d-flex gap-3">
 				<div class="info col-12 d-flex gap-3 p-0">
 					<div class="gallery d-flex align-content-center ">
@@ -30,20 +32,20 @@
 								<p class="h6 mb-2">Przeanalizowany przez trenera</p>
 								<div class="d-flex justify-content-center align-items-center ">
 									{% if report.verified %}
-										<p class="text-success h6 me-3">
+										<p class="text-warning h6 me-3">
 											<i class="bi h5 bi-journal-check">
 												TAK</i>
 										</p>
-										<button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+										<button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
 											Zobacz
 										</button>
 									{% else %}
-										<p class="text-danger h6 me-3">
+										<p class="text-dark h6 me-3">
 											<i class="bi h4 bi-journal-x">
 												NIE</i>
 										</p>
 										{% if is_granted('ROLE_TRAINER')  %}
-											<a href="{{path('trainer_report_add_analysis', {id: report.id} )}}" type="button" class="btn btn-success btn-sm">Analizuj</a>
+											<a href="{{path('trainer_report_add_analysis', {id: report.id} )}}" type="button" class="btn btn-warning btn-sm">Analizuj</a>
 										{% endif %}
 									{% endif %}
 								</div>
@@ -56,7 +58,7 @@
 						<div class="p-3 rounded-5 my-bg-white">
 							<p class="h6 mb-2">Dieta trzymana na</p>
 							{% if report.percentDiet >= 80 %}
-								<p class="h4 text-success mb-1">{{report.percentDiet}}%</p>
+								<p class="h4 text-warning mb-1">{{report.percentDiet}}%</p>
 							{% else %}
 								<p class="h4 text-danger mb-1">{{report.percentDiet}}%</p>
 							{% endif %}
@@ -108,54 +110,68 @@
 								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							</div>
 							<div class="modal-body">
-<div class="row">
-  <div class="col-2 pe-0">
-    <nav id="navbar-example3" class="h-100 flex-column align-items-stretch pe-3 border-end">
-      <nav class="nav nav-pills flex-column">
-        <a class="nav-link active" href="#item-1">Plan Treningowy</a>
-        <a class="nav-link" href="#item-2">Plan Żywieniowy</a>
-        <a class="nav-link" href="#item-3">Zalecenia</a>
-      </nav>
-    </nav>
-  </div>
+								<div class="row">
+									<div class="col-2 pe-0">
+										<nav id="navbar-example3" class="h-100 flex-column align-items-stretch pe-3 border-end">
+											<nav class="nav nav-pills flex-column">
+												<a class="nav-link active" href="#item-1">Plan Treningowy</a>
+												<a class="nav-link" href="#item-2">Plan Żywieniowy</a>
+												<a class="nav-link" href="#item-3">Zalecenia</a>
+											</nav>
+										</nav>
+									</div>
 
-  <div class="col-10 analyze-report">
-    <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true" class="scrollspy-example-2" tabindex="0">
-      <div id="item-1" class="mb-3 pb-3 border-bottom">
-        <h4>Plan Treningowy</h4>
-       {{report.reportAnalysis.TrainingPlan | raw}}{% if is_granted('ROLE_STUDENT')  %}
-		 <div class="d-flex align-items-center justify-content-end">
-		  <strong>Kliknij i pobierz </strong>
-		 <a href="{{ path('report_pdf', {'id': report.reportAnalysis.id, 'type' : 'TrainingPlan'}) }}"><i class="text-success h2 bi bi-file-earmark-pdf"></i></a>
-      </div>{% endif %}
-      </div>
-      <div id="item-2" class="mb-3 pb-3 border-bottom">
-        <h4>Plan Żywieniowy</h4>
-        {{report.reportAnalysis.NutritionPlan | raw}}{% if is_granted('ROLE_STUDENT')  %}
-		 <div class="d-flex align-items-center justify-content-end">
-		  <strong>Kliknij i pobierz </strong>
-			<a href="{{ path('report_pdf', {'id': report.reportAnalysis.id, 'type' : 'NutritionPlan'}) }}"><i class="text-success h2 bi bi-file-earmark-pdf"></i></a>
-      </div>{% endif %}
-      </div>
-      <div id="item-3">
-        <h4>Zalecenia</h4>
-        {{report.reportAnalysis.recommendations | raw}}
-		  {% if is_granted('ROLE_STUDENT')  %}
-		 <div class="d-flex align-items-center justify-content-end">
-		  <strong>Kliknij i pobierz </strong>
-		  <a href="{{ path('report_pdf', {'id': report.reportAnalysis.id, 'type' : 'recommendations'}) }}"><i class="text-success h2 bi bi-file-earmark-pdf"></i></a>
-</div>{% endif %}
-      </div>
-    </div>
-  </div>
-</div>
-							
+									<div class="col-10 analyze-report">
+										<div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true" class="scrollspy-example-2" tabindex="0">
+											<div id="item-1" class="mb-3 pb-3 border-bottom">
+												<h4>Plan Treningowy</h4>
+												{{report.reportAnalysis.TrainingPlan | raw}}
+												{% if is_granted('ROLE_STUDENT')  %}
+													<div class="d-flex align-items-center justify-content-end">
+														<strong>Kliknij i pobierz
+														</strong>
+														<a href="{{ path('report_pdf', {'id': report.reportAnalysis.id, 'type' : 'TrainingPlan'}) }}">
+															<i class="text-warning h2 bi bi-file-earmark-pdf"></i>
+														</a>
+													</div>
+												{% endif %}
+											</div>
+											<div id="item-2" class="mb-3 pb-3 border-bottom">
+												<h4>Plan Żywieniowy</h4>
+												{{report.reportAnalysis.NutritionPlan | raw}}
+												{% if is_granted('ROLE_STUDENT')  %}
+													<div class="d-flex align-items-center justify-content-end">
+														<strong>Kliknij i pobierz
+														</strong>
+														<a href="{{ path('report_pdf', {'id': report.reportAnalysis.id, 'type' : 'NutritionPlan'}) }}">
+															<i class="text-warning h2 bi bi-file-earmark-pdf"></i>
+														</a>
+													</div>
+												{% endif %}
+											</div>
+											<div id="item-3">
+												<h4>Zalecenia</h4>
+												{{report.reportAnalysis.recommendations | raw}}
+												{% if is_granted('ROLE_STUDENT')  %}
+													<div class="d-flex align-items-center justify-content-end">
+														<strong>Kliknij i pobierz
+														</strong>
+														<a href="{{ path('report_pdf', {'id': report.reportAnalysis.id, 'type' : 'recommendations'}) }}">
+															<i class="text-warning h2 bi bi-file-earmark-pdf"></i>
+														</a>
+													</div>
+												{% endif %}
+											</div>
+										</div>
+									</div>
+								</div>
+
 							</div>
 							<div class="modal-footer">
 								{% if is_granted('ROLE_TRAINER')  %}
-									<a href="{{path('trainer_report_analysis_edit', {id: report.reportAnalysis.id})}}" type="button" class="btn danger">Edytuj</a>
+									<a href="{{path('trainer_report_analysis_edit', {id: report.reportAnalysis.id})}}" type="button" class="btn btn-warning">Edytuj</a>
 								{% endif %}
-								<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Zamknij</button>
+								<button type="button" class="btn btn-dark" data-bs-dismiss="modal">Zamknij</button>
 							</div>
 						</div>
 					</div>

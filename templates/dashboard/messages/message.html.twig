@@ -24,7 +24,7 @@
 									<small class="me-1">{{message.createdAt|date(" d.m.y m:h") }}</small>
 									{% include 'dashboard/shared/_img_avatar.html.twig' with {avatar: app.user.avatar , width: 30, height: 30} %}
 								</div>
-								<span class="bg-success rounded-4 py-2 px-3 text-white">
+								<span class="bg-warning rounded-4 py-2 px-3 text-white">
 									{{message.content}}
 								</span>
 							</div>
@@ -48,7 +48,7 @@
 				{{ form_start(form, {'attr':{'class': 'row g-3 needs-validation'}})}}
 				{{ form_widget(form.content, {'attr': {'class': 'col-md-12 form-control my-bg-white'}}) }}
 				<div class="text-end">
-					<button type="submit" class="btn btn-success">Wyślij</button>
+					<button type="submit" class="btn btn-warning">Wyślij</button>
 				</div>
 				{{ form_end(form) }}
 			</div>

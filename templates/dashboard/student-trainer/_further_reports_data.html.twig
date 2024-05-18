@@ -16,7 +16,13 @@
 		</td>
 		<td>{{parameter.last}}<small>{{parameter.measure}}</smal>
 		</td>
-		<td>{{parameter.diference}}<small>{{parameter.measure}}</smal>
+		<td>
+			{% if parameter.diference > 0 %}
+				+{{parameter.diference}}
+			{% else %}
+				{{parameter.diference}}
+			{% endif %}
+			<small>{{parameter.measure}}</smal>
 		</td>
 	</tr>
 {% endfor %}

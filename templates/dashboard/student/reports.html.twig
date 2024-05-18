@@ -12,63 +12,98 @@
 	{% block section %}
 		<section class="box-reports">
 			{% include "shared_global/info.html.twig" %}
-			<a href="{{path('student_report_add')}}" type="button" class="btn btn-dark my-3">Dodaj raport</a>
-			{% for report in reports %}
-				<div class="rounded-5 my-bg-white mb-2 ps-2 pe-3">
-					<div class="d-flex flex-row justify-content-between">
-						<div class="d-flex">
-							<div class="box-img p-2">
-								{% include "dashboard/shared/_img_raport.html.twig" %}
-							</div>
-							<div class="d-flex flex-column justify-content-between p-2">
-								<div class="d-flex justify-content-between align-content-center w-100">
-									<div class="d-flex align-items-center">
-										<p class="h5 mb-0 me-3">{{report.weight}}<small>kg</small>
-										</p>
-										<p class="h6 mb-0 text-danger">{{report.weightDifference}}<small>kg</small>
-										</p>
-									</div>
-									<p>{{report.date|date("d.m.Y") }}</p>
+			{% if reports is not empty %}
+				{% if app.user.trainer is null %}
+					<div class="text-center mt-2 mb-5">
+						<p class="h4 mb-2">Brak Trenera!</p>
+						<p class="mb-2">
+							Wyszukaj trenera, dołącz do jego teamu i rozpocznij swoją przygodę w stronę zdrowia i piękna.
+						</p>
+						<a type="button" class="btn btn-warning" type="button" class="btn" href="{{path('all_trainers')}}">SZUKAJ</a>
+					</div>
+				{% else %}
+					<a href="{{path('student_report_add')}}" type="button" class="btn btn-dark my-3">Dodaj raport</a>
+				{% endif %}
+				{% for report in reports %}
+					<div class="rounded-5 my-bg-white mb-2 ps-2 pe-3">
+						<div class="d-flex flex-row justify-content-between">
+							<div class="d-flex">
+								<div class="d-flex align-items-center justify-content-center p-2">
+									<p class="h3">#{{report.numberReport}}</p>
 								</div>
-								<ul class="d-flex align-content-center w-100 list-inline mb-0">
-									<li class="list-inline-item text-secondary fw-light me-3">
-										<small>Udo:
-											{{report.thighCircumference}}cm</small>
-									</li>
-									<li class="list-inline-item text-secondary fw-light me-3">
-										<small>Pas:
-											{{report.beltCircumference}}cm</small>
-									</li>
-									<li class="list-inline-item text-secondary fw-light me-3">
-										<small>Klatka:
-											{{report.chestCircumference}}cm</small>
-									</li>
-									<li class="list-inline-item text-secondary fw-light">
-										<small>Biceps:
-											{{report.bicepsCircumference}}cm</small>
-									</li>
-								</ul>
+								<div class="box-img p-2">
+									{% include "dashboard/shared/_img_raport.html.twig" %}
+								</div>
+								<div class="d-flex flex-column justify-content-between p-2">
+									<div class="d-flex justify-content-between align-content-center w-100">
+										<div class="d-flex align-items-end">
+											<p class="h5 mb-0 me-3">{{report.weight}}<small>kg</small>
+											</p>
+											<small class="mb-0 text-dark" style="text-transform: unset;">
+												{% if report.weightDifference > 0 %}
+													+{{report.weightDifference}}
+												{% else %}
+													{{report.weightDifference}}
+												{% endif %}
+												kg
+											</small>
+
+										</div>
+										<p>{{report.date|date("d.m.Y") }}</p>
+									</div>
+									<ul class="d-flex align-content-center w-100 list-inline mb-0">
+										<li class="list-inline-item text-secondary fw-light me-3">
+											<small>Udo:
+												{{report.thighCircumference}}cm</small>
+										</li>
+										<li class="list-inline-item text-secondary fw-light me-3">
+											<small>Pas:
+												{{report.beltCircumference}}cm</small>
+										</li>
+										<li class="list-inline-item text-secondary fw-light me-3">
+											<small>Klatka:
+												{{report.chestCircumference}}cm</small>
+										</li>
+										<li class="list-inline-item text-secondary fw-light">
+											<small>Biceps:
+												{{report.bicepsCircumference}}cm</small>
+										</li>
+									</ul>
+								</div>
 							</div>
-						</div>
-						<div class="d-flex align-items-center">
-							<div class="text-center p-2">
-								<p>przeanalizowany?</p>
-								{% if report.verified %}
-									<i class="bi bi-journal-check text-success h5 mb-0 ">
-										TAK</i>
-								{% else %}
-									<i class="bi bi-journal-x text-danger h5 mb-0">
-										NIE</i>
-								{% endif %}
-							</div>
-							<div class="p-2">
-								<a href="{{path('student_report', {id: report.id} )}}" class="btn btn-success">Podgląd</a>
-								<a href="{{path('student_report_edit', {id: report.id} )}}" class="btn btn-success">Edytuj</a>
+							<div class="d-flex align-items-center">
+								<div class="text-center p-2">
+									<p>przeanalizowany?</p>
+									{% if report.verified %}
+										<i class="bi bi-journal-check text-warning h5 mb-0 ">
+											TAK</i>
+									{% else %}
+										<i class="bi bi-journal-x text-dark h5 mb-0">
+											NIE</i>
+									{% endif %}
+								</div>
+								<div class="p-2">
+									<a href="{{path('student_report', {id: report.id} )}}" class="btn btn-warning">Podgląd</a>
+									<a href="{{path('student_report_edit', {id: report.id} )}}" class="btn btn-warning">Edytuj</a>
+								</div>
 							</div>
 						</div>
 					</div>
+				{% endfor %}
+			{% endif %}
+
+			{% if app.user.trainer is not null and reports is empty %}
+				<div class="text-center mt-2">
+					<p class="h4 mb-2">Brak Danych!</p>
+					<p class="mb-2">
+						Dodaj Swój pierwszy raport !
+					</p>
+					<a href="{{path('student_report_add')}}" type="button" class="btn btn-dark my-3">Dodaj pierwszy raport</a>
 				</div>
-			{% endfor %}
+			{% endif %}
+			{% if app.user.trainer is null and reports is empty %}
+				{% include "dashboard/shared/_no_trainer.html.twig" %}
+			{% endif %}
 		</section>
 	{% endblock %}
 {% endblock %}

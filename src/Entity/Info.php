@@ -20,16 +20,19 @@ class Info
     private ?\DateTimeImmutable $seedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'infos')]
-    private ?User $user;
+    private User $user;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 55)]
     private ?string $action = null;
 
-    #[ORM\OneToOne(inversedBy: 'info', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'infos')]
     private ?ReportAnalysis $reportAnalysis = null;
 
-    #[ORM\OneToOne(inversedBy: 'info', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'infos')]
     private ?Report $report = null;
+
+    #[ORM\ManyToOne(inversedBy: 'newStudent')]
+    private ?User $newStudent = null;
 
     public function getId(): int
     {
@@ -105,6 +108,18 @@ class Info
     public function setReport(?Report $report): static
     {
         $this->report = $report;
+
+        return $this;
+    }
+
+    public function getNewStudent(): ?User
+    {
+        return $this->newStudent;
+    }
+
+    public function setNewStudent(?User $newStudent): static
+    {
+        $this->newStudent = $newStudent;
 
         return $this;
     }

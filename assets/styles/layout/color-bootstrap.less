@@ -2,27 +2,55 @@
 @import "../vars.less";
 
 html {
-	.text-success {
+	.text-warning {
 		color: @color-main !important;
 	}
 
-	.bg-success {
+	.bg-warning {
 		background-color: @color-main !important;
 	}
 
-	.btn-success {
+	.btn-warning {
 		--bs-btn-bg: @color-main !important;
 		--bs-btn-border-color: @color-main !important;
 		--bs-btn-hover-bg: @color-dark-main !important;
 		--bs-btn-hover-border-color: @color-dark-main !important;
 		--bs-btn-active-bg: @color-dark-main !important;
 		--bs-btn-active-border-color: @color-dark-main !important;
+		--bs-btn-color: @color-white !important;
+		--bs-btn-hover-color: @color-white !important;
+		--bs-btn-active-color: @color-white !important;
+		--bs-btn-disabled-color: @color-white !important;
 	}
 
-	.text-danger {
+	.bg-danger {
+		background-color: @color-danger !important;
+	}
+
+	.alert-danger {
+		--bs-alert-color: @color-danger-dark !important;
+		--bs-alert-bg: @color-danger-light !important;
+		--bs-alert-link-color: @color-danger-dark !important;
+		--bs-alert-border-color: @color-danger-light-dark !important;
+		--bs-alert-border: @color-danger-light-dark !important;
+	}
+
+	.bg-success {
+		background-color: @color-success !important;
+	}
+
+	.alert-success {
+		--bs-alert-color: @color-success-dark !important;
+		--bs-alert-bg: @color-success-light !important;
+		--bs-alert-link-color: @color-success-dark !important;
+		--bs-alert-border-color: @color-success-light-dark !important;
+		--bs-alert-border: @color-success-light-dark !important;
+	}
+
+	.text-dark {
 		color: @bg-light-black !important;
 	}
-	.btn-danger {
+	.btn-dark {
 		--bs-btn-bg: @bg-light-black !important;
 		--bs-btn-border-color: @bg-light-black!important;
 		--bs-btn-hover-bg: @bg-black !important;

@@ -6,6 +6,7 @@ use App\Entity\Info;
 use App\Entity\Report;
 use App\Entity\ReportAnalysis;
 use App\Entity\User;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 
 class InfoService
@@ -17,6 +18,9 @@ class InfoService
    }
    public function newInfo(string $action, User $user, $typeInfo)
    {
+      if (!empty($typeInfo->getInfos()["elements"])) {
+         $this->closeInfo($typeInfo->getInfos());
+      }
       $info = new Info;
       $info->setCreatedAt(new \DateTimeImmutable());
       $info->setAction($action);
@@ -24,16 +28,32 @@ class InfoService
 
       if ($typeInfo instanceof ReportAnalysis)  $info->setReportAnalysis($typeInfo);
       if ($typeInfo instanceof Report)  $info->setReport($typeInfo);
+      if ($typeInfo instanceof User)  $info->setNewStudent($typeInfo);
 
       $this->entityManager->persist($info);
    }
 
-   public function closeInfo(Info $info)
+   public function closeInfo(?Collection $infos)
    {
-      if ($info !== null) {
-         $info->setSeedAt(new \DateTimeImmutable());
-         $this->entityManager->persist($info);
-         $this->entityManager->flush();
+      if ($infos !== null) {
+         foreach ($infos as $info) {
+            if ($info->getSeedAt() === null) {
+               if ($info->getNewStudent() !== null) {
+                  $this->setInfo($info);
+               } elseif ($info->getReport() !== null) {
+                  $this->setInfo($info);
+               } elseif ($info->getReportAnalysis() !== null) {
+                  $this->setInfo($info);
+               }
+            }
+         }
       }
+   }
+
+   public function setInfo($info)
+   {
+      $info->setSeedAt(new \DateTimeImmutable());
+      $this->entityManager->persist($info);
+      $this->entityManager->flush();
    }
 }

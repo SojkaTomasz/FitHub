@@ -12,115 +12,125 @@
 	{% block section %}
 		<section class="box-reports">
 			{% include "shared_global/info.html.twig" %}
-			<div class="rounded-5 p-3 my-bg-white">
-				<table class="table m-0 my-bg-white">
-					<thead>
-						<tr>
-							<th scope="col">Autor Planu</th>
-							<th scope="col">Data Planu</th>
-							<th class="text-end" scope="col">Zalecenia</th>
-							<th class="text-end" scope="col">Plany Żywieniowe</th>
-							<th class="text-end" scope="col">Plany Treningowe</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for reportAnalyst in reportsAnalysis %}
+			{% if reportsAnalysis is not empty %}
+				<div class="rounded-5 p-3 my-bg-white">
+					<table class="table m-0 my-bg-white">
+						<thead>
 							<tr>
-								<td>
-									<a class="text-success" href="{{path('student_trainer', {id: reportAnalyst.trainer.id})}}">
-										{{reportAnalyst.trainer.firstname}}
-										{{reportAnalyst.trainer.lastName}}</a>
-								</td>
-								<td>{{reportAnalyst.dateAnalysis | date("d.m.Y")}}</td>
-								<td class="text-end">
-									<button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal{{reportAnalyst.id}}recommendations">
-										Zobacz
-									</button>
-								</td>
-								<td class="text-end">
-									<button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal{{reportAnalyst.id}}NutritionPlan">
-										Zobacz
-									</button>
-								</td>
-								<td class="text-end">
-									<button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal{{reportAnalyst.id}}TrainingPlan">
-										Zobacz
-									</button>
-								</td>
-								<div class="modal fade" id="exampleModal{{reportAnalyst.id}}recommendations" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-									<div class="modal-dialog modal-xl">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h1 class="modal-title fs-5" id="staticBackdropLabel">Zalecenia z dnia
-													{{reportAnalyst.dateAnalysis | date("d.m.Y")}}
-												</h1>
-												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-											</div>
-											<div class="modal-body">
-												<p>{{reportAnalyst.recommendations | raw}}</p>
-											</div>
-											<div class="modal-footer">
-												<p>Kliknij i pobierz:</p>
-												<a href="{{ path('student_report_pdf', {'id': reportAnalyst.id, 'type' : 'recommendations'}) }}">
-													<i class="text-success h2 bi bi-file-earmark-pdf"></i>
-												</a>
-												{# <i class="text-success h2 bi bi-file-earmark-word"></i> #}
-												<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Zamknij</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="modal fade" id="exampleModal{{reportAnalyst.id}}NutritionPlan" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-									<div class="modal-dialog modal-xl">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h1 class="modal-title fs-5" id="staticBackdropLabel">Plan Żywieniowy z dnia
-													{{reportAnalyst.dateAnalysis | date("d.m.Y")}}
-												</h1>
-												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-											</div>
-											<div class="modal-body">
-												<p>{{reportAnalyst.NutritionPlan | raw}}</p>
-											</div>
-											<div class="modal-footer">
-												<p>Kliknij i pobierz:</p>
-												<a href="{{ path('student_report_pdf', {'id': reportAnalyst.id, 'type' : 'NutritionPlan'}) }}">
-													<i class="text-success h2 bi bi-file-earmark-pdf"></i>
-												</a>
-												{# <i class="text-success h2 bi bi-file-earmark-word"></i> #}
-												<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Zamknij</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="modal fade" id="exampleModal{{reportAnalyst.id}}TrainingPlan" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-									<div class="modal-dialog modal-xl">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h1 class="modal-title fs-5" id="staticBackdropLabel">Plan Treningowy z dnia
-													{{reportAnalyst.dateAnalysis | date("d.m.Y")}}
-												</h1>
-												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-											</div>
-											<div class="modal-body">
-												<p>{{reportAnalyst.TrainingPlan | raw}}</p>
-											</div>
-											<div class="modal-footer">
-												<p>Kliknij i pobierz:</p>
-												<a href="{{ path('student_report_pdf', {'id': reportAnalyst.id, 'type' : 'TrainingPlan'}) }}">
-													<i class="text-success h2 bi bi-file-earmark-pdf"></i>
-												</a>
-												{# <i class="text-success h2 bi bi-file-earmark-word"></i> #}
-												<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Zamknij</button>
-											</div>
-										</div>
-									</div>
-								</div>
+								<th scope="col">Autor Planu</th>
+								<th scope="col">Data Planu</th>
+								<th class="text-end" scope="col">Zalecenia</th>
+								<th class="text-end" scope="col">Plany Żywieniowe</th>
+								<th class="text-end" scope="col">Plany Treningowe</th>
 							</tr>
-						{% endfor %}
-					</tbody>
-				</table>
-			</div>
+						</thead>
+						<tbody>
+							{% for reportAnalyst in reportsAnalysis %}
+								<tr>
+									<td>
+										<a class="text-warning" href="{{path('student_trainer', {id: reportAnalyst.trainer.id})}}">
+											{{reportAnalyst.trainer.firstname}}
+											{{reportAnalyst.trainer.lastName}}</a>
+									</td>
+									<td>{{reportAnalyst.dateAnalysis | date("d.m.Y")}}</td>
+									<td class="text-end">
+										<button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{reportAnalyst.id}}recommendations">
+											Zobacz
+										</button>
+									</td>
+									<td class="text-end">
+										<button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{reportAnalyst.id}}NutritionPlan">
+											Zobacz
+										</button>
+									</td>
+									<td class="text-end">
+										<button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal{{reportAnalyst.id}}TrainingPlan">
+											Zobacz
+										</button>
+									</td>
+									<div class="modal fade" id="exampleModal{{reportAnalyst.id}}recommendations" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+										<div class="modal-dialog modal-xl">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h1 class="modal-title fs-5" id="staticBackdropLabel">Zalecenia z dnia
+														{{reportAnalyst.dateAnalysis | date("d.m.Y")}}
+													</h1>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<p>{{reportAnalyst.recommendations | raw}}</p>
+												</div>
+												<div class="modal-footer">
+													<p>Kliknij i pobierz:</p>
+													<a href="{{ path('report_pdf', {'id': reportAnalyst.id, 'type' : 'recommendations'}) }}">
+														<i class="text-warning h2 bi bi-file-earmark-pdf"></i>
+													</a>
+													{# <i class="text-warning h2 bi bi-file-earmark-word"></i> #}
+													<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Zamknij</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="modal fade" id="exampleModal{{reportAnalyst.id}}NutritionPlan" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+										<div class="modal-dialog modal-xl">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h1 class="modal-title fs-5" id="staticBackdropLabel">Plan Żywieniowy z dnia
+														{{reportAnalyst.dateAnalysis | date("d.m.Y")}}
+													</h1>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<p>{{reportAnalyst.NutritionPlan | raw}}</p>
+												</div>
+												<div class="modal-footer">
+													<p>Kliknij i pobierz:</p>
+													<a href="{{ path('report_pdf', {'id': reportAnalyst.id, 'type' : 'NutritionPlan'}) }}">
+														<i class="text-warning h2 bi bi-file-earmark-pdf"></i>
+													</a>
+													{# <i class="text-warning h2 bi bi-file-earmark-word"></i> #}
+													<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Zamknij</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="modal fade" id="exampleModal{{reportAnalyst.id}}TrainingPlan" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+										<div class="modal-dialog modal-xl">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h1 class="modal-title fs-5" id="staticBackdropLabel">Plan Treningowy z dnia
+														{{reportAnalyst.dateAnalysis | date("d.m.Y")}}
+													</h1>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<p>{{reportAnalyst.TrainingPlan | raw}}</p>
+												</div>
+												<div class="modal-footer">
+													<p>Kliknij i pobierz:</p>
+													<a href="{{ path('report_pdf', {'id': reportAnalyst.id, 'type' : 'TrainingPlan'}) }}">
+														<i class="text-warning h2 bi bi-file-earmark-pdf"></i>
+													</a>
+													{# <i class="text-warning h2 bi bi-file-earmark-word"></i> #}
+													<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Zamknij</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			{% else %}
+				<div class="text-center mt-2">
+					<p class="h4 mb-2">Brak Danych!</p>
+					<p class="mb-2">
+						Po pierwszej analizie Twojego raportu przez trenera tutaj znajdziesz Plan treningowy, Plan żywieniowy ora zalecenia które możesz pobrać w formie PDF.
+					</p>
+				</div>
+			{% endif %}
+
 		</section>
 	{% endblock %}
 {% endblock %}

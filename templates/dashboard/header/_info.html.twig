@@ -1,11 +1,18 @@
 <div class="mb-2 border-bottom pb-2 d-flex">
-	<i class="{{icon}} me-2 text-warning"></i>
+	<div class="d-flex flex-column me-2 align-items-center">
+		<i class="{{icon}} m-0 h4 text-warning"></i>
+		{% if info.seedAt is null %}
+			<i class="bi bi-exclamation-circle m-0 text-danger"></i>
+		{% else %}
+			<i class="bi bi-check2-circle m-0 text-success"></i>
+		{% endif %}
+	</div>
 	<div class="flex-grow-1">
 		<div class="toast-header">
 			{% if info.seedAt is null %}
 				<strong class="me-auto">{{title}}</strong>
 			{% else %}
-				<p class="me-auto m-0">{{title}}</p>
+				<p class="me-auto mb-0">{{title}}</p>
 			{% endif %}
 			<small>
 				{% set currentTime = "now"|date("U") %}
@@ -36,7 +43,7 @@
 		</div>
 
 		<div class="toast-body d-flex justify-content-between align-items-center">
-			<small class="m-0">{{subTitle}}</small>
+			<small class="m-0 me-1">{{subTitle}}</small>
 			{% if type == "report" %}
 				{% if is_granted('ROLE_STUDENT') %}
 					<a class="btn btn-sm btn-warning py-0" href="{{path('student_report', {id: id} )}}">Zobacz</a>
@@ -44,8 +51,10 @@
 				{% if is_granted('ROLE_TRAINER') %}
 					<a class="btn btn-sm btn-warning py-0" href="{{path('trainer_report', {id: id} )}}">Zobacz</a>
 				{% endif %}
-			{% elseif type == "user" %}
+			{% elseif type == "trener" %}
 				<a class="btn btn-sm btn-warning py-0" href="{{path('trainer_student', {id: id})}}">Zobacz</a>
+			{% elseif type == "student" %}
+				<a class="btn btn-sm btn-warning py-0" href="{{path('student_trainer', {id: id})}}">Zobacz</a>
 			{% endif %}
 		</div>
 	</div>

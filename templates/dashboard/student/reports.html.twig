@@ -19,6 +19,9 @@
 						<p class="mb-2">
 							Wyszukaj trenera, dołącz do jego teamu i rozpocznij swoją przygodę w stronę zdrowia i piękna.
 						</p>
+						<p class="mb-2">
+							Pamiętaj że poniższych raportów nie zobaczy nikt poza poprzednim trenerem.
+						</p>
 						<a type="button" class="btn btn-warning" type="button" class="btn" href="{{path('all_trainers')}}">SZUKAJ</a>
 					</div>
 				{% else %}
@@ -31,7 +34,7 @@
 								<div class="d-flex align-items-center justify-content-center p-2">
 									<p class="h3">#{{report.numberReport}}</p>
 								</div>
-								<div class="box-img p-2">
+								<div class="box-img p-1">
 									{% include "dashboard/shared/_img_raport.html.twig" %}
 								</div>
 								<div class="d-flex flex-column justify-content-between p-2">
@@ -72,8 +75,18 @@
 								</div>
 							</div>
 							<div class="d-flex align-items-center">
-								<div class="text-center p-2">
-									<p>przeanalizowany?</p>
+								<div class="d-flex align-items-center gap-2 p-2">
+									{% include 'dashboard/shared/_img_avatar.html.twig' with {avatar: report.trainer.avatar , width: 35, height: 35} %}
+									<div class="">
+										<p>Trener</p>
+										<div>
+											<small>{{report.trainer.firstName}}</small>
+											<small>{{report.trainer.LastName}}</small>
+										</div>
+									</div>
+								</div>
+								<div class="text-end p-2">
+									<p>Przeanalizowany?</p>
 									{% if report.verified %}
 										<i class="bi bi-journal-check text-warning h5 mb-0 ">
 											TAK</i>

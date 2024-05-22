@@ -72,9 +72,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Info::class, mappedBy: 'user')]
     private Collection $infos;
 
-    #[ORM\OneToMany(targetEntity: Info::class, mappedBy: 'newStudent')]
-    private Collection $newStudent;
-
     public function __construct()
     {
         $this->students = new ArrayCollection();
@@ -83,7 +80,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->reportsTrainer = new ArrayCollection();
         $this->reviews = new ArrayCollection();
         $this->infos = new ArrayCollection();
-        $this->newStudent = new ArrayCollection();
     }
 
 
@@ -407,36 +403,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($info->getUser() === $this) {
                 $info->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Info>
-     */
-    public function getNewStudent(): Collection
-    {
-        return $this->newStudent;
-    }
-
-    public function addNewStudent(Info $newStudent): static
-    {
-        if (!$this->newStudent->contains($newStudent)) {
-            $this->newStudent->add($newStudent);
-            $newStudent->setNewStudent($this);
-        }
-
-        return $this;
-    }
-
-    public function removeNewStudent(Info $newStudent): static
-    {
-        if ($this->newStudent->removeElement($newStudent)) {
-            // set the owning side to null (unless already changed)
-            if ($newStudent->getNewStudent() === $this) {
-                $newStudent->setNewStudent(null);
             }
         }
 

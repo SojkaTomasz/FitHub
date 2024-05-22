@@ -38,19 +38,19 @@ class TrainersController extends AbstractController
         }
 
         $students = $userRepository->findMyStudents($user->getId());
-
-        $infoService->closeInfo($user->getInfos(), $student);
+        $infoService->closeInfoNewStudent($user->getInfos(), $student);
 
         if (!in_array($student, $students)) {
             throw new AccessDeniedException();
         }
+
         return $this->render('dashboard/trainer/student.html.twig', [
             'student' => $student,
         ]);
     }
 
     #[Route('/dashboard/trainer/student/termination/{id<\d+>}', name: 'student_termination')]
-    public function remove(EntityManagerInterface $entityManager, ?User $student): Response
+    public function remove(EntityManagerInterface $entityManager, ?User $student, InfoService $infoService): Response
     {
         /** @var \App\Entity\User $trainer */
         $trainer = $this->getUser();
@@ -58,6 +58,8 @@ class TrainersController extends AbstractController
         if ($student->getTrainer() !== $trainer) {
             throw new AccessDeniedException();
         }
+
+        $infoService->newInfo("termination", $student, $trainer);
 
         $student->setTrainer(null);
         $entityManager->persist($student);

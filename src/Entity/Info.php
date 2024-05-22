@@ -31,7 +31,7 @@ class Info
     #[ORM\ManyToOne(inversedBy: 'infos')]
     private ?Report $report = null;
 
-    #[ORM\ManyToOne(inversedBy: 'newStudent')]
+    #[ORM\ManyToOne(inversedBy: 'infos')]
     private ?User $newStudent = null;
 
     public function getId(): int

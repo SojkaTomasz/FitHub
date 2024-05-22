@@ -69,8 +69,6 @@
 	<div class="offcanvas-body pt-0">
 		{% if app.user.infos is not empty %}
 			{% for info in app.user.infos|reverse %}
-
-				{# {% if info.action == 'new-report' and info.seedAt is null %} #}
 				{% if info.action == 'new-report'%}
 					{% include 'dashboard/header/_info.html.twig' with {
 						icon : "bi bi-clipboard-data-fill",
@@ -79,37 +77,37 @@
 						id: info.report.id,
 						type: "report"
 				} %}
-				{% elseif  info.action == 'edit-report'%}
-					{% include 'dashboard/header/_info.html.twig' with {
-						icon : "bi bi-clipboard-data-fill",
-    					title: "Edytowany Raport #" ~ info.reportAnalysis.report.numberReport,
-    					subTitle: 'Użytkownika' ~ info.report.student.firstName ~ ' ' ~ info.report.student.lastName ~ 'edytował raport',
-						id: info.report.id,
-						type: "report"
-				} %}
 				{% elseif  info.action == 'new-analysis-report'%}
 					{% include 'dashboard/header/_info.html.twig' with {
 						icon : "bi bi-clipboard-data-fill",
-    					title: "Nowa Analiza Raportu #" ~ info.reportAnalysis.report.numberReport, 
-    					subTitle: 'Raport z dnia' ~ info.reportAnalysis.report.date|date(" d.m.Y"),
+    					title: "Nowa Analiza Raportu", 
+    					subTitle: 'Raport #' ~ info.reportAnalysis.report.numberReport ~ ' z dnia' ~ info.reportAnalysis.report.date|date(" d.m.Y"),
 						id: info.reportAnalysis.report.id,
 						type: "report"
 				} %}
 				{% elseif  info.action == 'edit-analysis-report'%}
 					{% include 'dashboard/header/_info.html.twig' with {
 						icon : "bi bi-clipboard-data",
-    					title: "Edytowano Analizę Raportu #" ~ info.reportAnalysis.report.numberReport, 
-    					subTitle: 'Raport z dnia' ~ info.reportAnalysis.report.date|date(" d.m.Y"),
+    					title: "Edytowano Analizę Raportu", 
+    					subTitle: 'Raport #' ~ info.reportAnalysis.report.numberReport ~ ' z dnia' ~ info.reportAnalysis.report.date|date(" d.m.Y"),
 						id: info.reportAnalysis.report.id,
 						type: "report"
 				} %}
 				{% elseif  info.action == 'new-student'%}
 					{% include 'dashboard/header/_info.html.twig' with {
-						icon : "bi-person-fill-add",
+						icon : "bi bi-person-fill-add",
     					title: "Nowy Podopieczny", 
-    					subTitle: 'Raport z dnia',
+    					subTitle: 'Do Twojego zespołu dołączył/a ' ~ info.newStudent.firstName ~ ' ' ~ info.newStudent.lastName,
 						id: info.newStudent.id,
-						type: "user"
+						type: "trener"
+				} %}
+				{% elseif  info.action == 'termination'%}
+					{% include 'dashboard/header/_info.html.twig' with {
+						icon : "bi bi-person-x",
+    					title: "Zakończenie Współpracy", 
+    					subTitle: info.newStudent.firstName ~ ' ' ~ info.newStudent.lastName  ~ ' zakończył/a współpracę',
+						id: info.newStudent.id,
+						type: "student"
 				} %}
 				{% else %}
 					<div class="text-center mb-2">

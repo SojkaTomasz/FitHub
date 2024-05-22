@@ -113,7 +113,7 @@ class ReportForStudentController extends AbstractController
     }
 
     #[Route('/dashboard/student/report/edit/{id<\d+>}', name: 'student_report_edit')]
-    public function edit(Request $request, ?Report $report, EntityManagerInterface $entityManager, ReportRepository $reportRepository, FileUploader $fileUploader, InfoService $infoService): Response
+    public function edit(Request $request, ?Report $report, EntityManagerInterface $entityManager, ReportRepository $reportRepository, FileUploader $fileUploader): Response
     {
         $report->setFrontImg('');
         $report->setSideImg('');
@@ -146,7 +146,6 @@ class ReportForStudentController extends AbstractController
             $user = $this->getUser();
             $reports = $reportRepository->findMyReports($user->getId());
             $report->setWeightDifference($report->getWeight() - $reports[0]->getWeight());
-            // $infoService->newInfo("edit-report", $user->getTrainer(), $report);
             $entityManager->persist($report);
             $entityManager->flush();
 

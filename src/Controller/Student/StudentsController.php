@@ -36,7 +36,7 @@ class StudentsController extends AbstractController
     }
 
     #[Route('/dashboard/student/trainer/{id}', name: 'student_trainer')]
-    public function trainer(?User $trainer, Request $request, EntityManagerInterface $entityManager): Response
+    public function trainer(?User $trainer, Request $request, EntityManagerInterface $entityManager, InfoService $infoService): Response
     {
 
         /** @var App\Entity\User $student*/
@@ -46,6 +46,8 @@ class StudentsController extends AbstractController
             $this->addFlash('error', "Nie znaleziono trenera!");
             return $this->redirectToRoute('all_trainers');
         }
+
+        $infoService->closeInfoNewStudent($student->getInfos(), $trainer);
 
         if ($trainer->getStudents()->contains($student)) {
             $review = new Reviews();

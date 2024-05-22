@@ -16,7 +16,7 @@ class InfoService
       private EntityManagerInterface $entityManager,
    ) {
    }
-   public function newInfo(string $action, User $user, $typeInfo)
+   public function newInfo(string $action, User $user, ReportAnalysis | Report | User $typeInfo)
    {
       if (!empty($typeInfo->getInfos()["elements"])) {
          $this->closeInfo($typeInfo->getInfos());
@@ -28,7 +28,7 @@ class InfoService
 
       if ($typeInfo instanceof ReportAnalysis)  $info->setReportAnalysis($typeInfo);
       if ($typeInfo instanceof Report)  $info->setReport($typeInfo);
-      if ($typeInfo instanceof User)  $info->setNewStudent($typeInfo);
+      if ($typeInfo instanceof User) $info->setNewStudent($typeInfo);
 
       $this->entityManager->persist($info);
    }
@@ -36,24 +36,27 @@ class InfoService
    public function closeInfo(?Collection $infos)
    {
       if ($infos !== null) {
+
          foreach ($infos as $info) {
             if ($info->getSeedAt() === null) {
-               if ($info->getNewStudent() !== null) {
-                  $this->setInfo($info);
-               } elseif ($info->getReport() !== null) {
-                  $this->setInfo($info);
-               } elseif ($info->getReportAnalysis() !== null) {
-                  $this->setInfo($info);
-               }
+               $info->setSeedAt(new \DateTimeImmutable());
+               $this->entityManager->persist($info);
+               $this->entityManager->flush();
             }
          }
       }
    }
 
-   public function setInfo($info)
+   public function closeInfoNewStudent(?Collection $infos, User $student)
    {
-      $info->setSeedAt(new \DateTimeImmutable());
-      $this->entityManager->persist($info);
-      $this->entityManager->flush();
+      if ($infos !== null) {
+         foreach ($infos as $info) {
+            if ($info->getSeedAt() === null && $info->getNewStudent() === $student) {
+               $info->setSeedAt(new \DateTimeImmutable());
+               $this->entityManager->persist($info);
+               $this->entityManager->flush();
+            }
+         }
+      }
    }
 }

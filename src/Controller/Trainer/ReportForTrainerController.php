@@ -45,6 +45,7 @@ class ReportForTrainerController extends AbstractController
         $idSelectedReport = $report->getStudent()->getId();
         $dateSelectedReport = $report->getDate();
         $lastReport = $reportRepository->findLastReport($idSelectedReport, $dateSelectedReport);
+
         $infoService->closeInfo($report->getInfos());
 
         return $this->render('dashboard/student-trainer/report.html.twig', [

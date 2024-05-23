@@ -72,6 +72,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Info::class, mappedBy: 'user')]
     private Collection $infos;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?Questionnaire $questionnaire = null;
+
     public function __construct()
     {
         $this->students = new ArrayCollection();
@@ -405,6 +408,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $info->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getQuestionnaire(): ?Questionnaire
+    {
+        return $this->questionnaire;
+    }
+
+    public function setQuestionnaire(Questionnaire $questionnaire): static
+    {
+        // set the owning side of the relation if necessary
+        if ($questionnaire->getUser() !== $this) {
+            $questionnaire->setUser($this);
+        }
+
+        $this->questionnaire = $questionnaire;
 
         return $this;
     }

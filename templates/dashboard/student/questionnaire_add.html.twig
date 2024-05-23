@@ -1,0 +1,134 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Dodaj Ankietę
+{% endblock %}
+
+
+{% block main %}
+	{% block titleSection %}
+		<div class="title-section">
+			<h3 class="title">Dodaj Ankietę</h3>
+		</div>
+	{% endblock %}
+	{% block section %}
+		<section>
+			{{ form_errors(form) }}
+
+
+			{{ form_start(form, {'attr':{'class': 'row g-3 needs-validation'}}) }}
+
+			<p class="h4">Trening</p>
+			<div class="col-md-4">
+				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.goals}%}
+			</div>
+			<div class="col-md-4">
+				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.activityLevel}%}
+			</div>
+			<div class="col-md-4">
+				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.currentTraining}%}
+			</div>
+			<div class="col-md-6">
+				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.trainingDays}%}
+			</div>
+			<div class="col-md-6">
+				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.trainingHours}%}
+
+			</div>
+			<div class="col-md-6">
+				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.preferredTrainingTime}%}
+			</div>
+			<div class="col-md-6">
+				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.motivation}%}
+			</div>
+			<div class="col-md-6">
+				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.shortTermGoals}%}
+			</div>
+
+			<div class="col-md-6">
+				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.longTermGoals}%}
+			</div>
+
+
+			<div class="col-md-4">
+				{% include "dashboard/shared/_element_form_checkout_questionnaire.html.twig" with {form : form.preferredTraining}%}
+			</div>
+
+			<div class="col-md-4">
+				{% include "dashboard/shared/_element_form_checkout_questionnaire.html.twig" with {form : form.dislikedTraining}%}
+			</div>
+
+			<div class="col-md-4">
+				{% include "dashboard/shared/_element_form_checkout_questionnaire.html.twig" with {form : form.availableEquipment}%}
+			</div>
+			<br>
+			<hr>
+			<p class="h4">Dieta</p>
+			<div class="col-md-3">
+				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.mealsPerDay}%}
+			</div>
+
+			<div class="col-md-3">
+				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.snackingHabits}%}
+			</div>
+			<div class="col-md-3">
+				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.alcoholIntake}%}
+			</div>
+
+			<div class="col-md-3">
+				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.waterIntake}%}
+			</div>
+			<div class="col-md-4">
+				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.currentDiet}%}
+			</div>
+
+			<div class="col-md-4">
+				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.productsLike}%}
+			</div>
+
+			<div class="col-md-4">
+				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.productsNotLike}%}
+			</div>
+
+			<br>
+			<hr>
+			<p class="h4">Zdrowie</p>
+			<div class="col-md-3">
+				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.typeWork}%}
+			</div>
+
+			<div class="col-md-3">
+				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.stressLevel}%}
+			</div>
+
+			<div class="col-md-3">
+				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.sleepQuality}%}
+			</div>
+			<div class="col-md-3">
+				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.smokingHabits}%}
+			</div>
+			<div class="col-md-7">
+				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.healthIssues}%}
+			</div>
+
+			<div class="col-md-5">
+				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.mobilityIssues}%}
+			</div>
+
+
+			<br>
+			<hr>
+
+
+			<div class="col-md-12">
+				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.additionalInfo}%}
+			</div>
+
+			<div class="text-end">
+				{{ form_widget(form.save, {'attr': {'class': 'btn btn-warning', 'type': 'submit'}, 'label': 'Wyślij'})}}
+			</div>
+			{{ form_end(form) }}
+
+		</section>
+	{% endblock %}
+{% endblock %}

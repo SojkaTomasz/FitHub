@@ -39,6 +39,32 @@ html {
 	body {
 		display: flex;
 		background-color: @bg-light-dark-gray;
+		.offcanvas-body {
+			&::-webkit-scrollbar {
+				border-radius: 50px;
+				width: 10px;
+			}
+			&::-webkit-scrollbar-track {
+				border-radius: 50px;
+				background: @color-dark-white;
+			}
+			&::-webkit-scrollbar-thumb {
+				border-radius: 50px;
+				background: @color-dark-main;
+			}
+		}
+		aside.opacity,
+		header.opacity,
+		main.opacity {
+			opacity: 1;
+		}
+
+		aside,
+		header,
+		main {
+			opacity: 0;
+			transition: opacity 0.5s 0.1s !important;
+		}
 		aside,
 		header {
 			i::before {
@@ -67,13 +93,13 @@ html {
 				top: 0;
 				width: -webkit-fill-available;
 				margin: 1rem 1.5rem 0.7rem 0.7rem;
-				border-radius: 20px;
+				border-radius: 30px;
 				background: @bg-light-gray;
 				padding-left: 1.2rem;
 				.title {
 					color: @text-black;
 					margin: 0;
-					padding: 0.5rem 0;
+					padding: 0.8rem 0;
 				}
 			}
 			section {

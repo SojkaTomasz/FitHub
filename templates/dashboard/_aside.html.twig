@@ -1,10 +1,12 @@
-<div class="d-flex text-start px-0 my-1">
-	<a class="nav-link p-0 d-flex align-items-center" aria-current="page" href="{{path(route)}}">
-		<span class="p-2">
-			<i class="bi bi-layout-wtf"></i>
-		</span>
-		<div class="name-page text-nowrap">
-		<p class="m-0">{{title}}</p>
-		</div>
-	</a>
-</div>
+{% for item in items %}
+	<div class="d-flex text-start px-0 my-1">
+		<a class="nav-link p-0 d-flex align-items-center" aria-current="page" href="{{path(item.route)}}">
+			<span class="p-2">
+				<i class="bi {{item.icon}}"></i>
+			</span>
+			<div class="name-page text-nowrap">
+				<p class="m-0">{{item.title}}</p>
+			</div>
+		</a>
+	</div>
+{% endfor %}

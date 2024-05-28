@@ -9,7 +9,7 @@
 			<h3 class="title">Rozmowa
 				{{recipient.firstName}}
 				{{recipient.lastName}}
-				{% include 'dashboard/shared/_img_avatar.html.twig' with {avatar: recipient.avatar , width: 30, height: 30} %}
+				{% include 'dashboard/shared/_img_avatar.html.twig' with {avatar: recipient.avatar , width: 40, height: 40} %}
 			</h3>
 		</div>
 	{% endblock %}
@@ -20,7 +20,7 @@
 					{% for message in messages %}
 						{% if app.user == message.sender  %}
 							<div class="text-end d-flex flex-column align-items-end mb-2">
-								<div class="d-flex align-items-end">
+								<div class="d-flex align-items-end mb-1">
 									<small class="me-1">{{message.createdAt|date(" d.m.y m:h") }}</small>
 									{% include 'dashboard/shared/_img_avatar.html.twig' with {avatar: app.user.avatar , width: 30, height: 30} %}
 								</div>
@@ -30,7 +30,7 @@
 							</div>
 						{% else %}
 							<div class="d-flex flex-column align-items-start mb-2">
-								<div class="d-flex align-items-end">
+								<div class="d-flex align-items-end mb-1">
 									{% include 'dashboard/shared/_img_avatar.html.twig' with {avatar: recipient.avatar , width: 30, height: 30} %}
 									<small class="ms-1">{{message.createdAt|date(" d.m.y m:h") }}</small>
 								</div>

@@ -26,7 +26,7 @@
 								<th scope="col">Id</th>
 								<th scope="col">Imię</th>
 								<th scope="col">Nazwisko</th>
-								<th scope="col">Ocena</th>
+								{# <th scope="col">Ocena</th> #}
 								<th class="text-end" scope="col">Zobacz Profil</th>
 							</tr>
 						</thead>
@@ -38,7 +38,7 @@
 								<td>{{app.user.trainer.id}}</td>
 								<td>{{app.user.trainer.firstName}}</td>
 								<td>{{app.user.trainer.lastName}}</td>
-								<td>brak ocen</td>
+								{# <td>brak ocen</td> #}
 								<td class="text-end">
 									<a type="button" class="btn btn-warning" type="button" class="btn" href="{{path('student_trainer', {id: app.user.trainer.id})}}">Czytaj</a>
 								</td>
@@ -56,7 +56,7 @@
 							<th scope="col">Id</th>
 							<th scope="col">Imię</th>
 							<th scope="col">Nazwisko</th>
-							<th scope="col">Ocena</th>
+							{# <th scope="col">Ocena</th> #}
 							<th class="text-end" scope="col">Zobacz Profil</th>
 						</tr>
 					</thead>
@@ -69,14 +69,14 @@
 								<td>{{trainer[0].id}}</td>
 								<td>{{trainer[0].firstName}}</td>
 								<td>{{trainer[0].lastName}}</td>
-								<td>
-									{% if trainer.average_rating %}
-										<i class="bi bi-star-fill text-warning"></i>
-										{{trainer.average_rating | number_format(2, '.', ',') }}
-									{% else %}
-										brak ocen
-									{% endif %}
-								</td>
+								{# <td>
+																	{% if trainer.average_rating %}
+																		<i class="bi bi-star-fill text-warning"></i>
+																		{{trainer.average_rating | number_format(2, '.', ',') }}
+																	{% else %}
+																		brak ocen
+																	{% endif %}
+																</td> #}
 								<td class="text-end">
 									<a type="button" class="btn btn-warning" type="button" class="btn" href="{{path('student_trainer', {id: trainer[0].id})}}">Czytaj<a></td>
 									</tr>

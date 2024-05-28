@@ -1,6 +1,7 @@
 @import "../vars.less";
 @import "../mixins.less";
 
+
 aside {
 	max-height: 100vh;
 	background-color: @bg-light-dark-gray;
@@ -11,24 +12,20 @@ aside {
 			color: @text-main;
 		}
 	}
-	.mixin-animate-transition(width);
+
 	.icon-nav-arrow {
 		cursor: pointer;
 		background-color: @bg-main;
-		.mixin-animate-transition(left);
+
 		i {
 			display: flex;
 			align-items: center;
 			justify-content: center;
 			color: @text-white;
-			&::before {
-				.mixin-animate-transition(transform);
-			}
 		}
 	}
 	.nav {
 		left: 0;
-		.mixin-animate-transition(left);
 		background-color: @bg-light-gray;
 		.box-nav {
 			nav {
@@ -65,9 +62,7 @@ aside {
 			transform: rotate(180deg);
 		}
 	}
-	.logo {
-		transition: width 0.7s;
-	}
+
 	.logo.active {
 		width: 0;
 	}
@@ -77,7 +72,6 @@ aside {
 	.name-page p {
 		overflow: hidden;
 		margin-left: 1rem;
-		transition: width 0.7s, transform 0.7s, margin 0.7s;
 	}
 	.name-page.active p {
 		transform: translate(-200%);

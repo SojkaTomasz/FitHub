@@ -1,0 +1,78 @@
+{% if reports is not empty  %}
+	{% for report in reports %}
+		<a href="{{path('trainer_report', {id: report.id} )}}" type="button" class=" my-bg-white mb-2 rounded-5 d-block px-2 report-hover">
+			<div class="d-flex flex-row justify-content-between">
+				<div class="d-flex align-items-center justify-content-center p-2">
+					<p class="h3">#{{report.numberReport}}</p>
+				</div>
+				<div class="p-2 d-flex flex-column align-items-center justify-content-center ">
+					<div class="position-relative">
+						{% include 'dashboard/shared/_img_avatar.html.twig' with {avatar: report.student.avatar , width: 45, height: 45} %}
+						{% if report.student.trainer is not null %}
+							{% if report.student.trainer.id == app.user.id %}
+								<span style="top: 5px; left: 5px" class="position-absolute translate-middle p-2 bg-success border border-light rounded-circle"></span>
+							{% else %}
+								<span style="top: 5px; left: 5px" class="position-absolute translate-middle p-2 bg-danger border border-light rounded-circle"></span>
+							{% endif %}
+						{% else %}
+							<span style="top: 5px; left: 5px" class="position-absolute translate-middle p-2 bg-danger border border-light rounded-circle"></span>
+						{% endif %}
+					</div>
+				</div>
+				<div class="p-2 box-img">
+					<img class="img rounded-4 object-fit-cover" src="{{reports_url ~ report.frontImg}}" alt="">
+					<img class="img rounded-4 object-fit-cover" src="{{reports_url ~ report.sideImg}}" alt="">
+					<img class="img rounded-4 object-fit-cover" src="{{reports_url ~ report.backImg}}" alt="">
+				</div>
+				<div class="d-flex flex-column justify-content-between p-2 flex-grow-1">
+					<div class="d-flex justify-content-between align-content-center w-100">
+						<div class="d-flex align-items-center">
+							<p class="h5 mb-0 me-3">{{report.weight}}<small>kg</small>
+							</p>
+							<p class="h6 mb-0 text-dark">{{report.weightDifference}}<small>kg</small>
+							</p>
+						</div>
+						<span class="text-dark">Raport z dnia:
+							{{report.date|date("d.m.Y") }}
+						</span>
+					</div>
+					<ul class="d-flex align-content-center w-100 list-inline mb-0">
+						<li class="list-inline-item text-secondary fw-light me-3">
+							<small>Udo:
+								{{report.thighCircumference}}cm</small>
+						</li>
+						<li class="list-inline-item text-secondary fw-light me-3">
+							<small>Pas:
+								{{report.beltCircumference}}cm</small>
+						</li>
+						<li class="list-inline-item text-secondary fw-light me-3">
+							<small>Klata:
+								{{report.chestCircumference}}cm</small>
+						</li>
+						<li class="list-inline-item text-secondary fw-light">
+							<small>Bicek:
+								{{report.bicepsCircumference}}cm</small>
+						</li>
+					</ul>
+				</div>
+				<div class="d-flex flex-column align-items-center text-center p-2">
+					<p class="mb-1">Sprawdzony?</p>
+					{% if report.verified %}
+						<i class="bi bi-journal-check text-warning h5 mb-0 ">
+							TAK</i>
+					{% else %}
+						<i class="bi bi-journal-x text-dark h5 mb-0">
+							NIE</i>
+					{% endif %}
+				</div>
+			</div>
+		</a>
+	{% endfor %}
+{% else %}
+	<div class="text-center mt-2">
+		<p class="h4 mb-2">Brak Danych!</p>
+		<p class="mb-2">
+			Gdy Twój podopieczny doda raport, tutaj pojawi się lista wszystkich raportów wszystkich podopiecznych.
+		</p>
+	</div>
+{% endif %}

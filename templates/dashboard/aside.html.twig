@@ -9,32 +9,21 @@
 			</div>
 			<nav>
 				{% if is_granted('ROLE_STUDENT')  %}
-					{% set itemsStudentPanel = [
-						{route: 'dashboard' , title: 'Panel Główny'},
-						{route: 'student_reports_analysis' , title: 'Plany'},
-						{route: 'student_reports' , title: 'Raporty'},
-						{route: 'all_trainers' , title: 'Trenerzy'},
-					]  %}
-
-					{% for itemStudentPanel in itemsStudentPanel %}
-						{% include 'dashboard/_aside.html.twig' with {
-							route: itemStudentPanel.route , title: itemStudentPanel.title
-						} %}
-					{% endfor %}
+					{% include 'dashboard/_aside.html.twig' with {
+						items: [
+							{route: 'dashboard' , title: 'Panel Główny', icon: "bi-speedometer2"},
+							{route: 'student_reports_analysis' , title: 'Plany', icon: "bi-list-stars"},
+							{route: 'student_reports' , title: 'Raporty', icon: "bi-clipboard-data"},
+							{route: 'all_trainers' , title: 'Trenerzy', icon: "bi-people"},
+						]} %}
 				{% endif %}
+
 				{% if is_granted('ROLE_TRAINER')  %}
-
-					{% set itemsTrainerPanel = [
-						{route: 'dashboard' , title: 'Panel Główny'},
-						{route: 'students_trainer_all' , title: 'Podopieczni'},
-						{route: 'trainer_reports' , title: 'Raporty'},
-					]  %}
-
-					{% for itemTrainerPanel in itemsTrainerPanel %}
-						{% include 'dashboard/_aside.html.twig' with {
-							route: itemTrainerPanel.route , title: itemTrainerPanel.title
-						} %}
-					{% endfor %}
+					{% include 'dashboard/_aside.html.twig' with {
+						items: [
+							{route: 'students_trainer_all' , title: 'Podopieczni', icon: "bi-people"},
+							{route: 'trainer_reports' , title: 'Raporty', icon: "bi-clipboard-data"},
+						]} %}
 				{% endif %}
 			</nav>
 		</div>

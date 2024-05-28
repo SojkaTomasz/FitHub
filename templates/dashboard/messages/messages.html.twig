@@ -37,7 +37,7 @@
 										<td>{{message.sender.lastName}}</td>
 										<td class="text-end">
 											<div class="position-relative">
-												<a type="button" class="btn btn-danger text-decoration-none text-white" href="{{path('message', {id:message.sender.id})}}">Czytaj</a>
+												<a type="button" class="btn btn-warning text-decoration-none text-white" href="{{path('message', {id:message.sender.id})}}">Czytaj</a>
 												{% if app.user == message.recipient and message.seedAt == false %}
 													<span class="position-absolute top-0 start-100 translate-middle p-2 bg-warning border border-light rounded-circle">
 														<span class="visually-hidden">New alerts</span>

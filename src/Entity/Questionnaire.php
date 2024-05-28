@@ -12,11 +12,11 @@ class Questionnaire
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private int $id;
 
     #[ORM\OneToOne(inversedBy: 'questionnaire', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    private User $user;
 
     #[ORM\Column(type: Types::TEXT)]
     private string $productsLike;
@@ -24,13 +24,13 @@ class Questionnaire
     #[ORM\Column(type: Types::TEXT)]
     private string $productsNotLike;
 
-    #[ORM\Column(type: Types::SMALLINT)]
-    private int $trainingDays;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private string $trainingDays;
 
-    #[ORM\Column(type: Types::SMALLINT)]
-    private int $trainingHours;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private string $trainingHours;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private string $typeWork;
 
     #[ORM\Column(type: Types::STRING, length: 255)]
@@ -45,15 +45,14 @@ class Questionnaire
     #[ORM\Column(type: Types::STRING, length: 255)]
     private string $activityLevel;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $currentTraining = null;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private string $currentTraining;
 
     #[ORM\Column(type: Types::STRING, length: 255)]
     private string $healthIssues;
 
     #[ORM\Column(type: Types::STRING, length: 255)]
     private string $mobilityIssues;
-
 
     #[ORM\Column(type: Types::STRING, length: 255)]
     private string $stressLevel;
@@ -64,12 +63,11 @@ class Questionnaire
     #[ORM\Column(type: Types::TEXT)]
     private string $currentDiet;
 
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private string $mealsPerDay;
 
-    #[ORM\Column(type: Types::SMALLINT)]
-    private int $mealsPerDay;
-
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $snackingHabits = null;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private string $snackingHabits;
 
     #[ORM\Column(type: Types::STRING, length: 255)]
     private string $waterIntake;
@@ -83,25 +81,25 @@ class Questionnaire
     #[ORM\Column(type: Types::STRING, length: 255)]
     private string $motivation;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private string $preferredTraining;
+    #[ORM\Column]
+    private array $preferredTraining = [];
 
-    #[ORM\Column(type: Types::TEXT)]
-    private string $dislikedTraining;
+    #[ORM\Column]
+    private array $dislikedTraining = [];
 
     #[ORM\Column(type: Types::STRING, length: 255)]
     private string $preferredTrainingTime;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $availableEquipment = null;
+    #[ORM\Column]
+    private array $availableEquipment = [];
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $additionalInfo = null;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?\DateTimeImmutable $createdAt;
 
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
 
@@ -146,24 +144,24 @@ class Questionnaire
         return $this;
     }
 
-    public function getTrainingDays(): int
+    public function getTrainingDays(): string
     {
         return $this->trainingDays;
     }
 
-    public function setTrainingDays(int $trainingDays): static
+    public function setTrainingDays(string $trainingDays): static
     {
         $this->trainingDays = $trainingDays;
 
         return $this;
     }
 
-    public function getTrainingHours(): int
+    public function getTrainingHours(): string
     {
         return $this->trainingHours;
     }
 
-    public function setTrainingHours(int $trainingHours): static
+    public function setTrainingHours(string $trainingHours): static
     {
         $this->trainingHours = $trainingHours;
 
@@ -230,7 +228,7 @@ class Questionnaire
         return $this;
     }
 
-    public function getCurrentTraining(): ?string
+    public function getCurrentTraining(): string
     {
         return $this->currentTraining;
     }
@@ -303,19 +301,19 @@ class Questionnaire
     }
 
 
-    public function getMealsPerDay(): int
+    public function getMealsPerDay(): string
     {
         return $this->mealsPerDay;
     }
 
-    public function setMealsPerDay(int $mealsPerDay): static
+    public function setMealsPerDay(string $mealsPerDay): static
     {
         $this->mealsPerDay = $mealsPerDay;
 
         return $this;
     }
 
-    public function getSnackingHabits(): ?string
+    public function getSnackingHabits(): string
     {
         return $this->snackingHabits;
     }
@@ -375,24 +373,24 @@ class Questionnaire
         return $this;
     }
 
-    public function getPreferredTraining(): string
+    public function getPreferredTraining(): array
     {
         return $this->preferredTraining;
     }
 
-    public function setPreferredTraining(string $preferredTraining): static
+    public function setPreferredTraining(array $preferredTraining): static
     {
         $this->preferredTraining = $preferredTraining;
 
         return $this;
     }
 
-    public function getDislikedTraining(): string
+    public function getDislikedTraining(): array
     {
         return $this->dislikedTraining;
     }
 
-    public function setDislikedTraining(string $dislikedTraining): static
+    public function setDislikedTraining(array $dislikedTraining): static
     {
         $this->dislikedTraining = $dislikedTraining;
 
@@ -411,24 +409,24 @@ class Questionnaire
         return $this;
     }
 
-    public function getAvailableEquipment(): ?string
+    public function getAvailableEquipment(): array
     {
         return $this->availableEquipment;
     }
 
-    public function setAvailableEquipment(?string $availableEquipment): static
+    public function setAvailableEquipment(array $availableEquipment): static
     {
         $this->availableEquipment = $availableEquipment;
 
         return $this;
     }
 
-    public function getAdditionalInfo(): ?string
+    public function getAdditionalInfo(): string
     {
         return $this->additionalInfo;
     }
 
-    public function setAdditionalInfo(?string $additionalInfo): static
+    public function setAdditionalInfo(string $additionalInfo): static
     {
         $this->additionalInfo = $additionalInfo;
 
@@ -447,12 +445,12 @@ class Questionnaire
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
 

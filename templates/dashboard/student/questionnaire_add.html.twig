@@ -20,99 +20,99 @@
 
 			<p class="h4">Trening</p>
 			<div class="col-md-4">
-				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.goals}%}
+				{% include "dashboard/shared/_element_form_select.html.twig" with {form : form.goals}%}
 			</div>
 			<div class="col-md-4">
-				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.activityLevel}%}
+				{% include "dashboard/shared/_element_form_select.html.twig" with {form : form.activityLevel}%}
 			</div>
 			<div class="col-md-4">
-				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.currentTraining}%}
+				{% include "dashboard/shared/_element_form_select.html.twig" with {form : form.currentTraining}%}
 			</div>
-			<div class="col-md-6">
-				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.trainingDays}%}
+			<div class="col-md-3">
+				{% include "dashboard/shared/_element_form_select.html.twig" with {form : form.trainingDays}%}
 			</div>
-			<div class="col-md-6">
-				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.trainingHours}%}
+			<div class="col-md-3">
+				{% include "dashboard/shared/_element_form_select.html.twig" with {form : form.trainingHours}%}
 
 			</div>
-			<div class="col-md-6">
-				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.preferredTrainingTime}%}
+			<div class="col-md-3">
+				{% include "dashboard/shared/_element_form_select.html.twig" with {form : form.preferredTrainingTime}%}
+			</div>
+			<div class="col-md-3">
+				{% include "dashboard/shared/_element_form_select.html.twig" with {form : form.motivation}%}
 			</div>
 			<div class="col-md-6">
-				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.motivation}%}
-			</div>
-			<div class="col-md-6">
-				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.shortTermGoals}%}
+				{% include "dashboard/shared/_element_form.html.twig" with {form : form.shortTermGoals}%}
 			</div>
 
 			<div class="col-md-6">
-				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.longTermGoals}%}
+				{% include "dashboard/shared/_element_form.html.twig" with {form : form.longTermGoals}%}
 			</div>
 
-
-			<div class="col-md-4">
-				{% include "dashboard/shared/_element_form_checkout_questionnaire.html.twig" with {form : form.preferredTraining}%}
-			</div>
 
 			<div class="col-md-4">
-				{% include "dashboard/shared/_element_form_checkout_questionnaire.html.twig" with {form : form.dislikedTraining}%}
+				{% include "dashboard/shared/_element_form_checkout.html.twig" with {form : form.preferredTraining}%}
 			</div>
 
 			<div class="col-md-4">
-				{% include "dashboard/shared/_element_form_checkout_questionnaire.html.twig" with {form : form.availableEquipment}%}
+				{% include "dashboard/shared/_element_form_checkout.html.twig" with {form : form.dislikedTraining}%}
+			</div>
+
+			<div class="col-md-4">
+				{% include "dashboard/shared/_element_form_checkout.html.twig" with {form : form.availableEquipment}%}
 			</div>
 			<br>
 			<hr>
 			<p class="h4">Dieta</p>
 			<div class="col-md-3">
-				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.mealsPerDay}%}
+				{% include "dashboard/shared/_element_form_select.html.twig" with {form : form.mealsPerDay}%}
 			</div>
 
 			<div class="col-md-3">
-				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.snackingHabits}%}
+				{% include "dashboard/shared/_element_form_select.html.twig" with {form : form.snackingHabits}%}
 			</div>
 			<div class="col-md-3">
-				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.alcoholIntake}%}
+				{% include "dashboard/shared/_element_form_select.html.twig" with {form : form.alcoholIntake}%}
 			</div>
 
 			<div class="col-md-3">
-				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.waterIntake}%}
+				{% include "dashboard/shared/_element_form_select.html.twig" with {form : form.waterIntake}%}
 			</div>
 			<div class="col-md-4">
-				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.currentDiet}%}
-			</div>
-
-			<div class="col-md-4">
-				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.productsLike}%}
+				{% include "dashboard/shared/_element_form.html.twig" with {form : form.currentDiet}%}
 			</div>
 
 			<div class="col-md-4">
-				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.productsNotLike}%}
+				{% include "dashboard/shared/_element_form.html.twig" with {form : form.productsLike}%}
+			</div>
+
+			<div class="col-md-4">
+				{% include "dashboard/shared/_element_form.html.twig" with {form : form.productsNotLike}%}
 			</div>
 
 			<br>
 			<hr>
 			<p class="h4">Zdrowie</p>
 			<div class="col-md-3">
-				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.typeWork}%}
+				{% include "dashboard/shared/_element_form_select.html.twig" with {form : form.typeWork}%}
 			</div>
 
 			<div class="col-md-3">
-				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.stressLevel}%}
+				{% include "dashboard/shared/_element_form_select.html.twig" with {form : form.stressLevel}%}
 			</div>
 
 			<div class="col-md-3">
-				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.sleepQuality}%}
+				{% include "dashboard/shared/_element_form_select.html.twig" with {form : form.sleepQuality}%}
 			</div>
 			<div class="col-md-3">
-				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.smokingHabits}%}
+				{% include "dashboard/shared/_element_form_select.html.twig" with {form : form.smokingHabits}%}
 			</div>
 			<div class="col-md-7">
-				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.healthIssues}%}
+				{% include "dashboard/shared/_element_form.html.twig" with {form : form.healthIssues}%}
 			</div>
 
 			<div class="col-md-5">
-				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.mobilityIssues}%}
+				{% include "dashboard/shared/_element_form.html.twig" with {form : form.mobilityIssues}%}
 			</div>
 
 
@@ -121,7 +121,7 @@
 
 
 			<div class="col-md-12">
-				{% include "dashboard/shared/_element_form_questionnaire.html.twig" with {form : form.additionalInfo}%}
+				{% include "dashboard/shared/_element_form.html.twig" with {form : form.additionalInfo}%}
 			</div>
 
 			<div class="text-end">

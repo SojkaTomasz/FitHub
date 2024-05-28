@@ -19,42 +19,42 @@ class QuestionnaireType extends AbstractType
 
             ->add('trainingDays', ChoiceType::class, [
                 'required' => false,
-                'label' => 'Ile dni w tygodniu możesz przeznaczyć na trening?',
+                'placeholder' => 'Wybierz...',
+                'label' => 'Ile dni w tygodniu możesz trenować?',
                 'choices' => [
-                    'Wybierz' => '',
-                    '1 dzień w tygodniu' => 1,
-                    '2 dni w tygodniu' => 2,
-                    '3 dni w tygodniu' => 3,
-                    '4 dni w tygodniu' => 4,
-                    '5 dni w tygodniu' => 5,
-                    '6 dni w tygodniu' => 6,
-                    '7 dni w tygodniu' => 7,
+                    '1 dzień w tygodniu' => '1 dzień w tygodniu',
+                    '2 dni w tygodniu' => '2 dni w tygodniu',
+                    '3 dni w tygodniu' => '3 dni w tygodniu',
+                    '4 dni w tygodniu' => '4 dni w tygodniu',
+                    '5 dni w tygodniu' => '5 dni w tygodniu',
+                    '6 dni w tygodniu' => '6 dni w tygodniu',
+                    '7 dni w tygodniu' => '7 dni w tygodniu',
                 ],
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Musisz wybrać wartość',
+                        'message' => 'To pole jest wymagane!',
                     ]),
-                    new Assert\Type(['type' => 'integer']),
+                    new Assert\Type(['type' => 'string']),
                 ],
             ])
 
             ->add('trainingHours', ChoiceType::class, [
                 'required' => false,
-                'label' => 'Ile godzin dziennie możesz przeznaczyć na trening?',
+                'placeholder' => 'Wybierz...',
+                'label' => 'Ile godzin dziennie możesz trenować?',
                 'choices' => [
-                    'Wybierz' => '',
-                    '1 godzina dziennie' => 1,
-                    '2 godziny dziennie' => 2,
-                    '3 godziny dziennie' => 3,
-                    '4 godziny dziennie' => 4,
-                    '5 godzin dziennie' => 5,
-                    '6 godzin dziennie' => 6,
+                    '1 godzinę' => '1 godzinę',
+                    '1 godzinę 30 minut' => '1 godzinę 30 minut',
+                    '2 godzinę' => '2 godzinę',
+                    '2 godzinę 30 minut' => '2 godzinę 30 minut',
+                    '3 godzinę' => '3 godzinę',
+                    'więcej' => 'więcej',
                 ],
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Musisz wybrać wartość',
+                        'message' => 'To pole jest wymagane!',
                     ]),
-                    new Assert\Type(['type' => 'integer']),
+                    new Assert\Type(['type' => 'string']),
                 ],
             ])
 
@@ -63,7 +63,7 @@ class QuestionnaireType extends AbstractType
                 'label' => 'Produkty, które lubisz (wymień kilka)',
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Musisz wybrać wartość',
+                        'message' => 'To pole jest wymagane!',
                     ]),
                     new Assert\Type(['type' => 'string']),
                 ],
@@ -74,7 +74,7 @@ class QuestionnaireType extends AbstractType
                 'label' => 'Produkty, których nie lubisz (wymień kilka)',
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Musisz wybrać wartość',
+                        'message' => 'To pole jest wymagane!',
                     ]),
                     new Assert\Type(['type' => 'string']),
                 ],
@@ -82,9 +82,9 @@ class QuestionnaireType extends AbstractType
 
             ->add('typeWork', ChoiceType::class, [
                 'required' => false,
-                'label' => 'Rodzaj Twojej pracy',
+                'placeholder' => 'Wybierz...',
+                'label' => 'Rodzaj Twojej pracy?',
                 'choices' => [
-                    'Wybierz' => '',
                     'Siedząca (biurowa, mało ruchu)' => 'siedząca',
                     'Umiarkowanie aktywna (część czasu spędzana w ruchu)' => 'umiarkowanie aktywna',
                     'Aktywna (praca fizyczna, dużo ruchu)' => 'aktywna',
@@ -92,7 +92,7 @@ class QuestionnaireType extends AbstractType
                 ],
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Musisz wybrać wartość',
+                        'message' => 'To pole jest wymagane!',
                     ]),
                     new Assert\Type(['type' => 'string']),
                 ],
@@ -100,9 +100,9 @@ class QuestionnaireType extends AbstractType
 
             ->add('goals', ChoiceType::class, [
                 'required' => false,
+                'placeholder' => 'Wybierz...',
                 'label' => 'Główne cele treningowe',
                 'choices' => [
-                    'Wybierz' => '',
                     'Schudnąć' => 'schudnąć',
                     'Zbudować mięśnie' => 'zbudować mięśnie',
                     'Poprawić kondycję' => 'poprawić kondycję',
@@ -111,7 +111,7 @@ class QuestionnaireType extends AbstractType
                 ],
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Musisz wybrać wartość',
+                        'message' => 'To pole jest wymagane!',
                     ]),
                     new Assert\Type(['type' => 'string']),
                 ],
@@ -122,7 +122,7 @@ class QuestionnaireType extends AbstractType
                 'label' => 'Cele krótkoterminowe (3-6 miesięcy)',
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Musisz wybrać wartość',
+                        'message' => 'To pole jest wymagane!',
                     ]),
                     new Assert\Type(['type' => 'string']),
                 ],
@@ -133,7 +133,7 @@ class QuestionnaireType extends AbstractType
                 'label' => 'Cele długoterminowe (6-12 miesięcy)',
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Musisz wybrać wartość',
+                        'message' => 'To pole jest wymagane!',
                     ]),
                     new Assert\Type(['type' => 'string']),
                 ],
@@ -141,9 +141,9 @@ class QuestionnaireType extends AbstractType
 
             ->add('activityLevel', ChoiceType::class, [
                 'required' => false,
+                'placeholder' => 'Wybierz...',
                 'label' => 'Jaki jest Twój poziom aktywności fizycznej?',
                 'choices' => [
-                    'Wybierz' => '',
                     'Niski (mało ruchu)' => 'niski',
                     'Umiarkowany (sporadyczne ćwiczenia)' => 'umiarkowany',
                     'Wysoki (regularne ćwiczenia)' => 'wysoki',
@@ -151,7 +151,7 @@ class QuestionnaireType extends AbstractType
                 ],
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Musisz wybrać wartość',
+                        'message' => 'To pole jest wymagane!',
                     ]),
                     new Assert\Type(['type' => 'string']),
                 ],
@@ -160,9 +160,9 @@ class QuestionnaireType extends AbstractType
 
             ->add('currentTraining', ChoiceType::class, [
                 'required' => false,
+                'placeholder' => 'Wybierz...',
                 'label' => 'Obecny plan treningowy',
                 'choices' => [
-                    'Wybierz' => '',
                     'Kardio' => 'kardio',
                     'Siłowy' => 'siłowy',
                     'Mieszany' => 'mieszany',
@@ -170,7 +170,7 @@ class QuestionnaireType extends AbstractType
                 ],
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Musisz wybrać wartość',
+                        'message' => 'To pole jest wymagane!',
                     ]),
                     new Assert\Type(['type' => 'string']),
                 ],
@@ -181,7 +181,7 @@ class QuestionnaireType extends AbstractType
                 'label' => 'Czy masz jakieś problemy zdrowotne, które powinniśmy znać?',
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Musisz wybrać wartość',
+                        'message' => 'To pole jest wymagane!',
                     ]),
                     new Assert\Type(['type' => 'string']),
                 ],
@@ -192,7 +192,7 @@ class QuestionnaireType extends AbstractType
                 'label' => 'Czy masz jakieś problemy z mobilnością?',
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Musisz wybrać wartość',
+                        'message' => 'To pole jest wymagane!',
                     ]),
                     new Assert\Type(['type' => 'string']),
                 ],
@@ -200,16 +200,16 @@ class QuestionnaireType extends AbstractType
 
             ->add('stressLevel', ChoiceType::class, [
                 'required' => false,
+                'placeholder' => 'Wybierz...',
                 'label' => 'Jak oceniasz swój poziom stresu?',
                 'choices' => [
-                    'Wybierz' => '',
                     'Niski (rzadko odczuwam stres)' => 'niski',
                     'Średni (czasami odczuwam stres)' => 'średni',
                     'Wysoki (często odczuwam stres)' => 'wysoki',
                 ],
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Musisz wybrać wartość',
+                        'message' => 'To pole jest wymagane!',
                     ]),
                     new Assert\Type(['type' => 'string']),
                 ],
@@ -217,16 +217,16 @@ class QuestionnaireType extends AbstractType
 
             ->add('sleepQuality', ChoiceType::class, [
                 'required' => false,
+                'placeholder' => 'Wybierz...',
                 'label' => 'Jak oceniasz jakość swojego snu?',
                 'choices' => [
-                    'Wybierz' => '',
                     'Zła (mam problemy ze snem)' => 'zła',
                     'Średnia (czasami mam problemy ze snem)' => 'średnia',
                     'Dobra (śpię dobrze)' => 'dobra',
                 ],
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Musisz wybrać wartość',
+                        'message' => 'To pole jest wymagane!',
                     ]),
                     new Assert\Type(['type' => 'string']),
                 ],
@@ -237,7 +237,7 @@ class QuestionnaireType extends AbstractType
                 'label' => 'Jak wygląda Twoja obecna dieta?',
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Musisz wybrać wartość',
+                        'message' => 'To pole jest wymagane!',
                     ]),
                     new Assert\Type(['type' => 'string']),
                 ],
@@ -245,36 +245,36 @@ class QuestionnaireType extends AbstractType
 
             ->add('mealsPerDay', ChoiceType::class, [
                 'required' => false,
+                'placeholder' => 'Wybierz...',
                 'label' => 'Ile posiłków spożywasz dziennie?',
                 'choices' => [
-                    'Wybierz' => '',
-                    '1 posiłek' => 1,
-                    '2 posiłki' => 2,
-                    '3 posiłki' => 3,
-                    '4 posiłki' => 4,
-                    '5 posiłków' => 5,
-                    '6 posiłków' => 6,
+                    '1 posiłek' => '1 posiłek',
+                    '2 posiłki' => '2 posiłki',
+                    '3 posiłki' => '3 posiłki',
+                    '4 posiłki' => '4 posiłki',
+                    '5 posiłków' => '5 posiłków',
+                    '6 posiłków' => '6 posiłków',
                 ],
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Musisz wybrać wartość',
+                        'message' => 'To pole jest wymagane!',
                     ]),
-                    new Assert\Type(['type' => 'integer']),
+                    new Assert\Type(['type' => 'string']),
                 ],
             ])
 
             ->add('snackingHabits', ChoiceType::class, [
                 'required' => false,
+                'placeholder' => 'Wybierz...',
                 'label' => 'Czy masz nawyki podjadania?',
                 'choices' => [
-                    'Wybierz' => '',
                     'Nie nigdy nie podjadam' => 'nigdy',
                     'Czasami podjadam' => 'czasami',
                     'Często podjadam' => 'często',
                 ],
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Musisz wybrać wartość',
+                        'message' => 'To pole jest wymagane!',
                     ]),
                     new Assert\Type(['type' => 'string']),
                 ],
@@ -282,9 +282,9 @@ class QuestionnaireType extends AbstractType
 
             ->add('waterIntake', ChoiceType::class, [
                 'required' => false,
+                'placeholder' => 'Wybierz...',
                 'label' => 'Ile wody spożywasz dziennie?',
                 'choices' => [
-                    'Wybierz' => '',
                     'Mniej niż 1 litr' => 'mniej niż 1 litr',
                     '1-2 litry' => '1-2 litry',
                     '2-3 litry' => '2-3 litry',
@@ -292,7 +292,7 @@ class QuestionnaireType extends AbstractType
                 ],
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Musisz wybrać wartość',
+                        'message' => 'To pole jest wymagane!',
                     ]),
                     new Assert\Type(['type' => 'string']),
                 ],
@@ -300,16 +300,16 @@ class QuestionnaireType extends AbstractType
 
             ->add('alcoholIntake', ChoiceType::class, [
                 'required' => false,
+                'placeholder' => 'Wybierz...',
                 'label' => 'Jak często spożywasz alkohol?',
                 'choices' => [
-                    'Wybierz' => '',
                     'Nie spożywam alkoholu' => 'nie spożywam',
                     'Okazjonalnie (raz na tydzień lub rzadziej)' => 'okazjonalnie',
                     'Regularnie (kilka razy w tygodniu)' => 'regularnie',
                 ],
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Musisz wybrać wartość',
+                        'message' => 'To pole jest wymagane!',
                     ]),
                     new Assert\Type(['type' => 'string']),
                 ],
@@ -317,16 +317,16 @@ class QuestionnaireType extends AbstractType
 
             ->add('smokingHabits', ChoiceType::class, [
                 'required' => false,
+                'placeholder' => 'Wybierz...',
                 'label' => 'Czy palisz?',
                 'choices' => [
-                    'Wybierz' => '',
                     'Nie palę' => 'nie palę',
                     'Okazjonalnie palę' => 'okazjonalnie',
                     'Regularnie palę' => 'regularnie',
                 ],
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Musisz wybrać wartość',
+                        'message' => 'To pole jest wymagane!',
                     ]),
                     new Assert\Type(['type' => 'string']),
                 ],
@@ -335,18 +335,17 @@ class QuestionnaireType extends AbstractType
 
             ->add('motivation', ChoiceType::class, [
                 'required' => false,
+                'placeholder' => 'Wybierz...',
                 'label' => 'Co najbardziej Cię motywuje do treningu?',
                 'choices' => [
-                    'Wybierz' => '',
                     'Poprawa zdrowia' => 'poprawa zdrowia',
                     'Utrata wagi' => 'utrata wagi',
                     'Budowanie mięśni' => 'budowanie mięśni',
                     'Poprawa samopoczucia' => 'poprawa samopoczucia',
-                    'Inne' => 'inne',
                 ],
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Musisz wybrać wartość',
+                        'message' => 'To pole jest wymagane!',
                     ]),
                     new Assert\Type(['type' => 'string']),
                 ],
@@ -354,60 +353,56 @@ class QuestionnaireType extends AbstractType
 
             ->add('preferredTraining', ChoiceType::class, [
                 'required' => false,
+                'placeholder' => 'Wybierz...',
                 'label' => 'Jakie rodzaje treningów preferujesz?',
                 'choices' => [
-                    'Wybierz' => '',
                     'Siłowy (np. podnoszenie ciężarów)' => 'siłowy',
                     'Kardio (np. bieganie, rower)' => 'kardio',
                     'Stretching (np. joga, pilates)' => 'stretching',
                     'Sporty drużynowe (np. piłka nożna, koszykówka)' => 'sporty drużynowe',
-                    'Inne' => 'inne',
                 ],
                 'multiple' => true,
                 'expanded' => true,
-                'mapped' => false,
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Musisz wybrać wartość',
+                        'message' => 'To pole jest wymagane!',
                     ]),
-                    new Assert\Type(['type' => 'string']),
+                    new Assert\Type(['type' => 'array']),
                 ],
             ])
 
             ->add('dislikedTraining', ChoiceType::class, [
                 'required' => false,
+                'placeholder' => 'Wybierz...',
                 'label' => 'Jakie rodzaje treningów Ci nie odpowiadają?',
                 'choices' => [
-                    'Wybierz' => '',
                     'Siłowy (np. podnoszenie ciężarów)' => 'siłowy',
                     'Kardio (np. bieganie, rower)' => 'kardio',
                     'Stretching (np. joga, pilates)' => 'stretching',
                     'Sporty drużynowe (np. piłka nożna, koszykówka)' => 'sporty drużynowe',
-                    'Inne' => 'inne',
                 ],
                 'multiple' => true,
                 'expanded' => true,
-                'mapped' => false,
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Musisz wybrać wartość',
+                        'message' => 'To pole jest wymagane!',
                     ]),
-                    new Assert\Type(['type' => 'string']),
+                    new Assert\Type(['type' => 'array']),
                 ],
             ])
 
             ->add('preferredTrainingTime', ChoiceType::class, [
                 'required' => false,
+                'placeholder' => 'Wybierz...',
                 'label' => 'Kiedy preferujesz trenować?',
                 'choices' => [
-                    'Wybierz' => '',
                     'Rano (przed pracą)' => 'rano',
                     'Po południu (po pracy)' => 'po południu',
                     'Wieczorem (późnym wieczorem)' => 'wieczorem',
                 ],
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Musisz wybrać wartość',
+                        'message' => 'To pole jest wymagane!',
                     ]),
                     new Assert\Type(['type' => 'string']),
                 ],
@@ -415,23 +410,21 @@ class QuestionnaireType extends AbstractType
 
             ->add('availableEquipment', ChoiceType::class, [
                 'required' => false,
+                'placeholder' => 'Wybierz...',
                 'label' => 'Jakim sprzętem do treningu dysponujesz?',
                 'choices' => [
-                    'Wybierz' => '',
                     'Hantle' => 'hantle',
                     'Sztanga' => 'sztanga',
                     'Mata do ćwiczeń' => 'mata',
                     'Sprzęt kardio (bieżnia, rower stacjonarny)' => 'sprzęt kardio',
-                    'Inne' => 'inne',
                 ],
                 'multiple' => true,
                 'expanded' => true,
-                'mapped' => false,
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Musisz wybrać wartość',
+                        'message' => 'To pole jest wymagane!',
                     ]),
-                    new Assert\Type(['type' => 'string']),
+                    new Assert\Type(['type' => 'array']),
                 ],
             ])
 
@@ -440,7 +433,7 @@ class QuestionnaireType extends AbstractType
                 'label' => 'Dodatkowe informacje, które chciałbyś przekazać',
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Musisz wybrać wartość',
+                        'message' => 'To pole jest wymagane!',
                     ]),
                     new Assert\Type(['type' => 'string']),
                 ],

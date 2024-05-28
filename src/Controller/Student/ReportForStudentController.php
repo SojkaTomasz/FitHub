@@ -68,6 +68,15 @@ class ReportForStudentController extends AbstractController
     #[Route('/dashboard/student/report/add', name: 'student_report_add')]
     public function newReport(?Request $request, EntityManagerInterface $entityManager, ReportRepository $reportRepository, FileUploader $fileUploader, InfoService $infoService): Response
     {
+
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+
+        if (!$user->getQuestionnaire()) {
+            $this->addFlash('error', "Przed pierwszym raportem musisz wypełnić ankietę!");
+            return $this->redirectToRoute('student_questionnaire_add');
+        }
+
         $report = new Report();
         $form = $this->createForm(ReportType::class, $report);
         $form->handleRequest($request);

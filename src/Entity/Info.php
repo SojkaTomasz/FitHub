@@ -34,6 +34,9 @@ class Info
     #[ORM\ManyToOne(inversedBy: 'infos')]
     private ?User $newStudent = null;
 
+    #[ORM\ManyToOne(inversedBy: 'infos')]
+    private ?Questionnaire $questionnaire = null;
+
     public function getId(): int
     {
         return $this->id;
@@ -120,6 +123,18 @@ class Info
     public function setNewStudent(?User $newStudent): static
     {
         $this->newStudent = $newStudent;
+
+        return $this;
+    }
+
+    public function getQuestionnaire(): ?Questionnaire
+    {
+        return $this->questionnaire;
+    }
+
+    public function setQuestionnaire(?Questionnaire $questionnaire): static
+    {
+        $this->questionnaire = $questionnaire;
 
         return $this;
     }

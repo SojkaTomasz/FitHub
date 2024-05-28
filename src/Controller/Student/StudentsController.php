@@ -82,9 +82,11 @@ class StudentsController extends AbstractController
         $user->setTrainer($trainer);
         $entityManager->persist($user);
         $infoService->newInfo("new-student", $trainer, $user);
+        if (!$user->getQuestionnaire()) {
+            $infoService->newInfo("questionnaire-student", $user);
+        }
         $entityManager->flush();
         $this->addFlash('success', "Wybrałeś użytkownika {$trainer->getFirstName()}");
-
         return $this->redirectToRoute('all_trainers');
     }
 }

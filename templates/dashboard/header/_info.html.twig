@@ -1,6 +1,6 @@
 <div class="mb-2 border-bottom pb-2 d-flex">
 	<div class="d-flex flex-column me-2 align-items-center">
-		<i class="{{icon}} m-0 h4 text-warning"></i>
+		<i class="{{icon}} m-0 h5 text-warning"></i>
 		{% if info.seedAt is null %}
 			<i class="bi bi-exclamation-circle m-0 text-danger"></i>
 		{% else %}
@@ -55,6 +55,16 @@
 				<a class="btn btn-sm btn-warning py-0" href="{{path('trainer_student', {id: id})}}">Zobacz</a>
 			{% elseif type == "student" %}
 				<a class="btn btn-sm btn-warning py-0" href="{{path('student_trainer', {id: id})}}">Zobacz</a>
+			{% elseif type == "questionnaire-trainer" %}
+				<a class="btn btn-sm btn-warning py-0" href="{{path('trainer_student', {id: id})}}">Zobacz</a>
+			{% elseif type == "questionnaire-student" %}
+				{% if app.user.questionnaire is not null %}
+					<a class="btn btn-sm btn-warning py-0" href="{{path('student_questionnaire_add')}}">Zobacz</a>
+				{% else %}
+					<a class="btn btn-sm btn-warning py-0" href="{{path('student_questionnaire_add')}}">Wypełnij</a>
+
+				{% endif %}
+
 			{% endif %}
 		</div>
 	</div>

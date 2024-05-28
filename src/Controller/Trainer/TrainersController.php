@@ -39,6 +39,8 @@ class TrainersController extends AbstractController
 
         $students = $userRepository->findMyStudents($user->getId());
         $infoService->closeInfoNewStudent($user->getInfos(), $student);
+        $infoQuestionnaire = $student->getQuestionnaire() ? $student->getQuestionnaire()->getInfos() : null;
+        $infoService->closeInfo($infoQuestionnaire);
 
         if (!in_array($student, $students)) {
             throw new AccessDeniedException();

@@ -101,6 +101,21 @@
 						id: info.newStudent.id,
 						type: "trener"
 				} %}
+				{% elseif  info.action == 'questionnaire-student'%}
+					{% include 'dashboard/header/_info.html.twig' with {
+						icon : "bi bi-exclamation-diamond-fill",
+    					title: "Ankieta", 
+    					subTitle: 'Musisz wypełnić ankietę przed pierwszym raportem',
+						type: "questionnaire-student"
+				} %}
+				{% elseif  info.action == 'questionnaire-trainer'%}
+					{% include 'dashboard/header/_info.html.twig' with {
+						icon : "bi bi-ui-checks",
+    					title: "Ankieta", 
+    					subTitle: 'Podopieczny ' ~ info.questionnaire.user.firstName ~ ' ' ~ info.questionnaire.user.lastName ~ ' wypełnił ankietę',
+						id: info.questionnaire.user.id,
+						type: "questionnaire-trainer"
+				} %}
 				{% elseif  info.action == 'termination'%}
 					{% include 'dashboard/header/_info.html.twig' with {
 						icon : "bi bi-person-x",

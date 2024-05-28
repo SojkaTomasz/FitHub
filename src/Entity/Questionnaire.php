@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\QuestionnaireRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -101,6 +103,14 @@ class Questionnaire
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\OneToMany(targetEntity: Info::class, mappedBy: 'questionnaire')]
+    private Collection $infos;
+
+    public function __construct()
+    {
+        $this->infos = new ArrayCollection();
+    }
 
 
     public function getId(): int
@@ -453,6 +463,36 @@ class Questionnaire
     public function setUpdatedAt(\DateTimeInterface $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Info>
+     */
+    public function getInfos(): Collection
+    {
+        return $this->infos;
+    }
+
+    public function addInfo(Info $info): static
+    {
+        if (!$this->infos->contains($info)) {
+            $this->infos->add($info);
+            $info->setQuestionnaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInfo(Info $info): static
+    {
+        if ($this->infos->removeElement($info)) {
+            // set the owning side to null (unless already changed)
+            if ($info->getQuestionnaire() === $this) {
+                $info->setQuestionnaire(null);
+            }
+        }
 
         return $this;
     }

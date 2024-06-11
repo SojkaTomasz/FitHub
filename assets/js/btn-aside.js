@@ -8,7 +8,6 @@ const header = document.querySelector("header")
 const main = document.querySelector("main")
 
 let nav = localStorage.getItem("nav") === "true" // Use localStorage instead of sessionStorage
-console.log(nav)
 
 function toggleNavClasses() {
 	bi.classList.toggle("active", nav)

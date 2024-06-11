@@ -6,7 +6,10 @@
 {% block home %}
 	<div class="container my-5">
 		{% include "shared_global/info.html.twig" %}
-		<h1>Logowanie</h1>
+		<div class="d-flex flex-column  align-items-center">
+			<h1>Logowanie</h1>
+			<img class="logo my-3" src="/assets/image/logo.png" width="220" alt="">
+		</div>
 		<form action="{{ path('login') }}" method="post" class="row g-3 needs-validation my-bg-white my-3 p-3 px-5 border border-1 rounded-5">
 			<div class="col-md-12">
 				<label for="username" class="form-label">Email:</label>
@@ -24,6 +27,8 @@
 			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 			<button class="btn btn-warning" type="submit">login</button>
 		</form>
-		<a type="button" class="btn btn-warning btn-lg mx-1" href="{{path('registration_user')}}">Rejestracja</a>
+		<div class="text-end">
+			<a type="button" class="btn btn-warning btn-lg" href="{{path('registration_user')}}">Rejestracja</a>
+		</div>
 	</div>
 {% endblock %}

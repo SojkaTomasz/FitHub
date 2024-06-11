@@ -5,9 +5,11 @@
 
 {% block home %}
 	<div class="container mt-5">
-		<h1>Rejestracja
-		</h1>
-
+		<div class="d-flex flex-column  align-items-center">
+			<h1>Rejestracja
+			</h1>
+			<img class="logo my-3" src="/assets/image/logo.png" width="220" alt="">
+		</div>
 		{{ form_errors(registrationForm) }}
 
 		{{ form_start(registrationForm, {'attr':{'class': 'row g-3 needs-validation my-bg-white my-3 p-3 px-5 border border-1 rounded-5' }}
@@ -15,14 +17,14 @@
 
 		<div class="col-md-6">
 			{{ form_label(registrationForm.firstName, 'Imię', {'label_attr': {'class': 'form-label'}}) }}
-			{{ form_widget(registrationForm.firstName, {'attr': {'class': 'form-control my-bg-white'}}) }}
+			{{ form_widget(registrationForm.firstName, {'attr': {'class': 'form-control'}}) }}
 			<div class="text-dark">
 				{{ form_errors(registrationForm.firstName) }}
 			</div>
 		</div>
 		<div class="col-md-6">
 			{{ form_label(registrationForm.lastName, 'Nazwisko', {'label_attr': {'class': 'form-label'}}) }}
-			{{ form_widget(registrationForm.lastName, {'attr': {'class': 'form-control my-bg-white'}}) }}
+			{{ form_widget(registrationForm.lastName, {'attr': {'class': 'form-control'}}) }}
 			<div class="text-dark">
 				{{ form_errors(registrationForm.lastName) }}
 			</div>
@@ -31,7 +33,7 @@
 
 		<div class="col-md-6">
 			{{ form_label(registrationForm.password.first, 'Hasło', {'label_attr': {'class': 'form-label', }}) }}
-			{{ form_widget(registrationForm.password.first, {'attr': {'class': 'form-control my-bg-white'}}) }}
+			{{ form_widget(registrationForm.password.first, {'attr': {'class': 'form-control'}}) }}
 			<div class="text-dark">
 				{{ form_errors(registrationForm.password.first) }}
 			</div>
@@ -39,7 +41,7 @@
 
 		<div class="col-md-6">
 			{{ form_label(registrationForm.password.second, 'Powtórz Hasło', {'label_attr': {'class': 'form-label', }}) }}
-			{{ form_widget(registrationForm.password.second, {'attr': {'class': 'form-control my-bg-white'}}) }}
+			{{ form_widget(registrationForm.password.second, {'attr': {'class': 'form-control'}}) }}
 			<div class="text-dark">
 				{{ form_errors(registrationForm.password.second) }}
 			</div>
@@ -47,7 +49,7 @@
 
 		<div class="col-md-6">
 			{{ form_label(registrationForm.email, 'Email', {'label_attr': {'class': 'form-label'}}) }}
-			{{ form_widget(registrationForm.email, {'attr': {'class': 'form-control my-bg-white'}}) }}
+			{{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
 			<div class="text-dark">
 				{{ form_errors(registrationForm.email) }}
 			</div>
@@ -70,6 +72,8 @@
 		</div>
 		<button type="submit" class="btn btn-warning">Register</button>
 		{{ form_end(registrationForm) }}
-		<a type="button" class="btn btn-warning btn-lg mx-1" href="{{path('login')}}">Login</a>
+		<div class="text-end">
+			<a type="button" class="btn btn-warning btn-lg mx-1" href="{{path('login')}}">Login</a>
+		</div>
 	</div>
 {% endblock %}

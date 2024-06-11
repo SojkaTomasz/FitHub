@@ -30,8 +30,14 @@
 			</main>
 		{% else %}
 			{% block home %}
-				<a type="button" class="btn btn-warning btn-lg mx-1" href="{{path('login')}}">Login</a>
-				<a type="button" class="btn btn-warning btn-lg mx-1" href="{{path('registration_user')}}">Rejestracja</a>
+				<div class="home_page d-flex flex-column">
+					<p class='h2'>Zaloguj się lub zarejestruj i dołącz do</p>
+					<img class="logo my-3" src="/assets/image/logo.png" width="220" alt="">
+					<div>
+						<a type="button" class="btn btn-warning btn-lg mx-1" href="{{path('login')}}">Login</a>
+						<a type="button" class="btn btn-warning btn-lg mx-1" href="{{path('registration_user')}}">Rejestracja</a>
+					</div>
+				</div>
 			{% endblock %}
 
 		{% endif %}

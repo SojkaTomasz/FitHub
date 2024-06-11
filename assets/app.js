@@ -18,3 +18,4 @@ import "./js/fancybox"
 import "./js/rang-value"
 import "./js/message-scroll-button"
 import "./js/analyze-report-active"
+import './bootstrap'
